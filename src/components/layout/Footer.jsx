@@ -1,6 +1,6 @@
 // ===== FILE: src/components/layout/Footer.jsx =====
 import { go } from '../../utils/scroll';
-import LogoImg from '../../assets/Gsbmlogo.png';
+import LogoImg from '../../assets/mainlogo.png'
 
 export default function Footer() {
   const footerLinks = [

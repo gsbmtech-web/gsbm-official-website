@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
-import vmrfLogoFull from '../../assets/GSBMlogo1.png';
+
+import vmrfLogoFull from '../../assets/mainlogo.png'
 
 export default function Navbar() {
   const logoSrc = vmrfLogoFull;
@@ -498,7 +499,7 @@ export default function Navbar() {
         .gsbm-logo-img {
           height: 160%;           /* fill exactly 60px tall */
           width: auto;            /* natural width — no distortion */
-          max-width: 320px;       /* prevents very wide logos from going overboard */
+          max-width: 220px;       /* prevents very wide logos from going overboard */
           object-fit: contain;
           object-position: left center;
           display: block;
