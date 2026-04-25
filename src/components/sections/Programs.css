@@ -1,0 +1,41 @@
+.program-mb {
+  margin-bottom: 14px;
+}
+
+.programs-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.gain-card {
+  padding: 20px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.gain-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+.gain-card-title {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 1.02rem;
+  color: var(--navy);
+  margin-bottom: 5px;
+}
+.gain-card-desc {
+  font-family: var(--sans);
+  font-size: 0.92rem;
+  color: var(--text2);
+  line-height: 1.78;
+}
+
+@media (max-width: 768px) {
+  .programs-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}

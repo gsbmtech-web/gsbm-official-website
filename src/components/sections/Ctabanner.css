@@ -1,0 +1,105 @@
+.ctab {
+  background: #000000; /* pure black background */
+  padding: 70px 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Gold decorative lines */
+.ctab::before,
+.ctab::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.ctab::before {
+  top: 0;
+}
+
+.ctab::after {
+  bottom: 0;
+}
+
+.ctab-kicker {
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold); /* gold text */
+  display: block;
+  margin-bottom: 12px;
+}
+
+.ctab h2 {
+  font-family: var(--serif);
+  font-size: clamp(1.8rem, 3.8vw, 3rem);
+  color: var(--gold); /* gold text */
+  margin-bottom: 16px;
+}
+
+.ctab p {
+  font-family: var(--sans);
+  font-size: 1.08rem;
+  color: rgba(255, 255, 255, 0.85); /* light grey for contrast */
+  max-width: 520px;
+  margin: 0 auto 32px;
+  line-height: 1.85;
+}
+
+.ctab-btns {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Primary button – gold background, black text */
+.ctab-btn-primary {
+  background: var(--gold);
+  color: #000000;
+  border: none;
+  padding: 12px 28px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.ctab-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(184, 146, 42, 0.4);
+  background: #e6c85c;
+}
+
+/* Secondary button – transparent with gold border */
+.ctab-btn-secondary {
+  background: transparent;
+  color: var(--gold);
+  border: 2px solid var(--gold);
+  padding: 12px 28px;
+  transition: all 0.2s;
+}
+
+.ctab-btn-secondary:hover {
+  background: rgba(184, 146, 42, 0.1);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .ctab {
+    padding: 48px 0;
+  }
+  .ctab-btns {
+    flex-direction: column;
+    align-items: center;
+  }
+  .ctab-btn-primary,
+  .ctab-btn-secondary {
+    width: 100%;
+    max-width: 240px;
+    text-align: center;
+  }
+}

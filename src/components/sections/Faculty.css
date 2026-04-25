@@ -1,0 +1,96 @@
+.faculty-mb12 {
+  margin-bottom: 12px;
+}
+
+.faculty-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 10px 8px;
+}
+
+.faculty-research-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  padding: 4px 0;
+}
+
+.fcard {
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+  background: var(--white);
+  text-align: center;
+  transition: all 0.22s ease;
+  will-change: transform;
+}
+
+.fcard:hover {
+  box-shadow: 0 8px 30px rgba(28, 24, 20, 0.1);
+  transform: translateY(-3px);
+  border-color: var(--gold);
+}
+
+.fcard-av {
+  width: 100%;
+  height: 150px;
+  background: var(--parchment);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--serif);
+  font-size: 2.4rem;
+  font-weight: 600;
+  color: var(--burgundy);
+}
+
+.fcard-body {
+  padding: 16px 14px 20px;
+}
+
+.fcard-name {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  color: var(--navy);
+  margin-bottom: 4px;
+}
+
+.fcard-title {
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  color: var(--burgundy);
+  font-weight: 600;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.fcard-area {
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  color: var(--text2);
+}
+
+@media (max-width: 1024px) {
+  .faculty-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .faculty-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .faculty-research-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .faculty-grid {
+    grid-template-columns: 1fr;
+  }
+}

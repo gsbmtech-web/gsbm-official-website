@@ -1,9 +1,9 @@
-// ===== FILE: src/components/sections/Faculty.jsx =====
+import { memo } from 'react';
 import { Ac1, Ac2 } from '../ui/Accordion';
 import SectionHeader from '../ui/SectionHeader';
 import DotItem from '../ui/DotItem';
+import './Faculty.css';
 
-/* ─── STATIC DATA ─── */
 const FACULTY = [
   { name: 'Raman Pushkar',  title: 'Consultant, ex-VP Deutsche Bank',   area: 'Finance & Investment Banking' },
   { name: 'Prasanna Rao',   title: 'Vice President, Accenture',          area: 'Strategy & Consulting' },
@@ -22,7 +22,27 @@ const researchAreas = [
   'Sustainability & Corporate Governance',
 ];
 
-export default function Faculty() {
+const FacultyCard = memo(({ faculty }) => {
+  const initials = faculty.name
+    .split(' ')
+    .filter(w => w.length > 2 && !w.includes('.'))
+    .slice(0, 2)
+    .map(w => w[0])
+    .join('');
+
+  return (
+    <div className="fcard">
+      <div className="fcard-av" aria-hidden="true">{initials}</div>
+      <div className="fcard-body">
+        <p className="fcard-name">{faculty.name}</p>
+        <p className="fcard-title">{faculty.title}</p>
+        <p className="fcard-area">{faculty.area}</p>
+      </div>
+    </div>
+  );
+});
+
+const Faculty = () => {
   return (
     <section className="sec" id="faculty">
       <div className="W">
@@ -34,7 +54,7 @@ export default function Faculty() {
 
         <Ac1 title="Faculty Overview & Teaching Philosophy" defaultOpen>
           <Ac2 title="Our Approach" defaultOpen>
-            <p className="body-text" style={{ marginBottom: 12 }}>
+            <p className="body-text faculty-mb12">
               At Ganesan School of Business Management(GSBM), faculty are not just educators — they are practitioners, researchers, and mentors.
               Each faculty member is selected for both their academic depth and practical industry exposure,
               creating a learning environment that is simultaneously rigorous and relevant.
@@ -48,30 +68,15 @@ export default function Faculty() {
 
         <Ac1 title="Faculty Profiles">
           <div className="faculty-grid">
-            {FACULTY.map((f, idx) => {
-              const initials = f.name
-                .split(' ')
-                .filter(w => w.length > 2 && !w.includes('.'))
-                .slice(0, 2)
-                .map(w => w[0])
-                .join('');
-              return (
-                <div key={idx} className="fcard">
-                  <div className="fcard-av">{initials}</div>
-                  <div className="fcard-body">
-                    <p className="fcard-name">{f.name}</p>
-                    <p className="fcard-title">{f.title}</p>
-                    <p className="fcard-area">{f.area}</p>
-                  </div>
-                </div>
-              );
-            })}
+            {FACULTY.map((faculty, idx) => (
+              <FacultyCard key={idx} faculty={faculty} />
+            ))}
           </div>
         </Ac1>
 
         <Ac1 title="Research Areas">
           <Ac2 title="Active Research Domains" defaultOpen>
-            <div className="g2" style={{ gap: 10 }}>
+            <div className="faculty-research-grid">
               {researchAreas.map(r => <DotItem key={r} text={r} />)}
             </div>
           </Ac2>
@@ -79,8 +84,8 @@ export default function Faculty() {
 
         <Ac1 title="Publications & Conferences">
           <Ac2 title="Research Output" defaultOpen>
-            <p className="body-text" style={{ marginBottom: 12 }}>
-             Ganesan School of Business Management(GSBM) faculty contribute actively to academic and industry research through peer-reviewed journal
+            <p className="body-text faculty-mb12">
+              Ganesan School of Business Management(GSBM) faculty contribute actively to academic and industry research through peer-reviewed journal
               publications, conference papers, case studies, and textbook contributions.
             </p>
             <p className="body-text">
@@ -90,67 +95,8 @@ export default function Faculty() {
           </Ac2>
         </Ac1>
       </div>
-
-      <style jsx="true">{`
-        .faculty-grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 20px;
-          padding: 10px 8px;
-        }
-        .fcard {
-          border: 1px solid var(--border);
-          border-radius: 2px;
-          overflow: hidden;
-          background: var(--white);
-          text-align: center;
-          transition: all .22s;
-        }
-        .fcard:hover {
-          box-shadow: 0 8px 30px rgba(28,24,20,.1);
-          transform: translateY(-3px);
-          border-color: var(--gold);
-        }
-        .fcard-av {
-          width: 100%; height: 150px;
-          background: var(--parchment);
-          display: flex; align-items: center; justify-content: center;
-          font-family: var(--serif);
-          font-size: 2.4rem;
-          font-weight: 600;
-          color: var(--burgundy);
-        }
-        .fcard-body { padding: 16px 14px 20px; }
-        .fcard-name {
-          font-family: var(--serif);
-          font-size: 1.15rem;
-          color: var(--navy);
-          margin-bottom: 4px;
-        }
-        .fcard-title {
-          font-family: var(--sans);
-          font-size: 0.75rem;
-          color: var(--burgundy);
-          font-weight: 600;
-          margin-bottom: 5px;
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
-        }
-        .fcard-area {
-          font-family: var(--sans);
-          font-size: 0.82rem;
-          color: var(--text2);
-        }
-        @media (max-width: 1024px) {
-          .faculty-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-        @media (max-width: 640px) {
-          .faculty-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
-        }
-        @media (max-width: 480px) {
-          .faculty-grid { grid-template-columns: 1fr; }
-        }
-      `}</style>
     </section>
   );
-}
+};
+
+export default memo(Faculty);

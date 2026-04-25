@@ -101,8 +101,9 @@ h1, h2, h3, h4, h5, h6 {
   padding: 12px 26px;
   border-radius: 2px;
   border: 2px solid transparent;
-  transition: all .2s;
+  transition: all 0.2s ease;
   white-space: nowrap;
+  cursor: pointer;
 }
 .btn-red { background: var(--burgundy); color: #fff; border-color: var(--burgundy); }
 .btn-red:hover { background: var(--red2); border-color: var(--red2); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(160,82,45,.22); }
@@ -135,7 +136,114 @@ h1, h2, h3, h4, h5, h6 {
 .d3 { animation-delay: .34s; }
 .d4 { animation-delay: .46s; }
 
-/* Responsive overrides (only essential global ones) */
+/* ========== NEW PRODUCTION ADDITIONS (10/10) ========== */
+
+/* 1. SKELETON LOADER (shimmer effect) */
+.skeleton-loader {
+  min-height: 200px;
+  width: 100%;
+  background: #e2e8f0;
+  position: relative;
+  overflow: hidden;
+}
+.skeleton-loader::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,0.4) 50%, transparent 70%);
+  animation: shimmer 1.5s infinite;
+}
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* 2. SKIP LINK (accessibility) */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--navy);
+  color: white;
+  padding: 8px 16px;
+  z-index: 1000;
+  text-decoration: none;
+  font-weight: bold;
+  font-family: var(--sans);
+}
+.skip-link:focus {
+  top: 0;
+  outline: 2px solid var(--gold);
+}
+
+/* 3. FOCUS VISIBLE (keyboard navigation) */
+:focus-visible {
+  outline: 2px solid var(--burgundy);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* 4. REDUCED MOTION (accessibility) */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* 5. TOUCH-FRIENDLY INTERACTIVE ELEMENTS */
+a, button, .btn, [role="button"] {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* 6. RESPONSIVE TYPOGRAPHY (fine-tuned) */
+@media (max-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+  .body-text {
+    font-size: 1rem;
+  }
+}
+@media (max-width: 480px) {
+  html {
+    font-size: 15px;
+  }
+}
+
+/* 7. BUTTON ACTIVE STATE (premium feedback) */
+.btn:active {
+  transform: translateY(1px);
+  transition-duration: 0.05s;
+}
+
+/* 8. ERROR FALLBACK STYLE (for ErrorBoundary) */
+.error-fallback {
+  text-align: center;
+  padding: 3rem 1rem;
+  background: var(--off);
+  border-radius: 8px;
+  margin: 2rem;
+}
+.error-fallback button {
+  margin-top: 1rem;
+  background: var(--burgundy);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+/* 9. ENSURE MAIN CONTENT IS FOCUSABLE (for skip link) */
+#main-content {
+  outline: none;
+}
+
+/* Responsive overrides (keep your existing ones below, only extend) */
 @media (max-width: 1024px) {
   .g21 { grid-template-columns: 1fr; gap: 40px; }
   .pin { position: static; top: auto; }
@@ -148,4 +256,23 @@ h1, h2, h3, h4, h5, h6 {
 @media (max-width: 640px) {
   .W, .W-md { padding: 0 1rem; }
   .sec, .sec-sky, .sec-off, .sec-navy, .sec-parch { padding: 52px 0; }
+}
+.skeleton-loader {
+  min-height: 200px;
+  width: 100%;
+  background: #e2e8f0;
+  position: relative;
+  overflow: hidden;
+  transform: translateZ(0); /* forces GPU */
+}
+.skeleton-loader::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  animation: shimmer 1.5s infinite;
+}
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }

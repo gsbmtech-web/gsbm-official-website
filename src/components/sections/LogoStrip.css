@@ -1,0 +1,159 @@
+/* ===== BASE STRIP STYLES (unchanged) ===== */
+.logo-strip {
+  width: 100%;
+  padding: 40px 56px;
+  box-sizing: border-box;
+  background: var(--white, #fff);
+  border-top: 1px solid rgba(0,0,0,0.07);
+  border-bottom: 1px solid rgba(0,0,0,0.07);
+}
+
+.logo-strip-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 64px;
+  flex-wrap: wrap;
+}
+
+.logo-strip-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  transition: all 0.25s ease;
+  will-change: transform;
+}
+
+.logo-strip-item img {
+  width: auto;
+  object-fit: contain;
+  display: block;
+  transform: translateZ(0);
+  transition: all 0.25s ease;
+  filter: grayscale(0%);  /* base */
+}
+
+/* Divider common style */
+.logo-strip-item:not(:last-child)::after {
+  content: '';
+  display: block;
+  width: 1px;
+  height: 48px;
+  background: rgba(0,0,0,0.12);
+  margin-left: 64px;
+}
+
+/* ========== UNIQUE STYLES PER LOGO (desktop first) ========== */
+
+/* Logo 1: VMRF (main accreditation) – gold glow on hover, slightly larger */
+.logo-strip-item:first-child img {
+  height: 90px;
+  max-width: 220px;
+}
+.logo-strip-item:first-child:hover {
+  transform: translateY(-4px);
+}
+.logo-strip-item:first-child:hover img {
+  filter: drop-shadow(0 0 8px rgba(201,168,76,0.6));
+}
+
+/* Logo 2: AICTE – blue hover tint, subtle scale */
+.logo-strip-item:nth-child(2) img {
+  height: 80px;
+  max-width: 200px;
+}
+.logo-strip-item:nth-child(2):hover {
+  transform: scale(1.02);
+}
+.logo-strip-item:nth-child(2):hover img {
+  filter: brightness(1.05) sepia(0.3) hue-rotate(180deg) saturate(1.2);
+}
+
+/* Logo 3: NAAC – red accent, vertical lift */
+.logo-strip-item:nth-child(3) img {
+  height: 85px;
+  max-width: 210px;
+}
+.logo-strip-item:nth-child(3):hover {
+  transform: translateY(-3px) rotate(0.5deg);
+}
+.logo-strip-item:nth-child(3):hover img {
+  filter: drop-shadow(0 4px 8px rgba(160,82,45,0.4));
+}
+
+/* Logo 4: 25 Years – special celebration effect, pulse on hover */
+.logo-strip-item:last-child img {
+  height: 100px;
+  max-width: 240px;
+  filter: brightness(1.02) contrast(1.05);
+}
+.logo-strip-item:last-child:hover {
+  animation: pulseGlow 0.8s ease infinite;
+}
+.logo-strip-item:last-child:hover img {
+  filter: brightness(1.1) drop-shadow(0 0 6px gold);
+}
+@keyframes pulseGlow {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+/* ========== DESKTOP LARGER (1200px+) – keep differences but bigger ========== */
+@media (min-width: 1200px) {
+  .logo-strip-inner { gap: 80px; }
+  .logo-strip-item:not(:last-child)::after { height: 60px; margin-left: 80px; }
+  
+  .logo-strip-item:first-child img { height: 110px; max-width: 260px; }
+  .logo-strip-item:nth-child(2) img { height: 100px; max-width: 240px; }
+  .logo-strip-item:nth-child(3) img { height: 105px; max-width: 250px; }
+  .logo-strip-item:last-child img { height: 120px; max-width: 280px; }
+}
+
+/* ========== TABLET (keep differences scaled down) ========== */
+@media (max-width: 1024px) {
+  .logo-strip { padding: 32px 36px; }
+  .logo-strip-inner { gap: 48px; }
+  .logo-strip-item:not(:last-child)::after { height: 40px; margin-left: 48px; }
+  
+  .logo-strip-item:first-child img { height: 70px; max-width: 180px; }
+  .logo-strip-item:nth-child(2) img { height: 65px; max-width: 170px; }
+  .logo-strip-item:nth-child(3) img { height: 68px; max-width: 175px; }
+  .logo-strip-item:last-child img { height: 75px; max-width: 190px; }
+}
+
+@media (max-width: 768px) {
+  .logo-strip { padding: 28px 24px; }
+  .logo-strip-inner { gap: 32px; }
+  .logo-strip-item:not(:last-child)::after { height: 35px; margin-left: 32px; }
+  
+  .logo-strip-item:first-child img { height: 55px; max-width: 140px; }
+  .logo-strip-item:nth-child(2) img { height: 52px; max-width: 130px; }
+  .logo-strip-item:nth-child(3) img { height: 54px; max-width: 135px; }
+  .logo-strip-item:last-child img { height: 60px; max-width: 150px; }
+}
+
+/* ========== MOBILE (same differences, scaled) ========== */
+@media (max-width: 540px) {
+  .logo-strip { padding: 24px 18px; }
+  .logo-strip-inner { gap: 20px; }
+  .logo-strip-item:not(:last-child)::after { height: 30px; margin-left: 20px; }
+  
+  .logo-strip-item:first-child img { height: 45px; max-width: 100px; }
+  .logo-strip-item:nth-child(2) img { height: 42px; max-width: 90px; }
+  .logo-strip-item:nth-child(3) img { height: 44px; max-width: 95px; }
+  .logo-strip-item:last-child img { height: 48px; max-width: 110px; }
+}
+
+@media (max-width: 360px) {
+  .logo-strip-inner { gap: 14px; }
+  .logo-strip-item:not(:last-child)::after { height: 26px; margin-left: 14px; }
+  
+  .logo-strip-item:first-child img { height: 38px; max-width: 82px; }
+  .logo-strip-item:nth-child(2) img { height: 35px; max-width: 75px; }
+  .logo-strip-item:nth-child(3) img { height: 36px; max-width: 78px; }
+  .logo-strip-item:last-child img { height: 42px; max-width: 90px; }
+}

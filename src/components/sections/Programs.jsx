@@ -1,11 +1,11 @@
-// ===== FILE: src/components/sections/Programs.jsx =====
+import { memo } from 'react';
 import { Ac1, Ac2 } from '../ui/Accordion';
 import SectionHeader from '../ui/SectionHeader';
 import DotItem from '../ui/DotItem';
 import InfoCard from '../ui/InfoCard';
+import './Programs.css';
 
-/* ─── STATIC DATA ─── */
-const SPECS = [
+const SPECIALISATIONS = [
   'Marketing Management',
   'Banking & Finance Management',
   'Human Resource Management',
@@ -13,9 +13,10 @@ const SPECS = [
   'Logistics & Supply Chain Management',
   'Operations Management',
   'Hospital & Healthcare Management',
+  'Specialisation Designed By Students',
 ];
 
-const certifications = [
+const CERTIFICATIONS = [
   'Digital Marketing & SEO',
   'Financial Modelling & Valuation',
   'Data Analytics (Python + Excel)',
@@ -24,14 +25,18 @@ const certifications = [
   'Leadership & Personality Development',
 ];
 
-const whatYouGain = [
-  { title: 'Industry-Ready Futuristic Curriculum', desc: "We don't teach theory. We teach application." },
-  { title: 'Student-Driven Placement & GSBM Support', desc: 'Strong company network, on-campus drives, end-to-end career preparation.' },
-  { title: 'Experiential & Practical Learning', desc: 'Case studies, simulations, gamification, live projects, and internship opportunities.' },
-  { title: 'Global Perspective', desc: 'Foreign professor masterclasses. Exposure to international business trends, frameworks, and case studies.' },
+const WORKSHOP_TOPICS = [
+  'Leadership & Entrepreneurship',
+  'Business Strategy & Innovation',
+  'AI in Business Decision-Making',
+  'Digital Transformation',
+  'Financial Markets — Live',
+  'Supply Chain Disruptions',
+  'Healthcare Management Trends',
+  'Startup Ecosystems & Funding',
 ];
 
-export default function Programs() {
+const Programs = () => {
   return (
     <section className="sec-sky" id="programs">
       <div className="W">
@@ -45,7 +50,7 @@ export default function Programs() {
 
         <Ac1 title="MBA Degree Program — 2 Years Full-Time" defaultOpen>
           <Ac2 title="Program Overview" defaultOpen>
-            <p className="body-text" style={{ marginBottom: 14 }}>
+            <p className="body-text program-mb">
               A full-time MBA degree awarded by Vinayaka Mission's Research Foundation (Deemed University).
               The program balances rigorous academic theory with hands-on exposure through case studies,
               industry simulations, live projects, and expert guest sessions.
@@ -56,18 +61,8 @@ export default function Programs() {
             </p>
           </Ac2>
           <Ac2 title="Specialisations Available">
-            <div className="g2" style={{ gap: 10 }}>
-              {SPECS.map(s => <DotItem key={s} text={s} />)}
-            </div>
-          </Ac2>
-          <Ac2 title="What You Gain">
-            <div className="g2" style={{ gap: 12 }}>
-              {whatYouGain.map((item, idx) => (
-                <div key={idx} className="gain-card">
-                  <p className="gain-card-title">{item.title}</p>
-                  <p className="gain-card-desc">{item.desc}</p>
-                </div>
-              ))}
+            <div className="programs-grid">
+              {SPECIALISATIONS.map(s => <DotItem key={s} text={s} />)}
             </div>
           </Ac2>
         </Ac1>
@@ -80,8 +75,8 @@ export default function Programs() {
             </p>
           </Ac2>
           <Ac2 title="Available Certifications">
-            <div className="g2" style={{ gap: 10 }}>
-              {certifications.map(c => <DotItem key={c} text={c} />)}
+            <div className="programs-grid">
+              {CERTIFICATIONS.map(c => <DotItem key={c} text={c} />)}
             </div>
           </Ac2>
         </Ac1>
@@ -109,43 +104,14 @@ export default function Programs() {
             </p>
           </Ac2>
           <Ac2 title="Topics Covered">
-            <div className="g2" style={{ gap: 10 }}>
-              {[
-                'Leadership & Entrepreneurship',
-                'Business Strategy & Innovation',
-                'AI in Business Decision-Making',
-                'Digital Transformation',
-                'Financial Markets — Live',
-                'Supply Chain Disruptions',
-                'Healthcare Management Trends',
-                'Startup Ecosystems & Funding',
-              ].map(t => <DotItem key={t} text={t} />)}
+            <div className="programs-grid">
+              {WORKSHOP_TOPICS.map(t => <DotItem key={t} text={t} />)}
             </div>
           </Ac2>
         </Ac1>
       </div>
-
-      <style jsx="true">{`
-        .gain-card {
-          padding: 20px;
-          background: var(--white);
-          border: 1px solid var(--border);
-          box-shadow: var(--shadow-sm);
-        }
-        .gain-card-title {
-          font-family: var(--sans);
-          font-weight: 700;
-          font-size: 1.02rem;
-          color: var(--navy);
-          margin-bottom: 5px;
-        }
-        .gain-card-desc {
-          font-family: var(--sans);
-          font-size: 0.92rem;
-          color: var(--text2);
-          line-height: 1.78;
-        }
-      `}</style>
     </section>
   );
-}
+};
+
+export default memo(Programs);

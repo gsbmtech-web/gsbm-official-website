@@ -1,0 +1,164 @@
+/* ===== Accordion.css =====
+   NOTE ON hidden ATTRIBUTE + CSS ANIMATION:
+   We use the HTML `hidden` attribute to hide panels from the accessibility tree
+   when closed. However, `hidden` sets `display: none` which breaks the CSS
+   grid-template-rows animation. The animation is preserved by overriding
+   `display` on the hidden element — the AT still respects `hidden` for
+   keyboard/screen reader navigation, while the visual animation works.
+   ===================================================================== */
+
+/* ── Ac1 (primary) ────────────────────────────────────────── */
+.ac1 {
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+.ac1-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px;
+  background: var(--white);
+  border: none;
+  gap: 14px;
+  font-family: var(--serif);
+  font-size: 1.22rem;
+  font-weight: 600;
+  color: var(--navy);
+  text-align: left;
+  transition: background 0.14s;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  cursor: pointer;
+  /* WCAG: min touch target */
+  min-height: 48px;
+}
+.ac1-btn:hover          { background: var(--sky); }
+.ac1-btn.open           { background: var(--burgundy); color: var(--white); }
+.ac1-btn.open .ac1-icon { background: var(--gold); color: var(--navy); transform: rotate(45deg); }
+.ac1-btn:focus-visible  { outline: 2px solid var(--gold); outline-offset: -2px; }
+
+.ac1-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--burgundy);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 400;
+  flex-shrink: 0;
+  transition: all 0.25s;
+  line-height: 1;
+  /* Prevent icon from being selectable */
+  user-select: none;
+}
+
+/* Grid animation trick: display:block overrides `hidden`'s display:none
+   while the AT still honours the hidden attribute for tab order/announcement */
+.ac1-body {
+  display: block; /* override hidden's display:none for animation */
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.35s ease;
+}
+.ac1-body.open {
+  max-height: 2000px; /* large enough for any content */
+}
+/* When not open, also visually hide (belt-and-suspenders with hidden attr) */
+.ac1-body:not(.open) {
+  visibility: hidden;
+}
+.ac1-body.open {
+  visibility: visible;
+}
+
+.ac1-inner {
+  background: var(--off);
+  border-top: 1px solid var(--border);
+  padding: 10px 0 6px;
+}
+
+/* ── Ac2 (secondary / nested) ─────────────────────────────── */
+.ac2 {
+  margin: 0 16px 8px;
+  border: 1px solid var(--border2);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.ac2-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  background: var(--white);
+  border: none;
+  gap: 10px;
+  font-family: var(--sans);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--blue);
+  text-align: left;
+  transition: background 0.12s;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  cursor: pointer;
+  min-height: 44px;
+}
+.ac2-btn:hover          { background: var(--sky); }
+.ac2-btn.open           { background: var(--blue); color: var(--white); }
+.ac2-btn.open .ac2-arr  { border-top-color: rgba(255, 255, 255, 0.8); transform: rotate(180deg); }
+.ac2-btn:focus-visible  { outline: 2px solid var(--gold); outline-offset: -2px; }
+
+.ac2-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
+  transition: background 0.18s;
+}
+.ac2-btn.open .ac2-dot { background: rgba(255, 255, 255, 0.6); }
+
+.ac2-arr {
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid currentColor;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+
+.ac2-body {
+  display: block;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.3s ease;
+}
+.ac2-body.open   { max-height: 2000px; }
+.ac2-body:not(.open) { visibility: hidden; }
+.ac2-body.open   { visibility: visible; }
+
+.ac2-content {
+  padding: 20px 22px;
+  background: var(--white);
+  border-top: 1px solid var(--border);
+  font-family: var(--sans);
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--text2);
+}
+
+/* Reduced motion: disable expand animation, keep instant show/hide */
+@media (prefers-reduced-motion: reduce) {
+  .ac1-body,
+  .ac2-body {
+    transition: none;
+  }
+}

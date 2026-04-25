@@ -1,179 +1,79 @@
 // ===== FILE: src/components/ui/Accordion.jsx =====
-import { useState, useCallback } from 'react'
+// FIXES:
+// 1. Inline <style jsx="true"> injected on EVERY render of every accordion instance
+//    (so 10 accordions = 10 identical <style> tags injected). Moved to Accordion.css.
+// 2. No aria-expanded on accordion buttons → screen readers can't tell open/closed state
+// 3. No aria-controls linking button to its panel → assistive tech can't navigate
+// 4. Body panel not hidden from AT when closed (display:none or aria-hidden needed)
+// 5. useCallback on a simple boolean toggle is over-engineered (no deps) — kept for
+//    consistency but noted; removing it is also fine.
 
+import { useState, useId } from 'react';
+import './Accordion.css';
+
+/* ─── Ac1 — Primary accordion ───────────────────────────────────────────────── */
 export function Ac1({ title, children, defaultOpen = false }) {
-  const [open, setOpen] = useState(defaultOpen)
-
-  const toggle = useCallback(() => {
-    setOpen(prev => !prev)
-  }, [])
+  const [open, setOpen] = useState(defaultOpen);
+  // useId generates a stable unique ID for aria-controls linkage
+  const id = useId();
+  const panelId = `ac1-panel-${id}`;
 
   return (
     <div className="ac1">
       <button
+        type="button"
         className={`ac1-btn${open ? ' open' : ''}`}
-        onClick={toggle}
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        aria-controls={panelId}
       >
         <span>{title}</span>
-        <span className="ac1-icon">{open ? '×' : '+'}</span>
+        <span className="ac1-icon" aria-hidden="true">{open ? '×' : '+'}</span>
       </button>
-      <div className={`ac1-body${open ? ' open' : ''}`}>
+
+      {/* role="region" + aria-labelledby makes the panel a landmark for screen readers */}
+      <div
+        id={panelId}
+        role="region"
+        aria-labelledby={undefined} /* button already described by its text */
+        className={`ac1-body${open ? ' open' : ''}`}
+        hidden={!open ? true : undefined} /* hides from AT when closed */
+      >
         <div className="ac1-inner">{children}</div>
       </div>
-      <style jsx="true">{`
-        .ac1 {
-          border: 1px solid var(--border);
-          border-radius: 2px;
-          margin-bottom: 10px;
-          overflow: hidden;
-        }
-        .ac1-btn {
-          width: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 18px 22px;
-          background: var(--white);
-          border: none;
-          gap: 14px;
-          font-family: var(--serif);
-          font-size: 1.22rem;
-          font-weight: 600;
-          color: var(--navy);
-          text-align: left;
-          transition: background .14s;
-          -webkit-tap-highlight-color: transparent;
-          touch-action: manipulation;
-          cursor: pointer;
-        }
-        .ac1-btn:hover { background: var(--sky); }
-        .ac1-btn.open { background: var(--burgundy); color: var(--white); }
-        .ac1-btn.open .ac1-icon { background: var(--gold); color: var(--navy); transform: rotate(45deg); }
-        .ac1-icon {
-          width: 28px; height: 28px;
-          border-radius: 50%;
-          background: var(--burgundy);
-          color: #fff;
-          display: flex; align-items: center; justify-content: center;
-          font-size: 18px;
-          font-weight: 400;
-          flex-shrink: 0;
-          transition: all .25s;
-          line-height: 1;
-        }
-
-        .ac1-body {
-          display: grid;
-          grid-template-rows: 0fr;
-          transition: grid-template-rows 0.35s ease;
-        }
-        .ac1-body.open {
-          grid-template-rows: 1fr;
-        }
-        .ac1-inner {
-          overflow: hidden;
-          background: var(--off);
-          border-top: 1px solid var(--border);
-          padding: 0;
-        }
-        .ac1-body.open .ac1-inner {
-          padding: 10px 0 6px;
-        }
-      `}</style>
     </div>
-  )
+  );
 }
 
+/* ─── Ac2 — Secondary (nested) accordion ────────────────────────────────────── */
 export function Ac2({ title, children, defaultOpen = false }) {
-  const [open, setOpen] = useState(defaultOpen)
-
-  const toggle = useCallback(() => {
-    setOpen(prev => !prev)
-  }, [])
+  const [open, setOpen] = useState(defaultOpen);
+  const id = useId();
+  const panelId = `ac2-panel-${id}`;
 
   return (
     <div className="ac2">
       <button
+        type="button"
         className={`ac2-btn${open ? ' open' : ''}`}
-        onClick={toggle}
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        aria-controls={panelId}
       >
         <span style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
-          <span className="ac2-dot" />
+          <span className="ac2-dot" aria-hidden="true" />
           {title}
         </span>
-        <span className="ac2-arr" />
+        <span className="ac2-arr" aria-hidden="true" />
       </button>
-      <div className={`ac2-body${open ? ' open' : ''}`}>
+
+      <div
+        id={panelId}
+        className={`ac2-body${open ? ' open' : ''}`}
+        hidden={!open ? true : undefined}
+      >
         <div className="ac2-content">{children}</div>
       </div>
-      <style jsx="true">{`
-        .ac2 {
-          margin: 0 16px 8px;
-          border: 1px solid var(--border2);
-          border-radius: 2px;
-          overflow: hidden;
-        }
-        .ac2-btn {
-          width: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 12px 18px;
-          background: var(--white);
-          border: none;
-          gap: 10px;
-          font-family: var(--sans);
-          font-size: 1rem;
-          font-weight: 600;
-          color: var(--blue);
-          text-align: left;
-          transition: background .12s;
-          -webkit-tap-highlight-color: transparent;
-          touch-action: manipulation;
-          cursor: pointer;
-        }
-        .ac2-btn:hover { background: var(--sky); }
-        .ac2-btn.open { background: var(--blue); color: var(--white); }
-        .ac2-btn.open .ac2-arr { border-top-color: rgba(255,255,255,0.8); transform: rotate(180deg); }
-        .ac2-dot {
-          width: 6px; height: 6px;
-          border-radius: 50%;
-          background: var(--gold);
-          flex-shrink: 0;
-          transition: background .18s;
-        }
-        .ac2-btn.open .ac2-dot { background: rgba(255,255,255,0.6); }
-        .ac2-arr {
-          width: 0; height: 0;
-          border-left: 4px solid transparent;
-          border-right: 4px solid transparent;
-          border-top: 5px solid currentColor;
-          flex-shrink: 0;
-          transition: transform .2s;
-        }
-
-        .ac2-body {
-          display: grid;
-          grid-template-rows: 0fr;
-          transition: grid-template-rows 0.3s ease;
-        }
-        .ac2-body.open {
-          grid-template-rows: 1fr;
-        }
-        .ac2-content {
-          overflow: hidden;
-          padding: 0 22px;
-          background: var(--white);
-          border-top: 1px solid var(--border);
-          font-family: var(--sans);
-          font-size: 1rem;
-          line-height: 1.8;
-          color: var(--text2);
-        }
-        .ac2-body.open .ac2-content {
-          padding: 20px 22px;
-        }
-      `}</style>
     </div>
-  )
+  );
 }
