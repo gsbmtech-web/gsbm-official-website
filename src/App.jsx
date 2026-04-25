@@ -59,13 +59,13 @@ const LogoStrip  = lazy(() => import('./components/sections/LogoStrip'));
 const About      = lazy(() => import('./components/sections/About'));
 const Leadership = lazy(() => import('./components/sections/Leadership'));
 const Programs   = lazy(() => import('./components/sections/Programs'));
-const Whygsbm    = lazy(() => import('./components/sections/whygsbm.jsx'));   // ✅ fixed
+const Whygsbm = lazy(() => import('./components/sections/whygsbm.jsx'));
 const Campus     = lazy(() => import('./components/sections/Campus'));
 const Admissions = lazy(() => import('./components/sections/Admissions'));
 const Faculty    = lazy(() => import('./components/sections/Faculty'));
 const Placements = lazy(() => import('./components/sections/Placements'));
 const Contact    = lazy(() => import('./components/sections/Contact'));
-const Ctabanner  = lazy(() => import('./components/sections/ctabanner.jsx')); // ✅ fixed
+const Ctabanner = lazy(() => import('./components/sections/ctabanner.jsx'));
 
 // ─── ScrollToTop ─────────────────────────────────────────────────────────────
 const ScrollToTop = memo(() => {
