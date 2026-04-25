@@ -8,7 +8,6 @@ import ApplyNow from './components/sections/Applynow';
 import NotFound from './components/ui/NotFound';
 
 // ─── Meta tag manager ───────────────────────────────────────────────────────
-// Handles title, description, and OG/Twitter cards without react-helmet-async.
 const MetaTags = memo(({ title, description, url, image }) => {
   useEffect(() => {
     const t = title || 'GSBM – Global School of Business Management';
@@ -22,7 +21,6 @@ const MetaTags = memo(({ title, description, url, image }) => {
       let el = document.querySelector(sel);
       if (!el) {
         el = document.createElement('meta');
-        // parse selector to set the right attribute
         if (sel.includes('property=')) el.setAttribute('property', sel.match(/property="([^"]+)"/)[1]);
         else if (sel.includes('name=')) el.setAttribute('name', sel.match(/name="([^"]+)"/)[1]);
         document.head.appendChild(el);
@@ -42,7 +40,6 @@ const MetaTags = memo(({ title, description, url, image }) => {
     setMeta('meta[name="twitter:description"]', 'content', d);
     setMeta('meta[name="twitter:image"]',       'content', img);
 
-    // Canonical link
     let canonical = document.querySelector('link[rel="canonical"]');
     if (!canonical) {
       canonical = document.createElement('link');
@@ -62,23 +59,19 @@ const LogoStrip  = lazy(() => import('./components/sections/LogoStrip'));
 const About      = lazy(() => import('./components/sections/About'));
 const Leadership = lazy(() => import('./components/sections/Leadership'));
 const Programs   = lazy(() => import('./components/sections/Programs'));
-const Why   = lazy(() => import('./components/sections/Whygsbm'));
+const Whygsbm    = lazy(() => import('./components/sections/Whygsbm'));   // ✅ fixed
 const Campus     = lazy(() => import('./components/sections/Campus'));
 const Admissions = lazy(() => import('./components/sections/Admissions'));
 const Faculty    = lazy(() => import('./components/sections/Faculty'));
 const Placements = lazy(() => import('./components/sections/Placements'));
 const Contact    = lazy(() => import('./components/sections/Contact'));
-const Ctabanner  = lazy(() => import('./components/sections/Ctabanner'));
+const Ctabanner  = lazy(() => import('./components/sections/Ctabanner')); // ✅ fixed
 
 // ─── ScrollToTop ─────────────────────────────────────────────────────────────
-// Uses 'smooth' for hash links, 'instant' for full page changes.
-// Wrapped in memo to prevent re-mount on every render.
 const ScrollToTop = memo(() => {
   const { pathname, hash } = useLocation();
-
   useEffect(() => {
     if (hash) {
-      // Small delay so lazy-loaded content has time to mount
       const id = setTimeout(() => {
         const el = document.querySelector(hash);
         el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -88,13 +81,11 @@ const ScrollToTop = memo(() => {
       window.scrollTo({ top: 0, behavior: 'instant' });
     }
   }, [pathname, hash]);
-
   return null;
 });
 ScrollToTop.displayName = 'ScrollToTop';
 
 // ─── HomePage ─────────────────────────────────────────────────────────────────
-// Single Suspense wrapper avoids 12 individual loading flashes (waterfall UX).
 const HomePage = () => (
   <main id="main-content" tabIndex={-1}>
     <Suspense fallback={<SectionLoader />}>
@@ -103,19 +94,18 @@ const HomePage = () => (
       <About />
       <Leadership />
       <Programs />
-      <Whygsbm />
+      <Whygsbm />      {/* ✅ matches import */}
       <Campus />
       <Admissions />
       <Faculty />
       <Placements />
       <Contact />
-      <Ctabanner />
+      <Ctabanner />    {/* ✅ matches import */}
     </Suspense>
   </main>
 );
 
 // ─── ApplyNow page layout ─────────────────────────────────────────────────────
-// Intentionally has its own Navbar/Footer so it can diverge from the main shell.
 const ApplyPage = () => (
   <>
     <Navbar />
@@ -137,48 +127,28 @@ export default function App() {
         description="Transform your career with GSBM's industry-focused MBA programs. Apply now for the 2026–2028 batch."
         image="/og-image.jpg"
       />
-
-      {/* Accessibility: skip navigation link */}
-      <a href="#main-content" className="skip-link">
-        Skip to main content
-      </a>
-
+      <a href="#main-content" className="skip-link">Skip to main content</a>
       <ScrollToTop />
-
       <Routes>
-        {/* Home */}
-        <Route
-          path="/"
-          element={
-            <ErrorBoundary>
-              <Navbar />
-              <HomePage />
-              <Footer />
-            </ErrorBoundary>
-          }
-        />
-
-        {/* Apply */}
-        <Route
-          path="/apply"
-          element={
-            <ErrorBoundary>
-              <ApplyPage />
-            </ErrorBoundary>
-          }
-        />
-
-        {/* 404 */}
-        <Route
-          path="*"
-          element={
-            <ErrorBoundary>
-              <Suspense fallback={<SectionLoader />}>
-                <NotFound />
-              </Suspense>
-            </ErrorBoundary>
-          }
-        />
+        <Route path="/" element={
+          <ErrorBoundary>
+            <Navbar />
+            <HomePage />
+            <Footer />
+          </ErrorBoundary>
+        } />
+        <Route path="/apply" element={
+          <ErrorBoundary>
+            <ApplyPage />
+          </ErrorBoundary>
+        } />
+        <Route path="*" element={
+          <ErrorBoundary>
+            <Suspense fallback={<SectionLoader />}>
+              <NotFound />
+            </Suspense>
+          </ErrorBoundary>
+        } />
       </Routes>
     </BrowserRouter>
   );
