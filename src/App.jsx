@@ -6,6 +6,7 @@ import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import ApplyNow from './components/sections/Applynow';
 import NotFound from './components/ui/NotFound';
+import GIECSection from "../src/components/sections/GIECSection.jsx";
 
 // ─── Meta tag manager ───────────────────────────────────────────────────────
 const MetaTags = memo(({ title, description, url, image }) => {
@@ -96,6 +97,7 @@ const HomePage = () => (
       <Programs />
       <Gsbmwhy />
       <Campus />
+      <GIECSection/>
       <Admissions />
       <Faculty />
       <Placements />
