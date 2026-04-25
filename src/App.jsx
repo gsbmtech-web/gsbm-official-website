@@ -62,13 +62,13 @@ const LogoStrip  = lazy(() => import('./components/sections/LogoStrip'));
 const About      = lazy(() => import('./components/sections/About'));
 const Leadership = lazy(() => import('./components/sections/Leadership'));
 const Programs   = lazy(() => import('./components/sections/Programs'));
-const WhyGSBM    = lazy(() => import('./components/sections/Whygsbm'));
+const Why   = lazy(() => import('./components/sections/Whygsbm'));
 const Campus     = lazy(() => import('./components/sections/Campus'));
 const Admissions = lazy(() => import('./components/sections/Admissions'));
 const Faculty    = lazy(() => import('./components/sections/Faculty'));
 const Placements = lazy(() => import('./components/sections/Placements'));
 const Contact    = lazy(() => import('./components/sections/Contact'));
-const CTABanner  = lazy(() => import('./components/sections/CTABanner'));
+const Ctabanner  = lazy(() => import('./components/sections/Ctabanner'));
 
 // ─── ScrollToTop ─────────────────────────────────────────────────────────────
 // Uses 'smooth' for hash links, 'instant' for full page changes.
@@ -103,13 +103,13 @@ const HomePage = () => (
       <About />
       <Leadership />
       <Programs />
-      <WhyGSBM />
+      <Whygsbm />
       <Campus />
       <Admissions />
       <Faculty />
       <Placements />
       <Contact />
-      <CTABanner />
+      <Ctabanner />
     </Suspense>
   </main>
 );

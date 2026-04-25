@@ -1,8 +1,8 @@
 import { memo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './CTABanner.css';
+import './Ctabanner.css';
 
-const CTABanner = () => {
+const Ctabanner = () => {
   const navigate = useNavigate();
 
   const handleApply = (e) => {
@@ -45,4 +45,4 @@ const CTABanner = () => {
   );
 };
 
-export default memo(CTABanner);
+export default memo(Ctabanner);
