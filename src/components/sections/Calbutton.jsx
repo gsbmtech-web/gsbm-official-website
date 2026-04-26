@@ -33,10 +33,8 @@ const Calbutton = () => {
             Apply Now →
           </a>
           <a
-            href="/contact"
-            data-href="/contact"
+            href="tel:+919841283764"
             className="btn ctab-btn-secondary"
-            onClick={handleNav}
           >
             Talk to an Advisor
           </a>

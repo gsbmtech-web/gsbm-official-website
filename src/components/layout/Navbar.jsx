@@ -17,7 +17,7 @@ const NAV_ITEMS = [
 
 const SECTION_IDS = NAV_ITEMS.map((i) => i.id);
 
-// ─── Static SVG icons — extracted so they're never re-created per render ──────
+// ─── Static SVG icons ─────────────────────────────────────────────────────────
 const PhoneIcon = (
   <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
     <path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z" />
@@ -48,7 +48,7 @@ const CloseIcon = (
   </svg>
 );
 
-// ─── NavLink — memoised so active-state changes only re-render the changed link
+// ─── NavLink ──────────────────────────────────────────────────────────────────
 const NavLink = memo(function NavLink({ item, isActive, onClick }) {
   const handleClick = useCallback(
     (e) => onClick(e, item.id),
@@ -66,7 +66,7 @@ const NavLink = memo(function NavLink({ item, isActive, onClick }) {
   );
 });
 
-// ─── DrawerLink — memoised for the same reason ────────────────────────────────
+// ─── DrawerLink ───────────────────────────────────────────────────────────────
 const DrawerLink = memo(function DrawerLink({ item, isActive, isOpen, index, onClick }) {
   const handleClick = useCallback(
     (e) => onClick(e, item.id),
@@ -77,8 +77,6 @@ const DrawerLink = memo(function DrawerLink({ item, isActive, isOpen, index, onC
       href={`#${item.id}`}
       className={`gsbm-drawer-link${isActive ? ' gsbm-drawer-link--active' : ''}`}
       onClick={handleClick}
-      // ✅ animationDelay moved to CSS custom property — avoids inline style object
-      //    recreation on every render. CSS var is read from the element attribute.
       style={{ '--delay': `${index * 45}ms` }}
       aria-current={isActive ? 'page' : undefined}
       tabIndex={isOpen ? 0 : -1}
@@ -91,9 +89,9 @@ const DrawerLink = memo(function DrawerLink({ item, isActive, isOpen, index, onC
 
 // ─── Navbar ───────────────────────────────────────────────────────────────────
 function Navbar() {
-  const [scrolled,    setScrolled]    = useState(false);
-  const [mobileOpen,  setMobileOpen]  = useState(false);
-  const [activeNav,   setActiveNav]   = useState('home');
+  const [scrolled,   setScrolled]   = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeNav,  setActiveNav]  = useState('home');
   const navigate  = useNavigate();
   const drawerRef = useRef(null);
   const hamRef    = useRef(null);
@@ -104,17 +102,20 @@ function Navbar() {
     startTransition(() => navigate('/apply'));
   }, [navigate]);
 
-  // ── Logo click — navigate via React Router instead of hard reload ─────────────
-  // ✅ BUG FIX: window.location.href = '/' causes a full page reload, destroying
-  //    React state and re-downloading all JS. Use navigate('/') instead.
-  //    startTransition marks it as non-urgent so it doesn't block interactions.
+  // ── Logo click ────────────────────────────────────────────────────────────────
+  // If already on home, smooth scroll to top.
+  // If on another route, navigate to home — ScrollToTop handles the scroll.
   const handleLogoClick = useCallback((e) => {
     e.preventDefault();
     setMobileOpen(false);
-    startTransition(() => navigate('/'));
+    if (window.location.pathname === '/') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      startTransition(() => navigate('/'));
+    }
   }, [navigate]);
 
-  // ── Scroll detection (RAF-throttled, passive listener) ───────────────────────
+  // ── Scroll detection ─────────────────────────────────────────────────────────
   useEffect(() => {
     let ticking = false;
     const onScroll = () => {
@@ -129,7 +130,7 @@ function Navbar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // ── Active section tracking via IntersectionObserver ────────────────────────
+  // ── Active section tracking via IntersectionObserver ─────────────────────────
   useEffect(() => {
     const observers = SECTION_IDS.reduce((acc, id) => {
       const el = document.getElementById(id);
@@ -145,26 +146,25 @@ function Navbar() {
     return () => observers.forEach((o) => o.disconnect());
   }, []);
 
-  // ── Body scroll lock + scrollbar width compensation ──────────────────────────
+  // ── Body scroll lock ─────────────────────────────────────────────────────────
   useEffect(() => {
-    // ✅ Read scrollbar width ONCE at effect time, not on every render
     const scrollbarW = window.innerWidth - document.documentElement.clientWidth;
     if (mobileOpen) {
-      document.body.style.overflow    = 'hidden';
+      document.body.style.overflow     = 'hidden';
       document.body.style.paddingRight = `${scrollbarW}px`;
     } else {
-      document.body.style.overflow    = '';
+      document.body.style.overflow     = '';
       document.body.style.paddingRight = '';
     }
     return () => {
-      document.body.style.overflow    = '';
+      document.body.style.overflow     = '';
       document.body.style.paddingRight = '';
     };
   }, [mobileOpen]);
 
-  // ── Escape key closes drawer ─────────────────────────────────────────────────
+  // ── Escape key closes drawer ──────────────────────────────────────────────────
   useEffect(() => {
-    if (!mobileOpen) return; // ✅ skip attaching listener when drawer is closed
+    if (!mobileOpen) return;
     const onKey = (e) => {
       if (e.key === 'Escape') {
         setMobileOpen(false);
@@ -175,7 +175,7 @@ function Navbar() {
     return () => window.removeEventListener('keydown', onKey);
   }, [mobileOpen]);
 
-  // ── Focus trap inside drawer ─────────────────────────────────────────────────
+  // ── Focus trap inside drawer ──────────────────────────────────────────────────
   useEffect(() => {
     if (!mobileOpen || !drawerRef.current) return;
     const focusable = drawerRef.current.querySelectorAll(
@@ -197,20 +197,39 @@ function Navbar() {
     return () => document.removeEventListener('keydown', trap);
   }, [mobileOpen]);
 
-  // ── Smooth scroll to section ─────────────────────────────────────────────────
+  // ── Smooth scroll to section (works from any route) ──────────────────────────
+  // FIX: If not on home page, navigate to /#id so ScrollToTop handles the scroll.
+  // If already on home, scroll directly — but sections like Campus/Admissions/
+  // Placements/Contact are LazySection-wrapped and may not be in the DOM yet
+  // if the user hasn't scrolled near them. So we first trigger their render by
+  // navigating with the hash, which causes a re-mount with the hash in the URL,
+  // then ScrollToTop (with its 300ms delay) finds the element after it mounts.
   const handleNavClick = useCallback((e, id) => {
     e.preventDefault();
     setActiveNav(id);
     setMobileOpen(false);
-    const el  = document.getElementById(id);
-    if (!el) return;
-    const nav  = document.querySelector('.gsbm-nav');
-    const navH = nav ? nav.getBoundingClientRect().height : 80;
-    const top  = el.getBoundingClientRect().top + window.scrollY - navH;
-    window.scrollTo({ top, behavior: 'smooth' });
-  }, []);
 
-  // ── Toggle mobile menu ───────────────────────────────────────────────────────
+    if (window.location.pathname !== '/') {
+      // On a different route — navigate home with hash; ScrollToTop handles scroll
+      startTransition(() => navigate(`/#${id}`));
+      return;
+    }
+
+    // On home page — try direct scroll first
+    const el = document.getElementById(id);
+    if (el) {
+      const nav  = document.querySelector('.gsbm-nav');
+      const navH = nav ? nav.getBoundingClientRect().height : 80;
+      const top  = el.getBoundingClientRect().top + window.scrollY - navH;
+      window.scrollTo({ top, behavior: 'smooth' });
+    } else {
+      // Section not in DOM yet (lazy, hasn't mounted) — use hash navigation
+      // so ScrollToTop retries after the section renders
+      startTransition(() => navigate(`/#${id}`));
+    }
+  }, [navigate]);
+
+  // ── Toggle mobile menu ────────────────────────────────────────────────────────
   const toggleMobile = useCallback(() => setMobileOpen((v) => !v), []);
   const closeMobile  = useCallback(() => setMobileOpen(false), []);
 
@@ -268,7 +287,7 @@ function Navbar() {
             />
           </a>
 
-          {/* Desktop nav — each link is its own memo, only re-renders on active change */}
+          {/* Desktop nav */}
           <nav className="gsbm-nav-links" aria-label="Main navigation">
             {NAV_ITEMS.map((item) => (
               <NavLink
