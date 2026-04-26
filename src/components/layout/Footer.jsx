@@ -1,6 +1,15 @@
 import { useCallback, startTransition } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FiMapPin, FiPhone, FiMail } from 'react-icons/fi';
+import {
+  FiMapPin,
+  FiPhone,
+  FiMail,
+  FiYoutube,
+  FiFacebook,
+  FiInstagram,
+  FiLinkedin,
+  FiTwitter,
+} from 'react-icons/fi';
 import LogoImg from '../../assets/mainlogo.png';
 import './Footer.css';
 
@@ -15,9 +24,39 @@ const footerLinks = [
   { label: 'Contact',     id: 'contact'     },
 ];
 
-// Scroll helper — called after navigation settles.
-// Uses requestAnimationFrame instead of a fixed setTimeout so it waits
-// for the browser's next paint rather than guessing 100 ms.
+const SOCIAL_LINKS = [
+  {
+    id: 'youtube',
+    Icon: FiYoutube,
+    label: 'YouTube',
+    href: 'https://www.youtube.com/@GanesanSchoolofBusinessManagem',
+  },
+  {
+    id: 'facebook',
+    Icon: FiFacebook,
+    label: 'Facebook',
+    href: 'https://www.facebook.com/ganesanschoolofbusinessmanagement/',
+  },
+  {
+    id: 'instagram',
+    Icon: FiInstagram,
+    label: 'Instagram',
+    href: 'https://www.instagram.com/ganesanschoolofbusinessmanagem/',
+  },
+  {
+    id: 'linkedin',
+    Icon: FiLinkedin,
+    label: 'LinkedIn',
+    href: 'https://www.linkedin.com/company/ganesan-school-of-business-management',
+  },
+  {
+    id: 'twitter',
+    Icon: FiTwitter,
+    label: 'X',
+    href: 'https://x.com/gsbmchennaiin',
+  },
+];
+
 const scrollToId = (id) => {
   const el = document.getElementById(id);
   if (el) {
@@ -30,8 +69,6 @@ const scrollToId = (id) => {
 const Footer = () => {
   const navigate = useNavigate();
 
-  // Single handler reads the target id from data-scrollto attribute —
-  // no per-link closure, stable reference via useCallback.
   const handleScroll = useCallback((e) => {
     e.preventDefault();
     const id = e.currentTarget.dataset.scrollto;
@@ -39,7 +76,6 @@ const Footer = () => {
       startTransition(() => {
         navigate('/');
       });
-      // Wait for React to paint the home page, then scroll.
       requestAnimationFrame(() => {
         requestAnimationFrame(() => scrollToId(id));
       });
@@ -111,6 +147,26 @@ const Footer = () => {
             <a href="mailto:manageradmissionsgsbm@vinayakamissions.com">
               manageradmissionsgsbm@vinayakamissions.com
             </a>
+          </div>
+
+          {/* Social icons */}
+          <div className="footer-social">
+            <p className="footer-heading footer-social-heading">Follow Us</p>
+            <div className="footer-social-icons">
+              {SOCIAL_LINKS.map(({ id, Icon, label, href }) => (
+                <a
+                  key={id}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer-social-btn"
+                  aria-label={label}
+                  title={label}
+                >
+                  <Icon size={16} strokeWidth={1.8} />
+                </a>
+              ))}
+            </div>
           </div>
 
           {/* Corporate Office – hidden on mobile via CSS */}

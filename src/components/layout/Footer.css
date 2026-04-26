@@ -42,7 +42,6 @@
   object-fit: contain;
   object-position: left center;
   margin-bottom: 20px;
-  
 }
 
 /* Tagline */
@@ -137,6 +136,38 @@
 }
 .footer-contact-item a:hover {
   color: var(--gold);
+}
+
+/* ── Social icons ──────────────────────────────────────────── */
+.footer-social {
+  margin-top: 4px;
+  margin-bottom: 20px;
+}
+.footer-social-heading {
+  margin-bottom: 12px;
+}
+.footer-social-icons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.footer-social-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 1.5px solid rgba(212, 175, 90, 0.35);
+  border-radius: 4px;
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  transition: background 0.18s, border-color 0.18s, color 0.18s, transform 0.18s;
+}
+.footer-social-btn:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--burgundy);
+  transform: translateY(-2px);
 }
 
 /* Corporate office (desktop only) */

@@ -1,10 +1,19 @@
-import { FiPhone, FiMail, FiMapPin, FiMessageCircle } from 'react-icons/fi';
+import {
+  FiPhone,
+  FiMail,
+  FiMapPin,
+  FiMessageCircle,
+  FiYoutube,
+  FiInstagram,
+  FiLinkedin,
+  FiTwitter,
+  FiFacebook,
+} from 'react-icons/fi';
 import { Ac1 } from '../ui/Accordion';
 import SectionHeader from '../ui/SectionHeader';
 import './Contact.css';
 
-// ─── Contact data ─────────────────────────────────────────────────────────────
-// Centralised here — future updates are a one-line data change, not a JSX hunt.
+// ─── Contact data ──────────────────────────────────────────────────────────────
 
 const CONTACT_CARDS = [
   {
@@ -59,7 +68,47 @@ const CONTACT_CARDS = [
   },
 ];
 
-// ─── Sub-component ────────────────────────────────────────────────────────────
+// ─── Social links data ─────────────────────────────────────────────────────────
+
+const SOCIAL_LINKS = [
+  {
+    id: 'youtube',
+    Icon: FiYoutube,
+    label: 'YouTube',
+    href: 'https://www.youtube.com/@GanesanSchoolofBusinessManagem',
+  },
+  {
+    id: 'facebook',
+    Icon: FiFacebook,
+    label: 'Facebook',
+    href: 'https://www.facebook.com/ganesanschoolofbusinessmanagement/',
+  },
+  {
+    id: 'instagram',
+    Icon: FiInstagram,
+    label: 'Instagram',
+    href: 'https://www.instagram.com/ganesanschoolofbusinessmanagem/',
+  },
+  {
+    id: 'linkedin',
+    Icon: FiLinkedin,
+    label: 'LinkedIn',
+    href: 'https://www.linkedin.com/company/ganesan-school-of-business-management',
+  },
+  {
+    id: 'twitter',
+    Icon: FiTwitter,
+    label: 'X (Twitter)',
+    href: 'https://x.com/gsbmchennaiin',
+  },
+];
+
+// ─── Exact campus coordinates (VMRF Vinayaka Nagar, Paiyanoor, OMR) ───────────
+// Confirmed via Google Places — same campus as VMLS & VSEP: 12.6578, 80.1810
+const CAMPUS_LAT = 12.6578;
+const CAMPUS_LNG = 80.1810;
+
+// ─── Sub-components ───────────────────────────────────────────────────────────
 
 const ContactCard = ({ Icon, label, content }) => (
   <div className="contact-card">
@@ -68,6 +117,28 @@ const ContactCard = ({ Icon, label, content }) => (
     </span>
     <p className="contact-card-label">{label}</p>
     {content}
+  </div>
+);
+
+const SocialCard = () => (
+  <div className="contact-card contact-card-social">
+    <p className="contact-card-label">Follow Us</p>
+    <div className="contact-social-icons">
+      {SOCIAL_LINKS.map(({ id, Icon, label, href }) => (
+        <a
+          key={id}
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="contact-social-btn"
+          aria-label={label}
+          title={label}
+        >
+          <Icon size={18} strokeWidth={1.8} />
+          <span className="contact-social-label">{label}</span>
+        </a>
+      ))}
+    </div>
   </div>
 );
 
@@ -87,17 +158,19 @@ const Contact = () => (
         {CONTACT_CARDS.map(({ id, Icon, label, content }) => (
           <ContactCard key={id} Icon={Icon} label={label} content={content} />
         ))}
+        <SocialCard />
       </div>
 
       <Ac1 title="Campus Location & Map">
         <div className="contact-map-container">
           <p className="body-text contact-map-text">
-            GSBM is located at the Old Mahabalipuram Road (OMR), Chennai.
-            Easily accessible by road with regular bus and cab connectivity.
+            GSBM is located at the VMRF campus, Vinayaka Nagar, Old Mahabalipuram Road (OMR),
+            Paiyanoor, Chennai – 603 104. Easily accessible by road with regular bus and cab
+            connectivity along the OMR IT corridor.
           </p>
           <iframe
             title="GSBM Campus Map"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3890.18!2d80.1951!3d12.6837!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5259c3c97b6a6b%3A0x80c7f7b9d5a2e2c1!2sAarupadai%20Veedu%20Institute%20of%20Technology!5e0!3m2!1sen!2sin!4v1"
+            src={`https://maps.google.com/maps?q=${CAMPUS_LAT},${CAMPUS_LNG}&z=17&output=embed`}
             className="contact-map-iframe"
             width="100%"
             height="400"

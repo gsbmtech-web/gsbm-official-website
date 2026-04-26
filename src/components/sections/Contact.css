@@ -49,6 +49,46 @@ a.contact-card-value:hover {
   color: var(--burgundy);
 }
 
+/* Social card */
+.contact-card-social {
+  grid-column: span 3; /* full-width row */
+  border-top-color: var(--navy);
+}
+
+.contact-social-icons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.contact-social-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 4px;
+  color: var(--navy);
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  transition: background 0.18s, border-color 0.18s, color 0.18s, transform 0.18s;
+}
+
+.contact-social-btn:hover {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.contact-social-label {
+  /* visible on desktop, hidden on very small screens if needed */
+}
+
 .contact-map-container {
   padding: 12px 8px;
 }
@@ -70,6 +110,9 @@ a.contact-card-value:hover {
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
   }
+  .contact-card-social {
+    grid-column: span 2;
+  }
 }
 
 @media (max-width: 768px) {
@@ -88,6 +131,9 @@ a.contact-card-value:hover {
   }
   .contact-card {
     padding: 18px;
+  }
+  .contact-card-social {
+    grid-column: span 1;
   }
   .contact-map-iframe {
     height: 200px;
