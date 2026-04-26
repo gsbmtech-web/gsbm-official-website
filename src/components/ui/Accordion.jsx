@@ -1,20 +1,16 @@
 // ===== FILE: src/components/ui/Accordion.jsx =====
-// FIXES:
-// 1. Inline <style jsx="true"> injected on EVERY render of every accordion instance
-//    (so 10 accordions = 10 identical <style> tags injected). Moved to Accordion.css.
-// 2. No aria-expanded on accordion buttons → screen readers can't tell open/closed state
-// 3. No aria-controls linking button to its panel → assistive tech can't navigate
-// 4. Body panel not hidden from AT when closed (display:none or aria-hidden needed)
-// 5. useCallback on a simple boolean toggle is over-engineered (no deps) — kept for
-//    consistency but noted; removing it is also fine.
+// MOBILE FIX: Removed `hidden` attribute from panels.
+// `hidden` sets display:none which fights the max-height CSS animation
+// and behaves inconsistently on Android Chrome / Samsung Browser.
+// Replaced with aria-hidden + visibility (in CSS) + pointer-events:none.
+// Screen readers still correctly skip closed panels via aria-hidden.
 
 import { useState, useId } from 'react';
 import './Accordion.css';
 
-/* ─── Ac1 — Primary accordion ───────────────────────────────────────────────── */
+/* ─── Ac1 — Primary accordion ─────────────────────────────────────────── */
 export function Ac1({ title, children, defaultOpen = false }) {
   const [open, setOpen] = useState(defaultOpen);
-  // useId generates a stable unique ID for aria-controls linkage
   const id = useId();
   const panelId = `ac1-panel-${id}`;
 
@@ -31,13 +27,11 @@ export function Ac1({ title, children, defaultOpen = false }) {
         <span className="ac1-icon" aria-hidden="true">{open ? '×' : '+'}</span>
       </button>
 
-      {/* role="region" + aria-labelledby makes the panel a landmark for screen readers */}
       <div
         id={panelId}
         role="region"
-        aria-labelledby={undefined} /* button already described by its text */
         className={`ac1-body${open ? ' open' : ''}`}
-        hidden={!open ? true : undefined} /* hides from AT when closed */
+        aria-hidden={!open}
       >
         <div className="ac1-inner">{children}</div>
       </div>
@@ -45,7 +39,7 @@ export function Ac1({ title, children, defaultOpen = false }) {
   );
 }
 
-/* ─── Ac2 — Secondary (nested) accordion ────────────────────────────────────── */
+/* ─── Ac2 — Secondary (nested) accordion ──────────────────────────────── */
 export function Ac2({ title, children, defaultOpen = false }) {
   const [open, setOpen] = useState(defaultOpen);
   const id = useId();
@@ -70,7 +64,7 @@ export function Ac2({ title, children, defaultOpen = false }) {
       <div
         id={panelId}
         className={`ac2-body${open ? ' open' : ''}`}
-        hidden={!open ? true : undefined}
+        aria-hidden={!open}
       >
         <div className="ac2-content">{children}</div>
       </div>

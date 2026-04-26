@@ -162,3 +162,17 @@
   }
   .giec-partner-logo { height: 64px; width: auto; }
 }
+.giec-brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 48px;
+}
+.giec-partof {
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--text3);
+  white-space: nowrap;
+}

@@ -1,4 +1,4 @@
-/* ─── Quick Facts (keep existing or rename to avoid conflicts) ─── */
+/* ─── Quick Facts ─── */
 .admissions-sbox {
   border: 1px solid var(--border);
   border-radius: 2px;
@@ -36,23 +36,32 @@
   font-weight: 700;
   font-size: 0.82rem;
   color: var(--navy);
-  min-width: 110px;
-  flex-shrink: 0;
+  /* FIX: was min-width:110px flex-shrink:0 — forced rows wider than viewport.
+     Now wraps naturally on small screens. */
+  min-width: 0;
+  flex-shrink: 1;
+  flex-basis: 120px;
 }
 .admissions-srow-val {
   color: var(--text2);
   font-size: 0.9rem;
+  min-width: 0;
+  flex: 1;
+  word-break: break-word;
 }
 
+/* ─── Sidebar Promo ─── */
 .admissions-sidebar-promo {
-  background: #1a1a1a;        /* black/dark grey background */
-  border-left: 4px solid var(--gold);   /* gold accent instead of burgundy */
+  background: #1a1a1a;
+  border-left: 4px solid var(--gold);
   padding: 24px 20px;
   margin: 20px 0;
   text-align: center;
-  color: #fff;                 /* base text white */
+  color: #fff;
+  /* FIX: ensure it never overflows its column */
+  box-sizing: border-box;
+  max-width: 100%;
 }
-
 .admissions-promo-badge {
   background: var(--gold);
   color: #1a1a1a;
@@ -65,7 +74,6 @@
   margin-bottom: 12px;
   border-radius: 2px;
 }
-
 .admissions-promo-title {
   font-family: var(--serif);
   font-size: 1.5rem;
@@ -73,14 +81,12 @@
   color: var(--gold);
   margin-bottom: 8px;
 }
-
 .admissions-promo-desc {
   font-family: var(--sans);
   font-size: 0.9rem;
   color: #ddd;
   margin-bottom: 20px;
 }
-
 .admissions-promo-btn {
   display: inline-flex;
   align-items: center;
@@ -95,12 +101,16 @@
   background: #e6c85c;
   transform: translateY(-2px);
 }
-/* ─── Contact Box (same as About) ─── */
+
+/* ─── Contact Box ─── */
 .admissions-contact-box {
   background: var(--white);
   border: 1px solid var(--border);
   padding: 20px;
   margin-top: 20px;
+  /* FIX: box-sizing so padding never causes overflow */
+  box-sizing: border-box;
+  max-width: 100%;
 }
 .admissions-contact-head {
   font-family: var(--sans);
@@ -121,6 +131,15 @@
   text-decoration: none;
   padding: 8px 0;
   transition: color 0.15s;
+  /* FIX: long email address was overflowing on mobile */
+  min-width: 0;
+  overflow-wrap: break-word;
+  word-break: break-all;
+}
+.admissions-contact-row span {
+  min-width: 0;
+  overflow-wrap: break-word;
+  word-break: break-all;
 }
 .admissions-contact-row svg {
   flex-shrink: 0;
@@ -130,7 +149,7 @@
   color: var(--burgundy);
 }
 
-/* ─── Step styles (renamed to avoid conflicts) ─── */
+/* ─── Steps ─── */
 .admissions-steps-container {
   padding-top: 6px;
 }
@@ -178,7 +197,7 @@
   line-height: 1.78;
 }
 
-/* ─── Other existing styles (exam badges, etc.) ─── */
+/* ─── Exam Badges ─── */
 .exam-badges-row {
   display: flex;
   flex-wrap: wrap;
@@ -206,7 +225,7 @@
 .admissions-mb12 { margin-bottom: 12px; }
 .admissions-mb14 { margin-bottom: 14px; }
 
-/* Responsive adjustments (optional) */
+/* ─── Mobile fixes ─── */
 @media (max-width: 768px) {
   .admissions-step-n {
     width: 32px;
@@ -215,5 +234,25 @@
   }
   .admissions-step:not(:last-child)::before {
     left: 15px;
+  }
+
+  /* Stack Quick Facts rows vertically on very small screens */
+  .admissions-srow {
+    flex-direction: column;
+    gap: 2px;
+  }
+  .admissions-srow-lbl {
+    flex-basis: auto;
+  }
+
+  /* Tighter promo box padding */
+  .admissions-sidebar-promo {
+    padding: 20px 16px;
+  }
+
+  /* Exam badges smaller on mobile */
+  .exam-badge {
+    padding: 8px 12px;
+    font-size: 0.82rem;
   }
 }

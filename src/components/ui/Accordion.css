@@ -1,10 +1,7 @@
 /* ===== Accordion.css =====
-   NOTE ON hidden ATTRIBUTE + CSS ANIMATION:
-   We use the HTML `hidden` attribute to hide panels from the accessibility tree
-   when closed. However, `hidden` sets `display: none` which breaks the CSS
-   grid-template-rows animation. The animation is preserved by overriding
-   `display` on the hidden element — the AT still respects `hidden` for
-   keyboard/screen reader navigation, while the visual animation works.
+   MOBILE FIX: Replaced hidden attribute approach with aria-hidden + 
+   visibility so the CSS max-height animation works consistently across
+   all mobile browsers without fighting display:none.
    ===================================================================== */
 
 /* ── Ac1 (primary) ────────────────────────────────────────── */
@@ -12,19 +9,24 @@
   border: 1px solid var(--border);
   border-radius: 2px;
   margin-bottom: 10px;
+  /* KEY FIX: contain overflow so nothing bleeds past the accordion edge */
   overflow: hidden;
+  /* Prevent accordion from ever exceeding viewport width */
+  max-width: 100%;
+  min-width: 0;
 }
+
 .ac1-btn {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 18px 22px;
+  padding: 16px 18px;
   background: var(--white);
   border: none;
-  gap: 14px;
+  gap: 12px;
   font-family: var(--serif);
-  font-size: 1.22rem;
+  font-size: 1.1rem;
   font-weight: 600;
   color: var(--navy);
   text-align: left;
@@ -32,8 +34,16 @@
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
   cursor: pointer;
-  /* WCAG: min touch target */
   min-height: 48px;
+  /* KEY FIX: prevent button text from forcing width expansion */
+  min-width: 0;
+  box-sizing: border-box;
+}
+.ac1-btn span:first-child {
+  /* Title text wraps instead of overflowing */
+  flex: 1;
+  min-width: 0;
+  word-break: break-word;
 }
 .ac1-btn:hover          { background: var(--sky); }
 .ac1-btn.open           { background: var(--burgundy); color: var(--white); }
@@ -51,56 +61,64 @@
   justify-content: center;
   font-size: 18px;
   font-weight: 400;
+  /* KEY FIX: never shrink the icon — prevents layout jank */
   flex-shrink: 0;
   transition: all 0.25s;
   line-height: 1;
-  /* Prevent icon from being selectable */
   user-select: none;
 }
 
-/* Grid animation trick: display:block overrides `hidden`'s display:none
-   while the AT still honours the hidden attribute for tab order/announcement */
+/* Replaced `hidden` attr approach with aria-hidden + pointer-events:none.
+   This is the reliable cross-browser pattern for CSS animated panels. */
 .ac1-body {
-  display: block; /* override hidden's display:none for animation */
+  display: block;
   overflow: hidden;
   max-height: 0;
   transition: max-height 0.35s ease;
-}
-.ac1-body.open {
-  max-height: 2000px; /* large enough for any content */
-}
-/* When not open, also visually hide (belt-and-suspenders with hidden attr) */
-.ac1-body:not(.open) {
   visibility: hidden;
+  pointer-events: none;
 }
 .ac1-body.open {
+  max-height: 3000px;
   visibility: visible;
+  pointer-events: auto;
 }
 
 .ac1-inner {
   background: var(--off);
   border-top: 1px solid var(--border);
   padding: 10px 0 6px;
+  /* KEY FIX: inner container must not exceed parent width */
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
 }
 
 /* ── Ac2 (secondary / nested) ─────────────────────────────── */
 .ac2 {
-  margin: 0 16px 8px;
+  /* KEY FIX: was margin: 0 16px — on a 360px screen, 16px each side
+     combined with ac2-content padding caused overflow. Reduced. */
+  margin: 0 10px 8px;
   border: 1px solid var(--border2);
   border-radius: 2px;
   overflow: hidden;
+  max-width: 100%;
+  min-width: 0;
+  /* Ensure ac2 width is calculated from its container, not viewport */
+  box-sizing: border-box;
 }
+
 .ac2-btn {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 18px;
+  padding: 12px 14px;
   background: var(--white);
   border: none;
   gap: 10px;
   font-family: var(--sans);
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 600;
   color: var(--blue);
   text-align: left;
@@ -109,10 +127,17 @@
   touch-action: manipulation;
   cursor: pointer;
   min-height: 44px;
+  min-width: 0;
+  box-sizing: border-box;
+}
+.ac2-btn > span:first-child {
+  flex: 1;
+  min-width: 0;
+  word-break: break-word;
 }
 .ac2-btn:hover          { background: var(--sky); }
 .ac2-btn.open           { background: var(--blue); color: var(--white); }
-.ac2-btn.open .ac2-arr  { border-top-color: rgba(255, 255, 255, 0.8); transform: rotate(180deg); }
+.ac2-btn.open .ac2-arr  { border-top-color: rgba(255,255,255,0.8); transform: rotate(180deg); }
 .ac2-btn:focus-visible  { outline: 2px solid var(--gold); outline-offset: -2px; }
 
 .ac2-dot {
@@ -123,7 +148,7 @@
   flex-shrink: 0;
   transition: background 0.18s;
 }
-.ac2-btn.open .ac2-dot { background: rgba(255, 255, 255, 0.6); }
+.ac2-btn.open .ac2-dot { background: rgba(255,255,255,0.6); }
 
 .ac2-arr {
   width: 0;
@@ -140,22 +165,52 @@
   overflow: hidden;
   max-height: 0;
   transition: max-height 0.3s ease;
+  visibility: hidden;
+  pointer-events: none;
 }
-.ac2-body.open   { max-height: 2000px; }
-.ac2-body:not(.open) { visibility: hidden; }
-.ac2-body.open   { visibility: visible; }
+.ac2-body.open {
+  max-height: 3000px;
+  visibility: visible;
+  pointer-events: auto;
+}
 
 .ac2-content {
-  padding: 20px 22px;
+  /* KEY FIX: was padding: 20px 22px — too wide for small screens.
+     Reduced horizontal padding and ensured box-sizing. */
+  padding: 16px 14px;
   background: var(--white);
   border-top: 1px solid var(--border);
   font-family: var(--sans);
-  font-size: 1rem;
-  line-height: 1.8;
+  font-size: 0.95rem;
+  line-height: 1.75;
   color: var(--text2);
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
-/* Reduced motion: disable expand animation, keep instant show/hide */
+/* ── Mobile tightening ─────────────────────────────────────── */
+@media (max-width: 640px) {
+  .ac1-btn {
+    padding: 14px 14px;
+    font-size: 1rem;
+  }
+  .ac2 {
+    margin: 0 6px 8px;
+  }
+  .ac2-btn {
+    padding: 11px 12px;
+    font-size: 0.9rem;
+  }
+  .ac2-content {
+    padding: 14px 12px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .ac1-body,
   .ac2-body {

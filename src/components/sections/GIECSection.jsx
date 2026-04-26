@@ -26,11 +26,8 @@ const PARTNERS = [
   },
 ];
 
-// Extracted component so each card manages its own error state cleanly
-// via React state instead of direct DOM manipulation.
 const PartnerCard = ({ src, alt, name }) => {
   const [imgError, setImgError] = useState(false);
-
   const handleError = useCallback(() => setImgError(true), []);
 
   return (
@@ -59,7 +56,7 @@ const GIECSection = () => (
   <section className="sec-sky giec-section" aria-labelledby="giec-heading">
     <div className="W">
 
-      {/* GIEC Logo — large, bold */}
+      {/* GIEC Logo + Part of GSBM tag */}
       <div className="giec-brand fu d1">
         <img
           src={giecLogo}
@@ -70,6 +67,7 @@ const GIECSection = () => (
           width={420}
           height={210}
         />
+        <span className="giec-partof">— Part of GSBM</span>
       </div>
 
       {/* Two-col body */}
