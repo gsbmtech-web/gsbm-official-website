@@ -97,3 +97,9 @@
     font-size: 1.25rem;
   }
 }
+/* ── Add this to your existing Leadership.css ── */
+
+/* Replaces style={{ whiteSpace: 'pre-line' }} inline style on .leadership-message */
+.leadership-message {
+  white-space: pre-line;
+}

@@ -1,0 +1,371 @@
+/* ═══════════════════════════════════════════════════
+   ApplyNow.css — corporate admissions portal
+   Uses site CSS variables: --sans, --serif, --navy,
+   --burgundy, --gold2, --text3, --border, --bg
+   ═══════════════════════════════════════════════════ */
+
+/* ── Reset / root ── */
+.ap-root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f4f3f0;
+  font-family: var(--sans);
+  color: var(--navy);
+}
+
+/* ═══════════════════════════════════════
+   NAV BAR
+   ═══════════════════════════════════════ */
+.ap-nav {
+  background: var(--navy);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.ap-nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.ap-back {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.22);
+  color: rgba(255,255,255,0.85);
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: border-color 0.18s, background 0.18s, color 0.18s;
+  white-space: nowrap;
+}
+.ap-back:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.5);
+  color: #fff;
+}
+
+.ap-nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.ap-nav-logo {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.06em;
+}
+.ap-nav-pipe {
+  width: 1px;
+  height: 18px;
+  background: rgba(255,255,255,0.2);
+}
+.ap-nav-sub {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.55);
+  letter-spacing: 0.02em;
+}
+
+.ap-nav-secure {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.73rem;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.04em;
+}
+
+/* ═══════════════════════════════════════
+   HERO STRIP
+   ═══════════════════════════════════════ */
+.ap-hero {
+  background: var(--navy);
+  padding: 40px 24px 44px;
+}
+.ap-hero-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.ap-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold2, #c9a84c);
+  background: rgba(201,168,76,0.12);
+  border: 1px solid rgba(201,168,76,0.28);
+  padding: 4px 12px;
+  border-radius: 4px;
+  margin-bottom: 14px;
+}
+
+.ap-h1 {
+  font-family: var(--serif);
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 10px;
+  line-height: 1.15;
+}
+.ap-h1-sub {
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.55);
+  margin: 0;
+  max-width: 480px;
+  line-height: 1.6;
+}
+
+/* ═══════════════════════════════════════
+   MAIN / LAYOUT
+   ═══════════════════════════════════════ */
+.ap-main {
+  flex: 1;
+  padding: 36px 24px 60px;
+}
+
+.ap-layout {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+/* ═══════════════════════════════════════
+   SIDEBAR
+   ═══════════════════════════════════════ */
+.ap-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: sticky;
+  top: 76px; /* nav height + gap */
+}
+
+/* Info cards */
+.ap-icard {
+  background: #fff;
+  border: 1px solid #e2dfd8;
+  border-bottom: none;
+  padding: 14px 16px;
+}
+.ap-icard:first-child {
+  border-radius: 10px 10px 0 0;
+}
+.ap-icard:nth-child(3) {
+  border-bottom: 1px solid #e2dfd8;
+  border-radius: 0 0 10px 10px;
+}
+
+.ap-icard-label {
+  font-size: 0.67rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text3, #888);
+  display: block;
+  margin-bottom: 4px;
+}
+.ap-icard-value {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--navy);
+  margin: 0 0 2px;
+  line-height: 1.35;
+}
+.ap-icard-meta {
+  font-size: 0.75rem;
+  color: var(--text3, #888);
+  margin: 0;
+  line-height: 1.45;
+}
+
+/* Divider */
+.ap-rule {
+  height: 1px;
+  background: #e2dfd8;
+  margin: 20px 0 16px;
+}
+
+/* Sidebar section heads */
+.ap-sidebar-head {
+  font-size: 0.67rem;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--text3, #888);
+  margin: 0 0 10px;
+}
+.ap-sidebar-head--mt {
+  margin-top: 20px;
+}
+
+/* Contact rows */
+.ap-contact-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: var(--navy);
+  text-decoration: none;
+  padding: 5px 0;
+  transition: color 0.15s;
+  border-bottom: 1px solid transparent;
+}
+.ap-contact-row:hover {
+  color: var(--burgundy, #a0522d);
+}
+
+/* Key dates */
+.ap-trow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid #ede9e2;
+  gap: 8px;
+}
+.ap-trow:last-child {
+  border-bottom: none;
+}
+.ap-trow-label {
+  font-size: 0.4rem;
+  color: var(--navy);
+}
+.ap-trow-date {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--burgundy, #a0522d);
+  white-space: nowrap;
+}
+
+/* ═══════════════════════════════════════
+   FORM PANEL
+   ═══════════════════════════════════════ */
+.ap-panel {
+  background: #fff;
+  border: 1px solid #e2dfd8;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.ap-panel-head {
+  padding: 20px 28px 18px;
+  border-bottom: 1px solid #ede9e2;
+}
+.ap-panel-title {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin: 0 0 4px;
+}
+.ap-panel-hint {
+  font-size: 0.82rem;
+  color: var(--text3, #888);
+  margin: 0;
+}
+
+.ap-iframe-wrap {
+  width: 100%;
+}
+.ap-iframe {
+  display: block;
+  border: none;
+  width: 100%;
+}
+
+/* ═══════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════ */
+.ap-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 16px 24px;
+  background: #eceae4;
+  border-top: 1px solid #ddd9d0;
+  font-size: 0.75rem;
+  color: var(--text3, #888);
+}
+.ap-footer-sep {
+  opacity: 0.5;
+}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════ */
+
+/* Tablet */
+@media (max-width: 900px) {
+  .ap-layout {
+    grid-template-columns: 1fr;
+  }
+  .ap-sidebar {
+    position: static;
+    /* Collapse to horizontal row of cards on tablet */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  .ap-icard {
+    border: 1px solid #e2dfd8 !important;
+    border-radius: 10px !important;
+  }
+  .ap-rule {
+    display: none;
+  }
+  /* Contact + dates in a row */
+  .ap-sidebar-head { margin-top: 4px; }
+  .ap-sidebar-head--mt { margin-top: 4px; }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .ap-nav-inner { padding: 0 16px; }
+  .ap-nav-sub   { display: none; }
+  .ap-nav-pipe  { display: none; }
+
+  .ap-hero { padding: 28px 16px 32px; }
+  .ap-main { padding: 20px 16px 48px; }
+
+  .ap-panel-head { padding: 16px 18px 14px; }
+
+  .ap-sidebar {
+    grid-template-columns: 1fr;
+  }
+
+  .ap-footer {
+    flex-direction: column;
+    gap: 4px;
+    text-align: center;
+  }
+  .ap-footer-sep { display: none; }
+}
+
+/* Small mobile */
+@media (max-width: 380px) {
+  .ap-h1 { font-size: 1.5rem; }
+  .ap-back span { display: none; }
+  .ap-back { padding: 6px 10px; }
+}

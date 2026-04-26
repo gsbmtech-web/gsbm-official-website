@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Ac1, Ac2 } from '../ui/Accordion';
 import SectionHeader from '../ui/SectionHeader';
 import DotItem from '../ui/DotItem';
@@ -114,4 +113,4 @@ const Programs = () => {
   );
 };
 
-export default memo(Programs);
+export default Programs;

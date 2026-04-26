@@ -1,0 +1,335 @@
+/* ─── Campus.css ─────────────────────────────────────────────────────────────
+   Extracted from the inline <style jsx="true"> block in Campus.jsx.
+   That pattern is a Next.js feature — it does NOT scope styles in Vite React.
+   It was injecting a raw <style> tag into the DOM on every single render,
+   which re-parsed ~200 lines of CSS every time Campus re-rendered.
+   Moving here = parsed once by the browser, cached, zero runtime cost.
+──────────────────────────────────────────────────────────────────────────── */
+
+.campus-intro {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 40px;
+  font-family: var(--sans);
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: var(--text2);
+}
+
+.campus-video-section {
+  margin-bottom: 48px;
+}
+
+/* ── Section label row ── */
+.section-label-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.section-label {
+  font-family: var(--sans);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--blue2);
+  white-space: nowrap;
+}
+
+.section-label-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.section-label-hint {
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  color: var(--text3);
+  white-space: nowrap;
+}
+
+/* ── Video ── */
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-md);
+}
+
+.video-wrapper video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video-title-overlay {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.65);
+  padding: 10px 20px;
+  border-left: 4px solid var(--gold);
+  font-family: var(--serif);
+  font-size: clamp(0.85rem, 3vw, 1.3rem);
+  font-weight: 700;
+  color: white;
+  border-radius: 0 6px 6px 0;
+  pointer-events: none;
+  max-width: 80%;
+  line-height: 1.3;
+}
+
+.video-caption {
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  color: var(--text3);
+  text-align: center;
+  margin-top: 12px;
+}
+
+/* ── Gallery ── */
+.campus-scroll-gallery {
+  margin: 32px 0 20px;
+  position: relative;
+}
+
+.campus-scroll-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.campus-scroll-container {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  gap: 20px;
+  padding: 12px 4px 20px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gold) var(--border);
+  -webkit-overflow-scrolling: touch;
+  flex: 1;
+}
+
+.campus-scroll-container::-webkit-scrollbar { height: 6px; }
+.campus-scroll-container::-webkit-scrollbar-track { background: var(--border); border-radius: 4px; }
+.campus-scroll-container::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 4px; }
+
+.campus-scroll-item {
+  flex: 0 0 320px;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--white);
+  box-shadow: var(--shadow-sm);
+}
+
+.campus-scroll-item:hover        { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+.campus-scroll-item:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+.campus-scroll-img-wrapper {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  background: var(--parchment);
+}
+
+.campus-scroll-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.campus-scroll-item:hover .campus-scroll-img { transform: scale(1.08); }
+
+.campus-scroll-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(28, 24, 20, 0.9) 0%, rgba(28, 24, 20, 0.3) 60%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.35s;
+  display: flex;
+  align-items: flex-end;
+  padding: 16px;
+}
+
+.campus-scroll-item:hover .campus-scroll-overlay { opacity: 1; }
+
+.campus-scroll-overlay-content {
+  transform: translateY(12px);
+  transition: transform 0.35s;
+}
+
+.campus-scroll-item:hover .campus-scroll-overlay-content { transform: translateY(0); }
+
+.campus-scroll-zoom-icon {
+  font-size: 1.2rem;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.campus-scroll-title {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+}
+
+.campus-scroll-caption {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  background: var(--white);
+  border-top: 1px solid var(--border);
+}
+
+.caption-title {
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.campus-scroll-btn {
+  position: absolute;
+  top: 40%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  font-size: 28px;
+  color: var(--burgundy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  z-index: 10;
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+}
+
+.campus-scroll-btn:hover       { background: var(--gold); color: var(--navy); transform: translateY(-50%) scale(1.05); }
+.campus-scroll-btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.campus-scroll-btn.left        { left: -20px; }
+.campus-scroll-btn.right       { right: -20px; }
+
+.campus-scroll-indicators { text-align: center; margin-top: 16px; }
+
+.scroll-hint-text {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+  font-weight: 500;
+}
+
+/* ── Lightbox ── */
+.campus-lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.93);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.campus-lightbox-inner {
+  max-width: 90vw;
+  max-height: 90vh;
+  position: relative;
+}
+
+.campus-lightbox-img {
+  max-width: 90vw;
+  max-height: 80vh;
+  object-fit: contain;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.campus-lightbox-caption {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 4px 0;
+}
+
+.campus-lightbox-num   { font-family: var(--sans); font-size: 0.7rem; color: rgba(255, 255, 255, 0.4); }
+.campus-lightbox-title { font-family: var(--sans); font-size: 0.9rem; color: rgba(255, 255, 255, 0.8); font-weight: 500; }
+
+.campus-lightbox-close,
+.campus-lightbox-prev,
+.campus-lightbox-next {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #fff;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  transition: background 0.18s;
+  z-index: 10001;
+  cursor: pointer;
+}
+
+.campus-lightbox-close { top: 16px; right: 16px; font-size: 1rem; }
+.campus-lightbox-prev  { left: 16px; top: 50%; transform: translateY(-50%); }
+.campus-lightbox-next  { right: 16px; top: 50%; transform: translateY(-50%); }
+
+.campus-lightbox-close:hover,
+.campus-lightbox-prev:hover,
+.campus-lightbox-next:hover {
+  background: var(--burgundy);
+  border-color: var(--burgundy);
+}
+
+.campus-lightbox-close:focus-visible,
+.campus-lightbox-prev:focus-visible,
+.campus-lightbox-next:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .campus-scroll-item    { flex: 0 0 260px; }
+  .campus-scroll-btn     { width: 36px; height: 36px; font-size: 22px; }
+  .campus-scroll-btn.left  { left: -10px; }
+  .campus-scroll-btn.right { right: -10px; }
+  .video-title-overlay   { top: 12px; left: 12px; padding: 5px 12px; font-size: 0.75rem; }
+}
+
+@media (max-width: 640px) {
+  .campus-scroll-item { flex: 0 0 240px; }
+  .campus-scroll-btn  { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .campus-scroll-item,
+  .campus-scroll-img,
+  .campus-scroll-overlay,
+  .campus-scroll-overlay-content {
+    transition: none;
+  }
+}

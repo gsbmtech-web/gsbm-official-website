@@ -438,3 +438,12 @@
   .gsbm-logo-img   { max-width: 150px; }
   .gsbm-nav-inner  { padding: 0 1rem; }
 }
+
+/* ── Add this to your existing Navbar.css ── */
+
+/* Reads the --delay custom property set on each DrawerLink.
+   This replaces the inline style={{ animationDelay: ... }} that was
+   creating a new object on every render. */
+.gsbm-drawer-link {
+  animation-delay: var(--delay, 0ms);
+}

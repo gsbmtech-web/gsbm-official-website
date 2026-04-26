@@ -68,20 +68,20 @@
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--cream);
+  color: #ba9329 ;
   margin-bottom: 6px;
 }
 .about-promo-title {
   font-family: var(--serif);
   font-size: 1.8rem;
-  color: #fff;
+  color:  #ba9329;
   font-weight: 700;
   margin-bottom: 6px;
 }
 .about-promo-desc {
-  font-family: var(--sans);
+  font-family: 4px solid var(--gold);
   font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.75);
+  color: #fff;
   margin-bottom: 20px;
   line-height: 1.7;
 }
@@ -156,3 +156,20 @@
 }
 
 .ac1:not(:last-child) { margin-bottom: 8px; }
+
+/* ── Add these to the bottom of your existing About.css ── */
+
+/* Replaces style={{ marginBottom: 12 }} inline styles */
+.about-text--mb {
+  margin-bottom: 12px;
+}
+
+/* Replaces style={{ padding: '4px 0' }} on accordion inner divs */
+.ac-pad {
+  padding: 4px 0;
+}
+
+/* Replaces style={{ gap: 8 }} on core values grid */
+.ac-values-grid {
+  gap: 8px;
+}
