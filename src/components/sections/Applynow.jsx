@@ -278,7 +278,7 @@ const ApplyNow = () => {
               <span className="ap-section-label">Need Help?</span>
               <a href="tel:+918667690672" className="ap-contact-link">
                 <FiPhone size={13} strokeWidth={2} />
-                +91 98412 83764
+                +91 8667690672
               </a>
             </div>
 

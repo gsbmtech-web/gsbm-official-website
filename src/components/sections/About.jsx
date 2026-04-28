@@ -92,7 +92,7 @@ const ContactInfo = memo(function ContactInfo() {
 
       <a href="tel:+918667690672" className="about-contact-row">
         {PhoneIcon}
-        <span>+91 98412 83764</span>
+        <span>+91 8667690672</span>
       </a>
 
       {/*

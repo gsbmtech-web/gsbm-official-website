@@ -246,10 +246,10 @@ function Navbar() {
             <a
               href="tel:+918667690672"
               className="gsbm-toplink"
-              aria-label="Call admissions: +91 98412 83764"
+              aria-label="Call admissions: +91 8667690672"
             >
               {PhoneIcon}
-              +91 98412 83764
+              +91 8667690672
             </a>
             <span className="gsbm-divider" aria-hidden="true" />
             <a
@@ -396,9 +396,9 @@ function Navbar() {
             <a
               href="tel:+918667690672"
               tabIndex={mobileOpen ? 0 : -1}
-              aria-label="Call admissions: +91 98412 83764"
+              aria-label="Call admissions: +91 8667690672"
             >
-              +91 98412 83764
+              +91 8667690672
             </a>
           </div>
         </div>
