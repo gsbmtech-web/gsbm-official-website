@@ -75,7 +75,7 @@ const SidebarPromo = () => {
 const ContactInfo = () => (
   <div className="admissions-contact-box">
     <p className="admissions-contact-head">Get in Touch</p>
-    <a href="tel:+919841283764" className="admissions-contact-row">
+    <a href="tel:+918667690672" className="admissions-contact-row">
       <FiPhone size={16} aria-hidden="true" focusable="false" />
       <span>+91 98412 83764</span>
     </a>

@@ -90,7 +90,7 @@ const ContactInfo = memo(function ContactInfo() {
     <div className="about-contact-box">
       <p className="about-contact-head">Get in Touch</p>
 
-      <a href="tel:+919841283764" className="about-contact-row">
+      <a href="tel:+918667690672" className="about-contact-row">
         {PhoneIcon}
         <span>+91 98412 83764</span>
       </a>

@@ -244,7 +244,7 @@ function Navbar() {
           </span>
           <div className="gsbm-topstrip-right">
             <a
-              href="tel:+919841283764"
+              href="tel:+918667690672"
               className="gsbm-toplink"
               aria-label="Call admissions: +91 98412 83764"
             >
@@ -394,7 +394,7 @@ function Navbar() {
           </button>
           <div className="gsbm-drawer-contact">
             <a
-              href="tel:+919841283764"
+              href="tel:+918667690672"
               tabIndex={mobileOpen ? 0 : -1}
               aria-label="Call admissions: +91 98412 83764"
             >

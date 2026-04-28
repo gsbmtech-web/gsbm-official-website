@@ -140,7 +140,7 @@ const Footer = () => {
           </div>
           <div className="footer-contact-item">
             <FiPhone size={15} className="footer-contact-icon" aria-hidden="true" />
-            <a href="tel:+919841283764">+91 98412 83764</a>
+            <a href="tel:+918667690672">+91 98412 83764</a>
           </div>
           <div className="footer-contact-item">
             <FiMail size={15} className="footer-contact-icon" aria-hidden="true" />

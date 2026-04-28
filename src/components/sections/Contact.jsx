@@ -20,7 +20,7 @@ const CONTACT_CARDS = [
     id: 'manager',
     Icon: FiPhone,
     label: 'Manager Admissions',
-    content: <a href="tel:+919841283764" className="contact-card-value">+91 98412 83764</a>,
+    content: <a href="tel:+918667690672" className="contact-card-value">+91 98412 83764</a>,
   },
   {
     id: 'counselor',
@@ -61,7 +61,7 @@ const CONTACT_CARDS = [
     Icon: FiMessageCircle,
     label: 'WhatsApp',
     content: (
-      <a href="https://wa.me/919841283764" className="contact-card-value">
+      <a href="https://wa.me/918667690672" className="contact-card-value">
         +91 98412 83764
       </a>
     ),
