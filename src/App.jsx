@@ -145,7 +145,7 @@ export default function App() {
           <meta property="og:image" content="/og-image.jpg" />
           <meta property="og:type" content="website" />
           <meta name="twitter:card" content="summary_large_image" />
-          <link rel="canonical" href="https://mba-webpage.vercel.app" />
+          <link rel="canonical" href="https://gsbm.co.in" />
         </Helmet>
 
         <a href="#main-content" className="skip-link">Skip to main content</a>
