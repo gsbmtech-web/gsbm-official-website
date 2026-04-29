@@ -137,10 +137,10 @@ export default function App() {
     <HelmetProvider>
       <BrowserRouter>
         <Helmet>
-          <title>GSBM – Global School of Business Management</title>
+          <title>GSBM – Ganesan School of Business Management</title>
           <meta name="description" content="Transform your career with GSBM's industry-focused MBA programs. Apply now for the 2026–2028 batch." />
           <meta name="robots" content="index, follow" />
-          <meta property="og:title" content="GSBM – Global School of Business Management" />
+          <meta property="og:title" content="GSBM – Ganesan School of Business Management" />
           <meta property="og:description" content="Transform your career with GSBM's industry-focused MBA programs." />
           <meta property="og:image" content="/og-image.jpg" />
           <meta property="og:type" content="website" />
