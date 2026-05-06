@@ -27,8 +27,13 @@ function Hero() {
 
   // ✅ useCallback — stable reference for Explore button
   const handleExploreClick = useCallback(() => {
-    go('programs');
-  }, []);
+  const link = document.createElement('a');
+  link.href = '/brochure.pdf'; // 👈 update this to match your exact filename
+  link.download = 'GSBM_Brochure.pdf'; // 👈 the name the user sees when downloading
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}, []);
 
   // ✅ Animations: use requestIdleCallback so it never blocks first paint
   useEffect(() => {
@@ -123,7 +128,7 @@ function Hero() {
               onClick={handleExploreClick}
               aria-label="Explore our MBA programs"
             >
-              Explore Program
+              Download Brochure
             </button>
           </div>
 
