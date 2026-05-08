@@ -1,5 +1,4 @@
-// /api/verify-otp.js
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ success: false, message: 'Method not allowed' });
   }
@@ -15,31 +14,23 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Decode token
     const tokenData = Buffer.from(token, 'base64').toString('utf-8');
     const [tokenPhone, tokenOtp, tokenExpiry] = tokenData.split(':');
-
     const cleanPhone = phone.replace(/\D/g, '');
 
-    // Check phone matches
     if (tokenPhone !== cleanPhone) {
       return res.status(400).json({ success: false, message: 'Invalid OTP request.' });
     }
-
-    // Check expiry
     if (Date.now() > parseInt(tokenExpiry)) {
       return res.status(400).json({ success: false, message: 'OTP has expired. Please request a new one.' });
     }
-
-    // Check OTP matches
     if (tokenOtp !== otp.trim()) {
       return res.status(400).json({ success: false, message: 'Incorrect OTP. Please try again.' });
     }
 
     return res.status(200).json({ success: true, message: 'OTP verified successfully' });
-
   } catch (error) {
     console.error('Verify error:', error);
     return res.status(400).json({ success: false, message: 'Invalid OTP. Please try again.' });
   }
-}
+};
