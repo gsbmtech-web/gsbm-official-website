@@ -27,7 +27,7 @@ export default async function handler(req, res) {
   const token = Buffer.from(tokenData).toString('base64');
 
   // Message matching NEW DLT template exactly
-  const message = `${otp} is your OTP. This OTP is valid for the next 10 minutes. Team Admissions GSBMCH`;
+  const message = `Please verify your Mobile on GSBM OTP is ${otp} this OTP Valid for next 10 Mints Team Admissions. Ganesan School of Business Management`;
   const encodedMessage = encodeURIComponent(message);
   const apiUrl = `http://pay4sms.in/sendsms/?token=${process.env.PAY4SMS_TOKEN}&credit=4&sender=${process.env.PAY4SMS_SENDER}&message=${encodedMessage}&number=${cleanPhone}&templateid=${process.env.PAY4SMS_TEMPLATE_ID}`;
 
