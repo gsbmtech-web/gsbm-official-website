@@ -4,7 +4,7 @@ import './LogoStrip.css';
 // ─── Static data outside component — not recreated on every render ────────────
 const LOGOS = [
   {
-    src: 'https://res.cloudinary.com/damisreoh/image/upload/v1777348495/WhatsApp_Image_2026-04-27_at_10.12.44_mgoqmz.jpg',
+    src: 'https://res.cloudinary.com/damisreoh/image/upload/v1778318906/Screenshot_2026-05-09_at_2.57.53_PM_y1bdcd.png',
     alt: 'VMRF – Vinayaka Mission Research Foundation logo',
     width: 200,
     height: 80,
