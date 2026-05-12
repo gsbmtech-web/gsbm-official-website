@@ -1,4 +1,5 @@
 import { lazy, Suspense, useEffect, useRef, useState, memo } from 'react';
+import { Analytics } from "@vercel/analytics/react"
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { HelmetProvider, Helmet } from 'react-helmet-async';
 import ErrorBoundary from './components/ErrorBoundary';
