@@ -56,7 +56,7 @@ const Programs = () => {
             </p>
             <p className="body-text">
               Designed to produce decision-makers with strong analytical ability, ethical values, and a global
-              business perspective — graduates who are both leadership-ready and placement-ready.
+              business perspective — Graduates who are both Leadership-ready and Placement-ready.
             </p>
           </Ac2>
           <Ac2 title="Specialisations Available">
@@ -84,21 +84,21 @@ const Programs = () => {
           <Ac2 title="Overview" defaultOpen>
             <p className="body-text">
               Year-round training embedded into the MBA program. Every student goes through structured preparation —
-              not just academics, but full corporate readiness across aptitude, communication, interviews, and personal branding.
+              not just Academics, but full Corporate readiness across Aptitude, Communication, Interviews, and Personal branding.
             </p>
           </Ac2>
           <Ac2 title="Training Modules">
-            <InfoCard label="Aptitude & Logical Reasoning" value="Structured mock tests aligned with actual corporate selection formats used by top companies." />
-            <InfoCard label="Soft Skills & Communication" value="Business writing, presentation delivery, professional communication, and workplace etiquette." />
-            <InfoCard label="Resume & LinkedIn Building" value="Crafting results-driven resumes and building an effective LinkedIn presence for visibility." />
-            <InfoCard label="Mock Interviews & Group Discussions" value="Full-length simulated interviews and GD rounds with detailed, constructive feedback from faculty and industry professionals." />
+            <InfoCard label="Aptitude & Logical Reasoning" value="Structured mock tests aligned with actual Corporate selection formats used by top companies." />
+            <InfoCard label="Soft Skills & Communication" value="Business writing, Presentation delivery, Professional communication, and Workplace etiquette." />
+            <InfoCard label="Resume & LinkedIn Building" value="Crafting results-driven resumes and building an effective LinkedIn presence for Visibility." />
+            <InfoCard label="Mock Interviews & Group Discussions" value="Full-length Simulated interviews and GD rounds with detailed, Constructive feedback from Faculty and Industry professionals." />
           </Ac2>
         </Ac1>
 
         <Ac1 title="Workshops, Seminars & Guest Lectures">
           <Ac2 title="Overview" defaultOpen>
             <p className="body-text">
-              Regular sessions by CEOs, senior leaders, and domain experts from India's top organisations.
+              Regular sessions by CEOs, Senior Leaders, and Domain Experts from India's top organisations.
               These sessions give students direct exposure to how business actually operates — far beyond what any textbook can offer.
             </p>
           </Ac2>

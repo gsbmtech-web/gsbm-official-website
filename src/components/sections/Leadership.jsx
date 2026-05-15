@@ -27,7 +27,7 @@ const LEADERSHIP = [
     subtitle: 'Vice President, VMRF-DU',
     photo: patronImg,
     message:
-      'Medicine taught me that the best outcomes come from combining rigorous systems with genuine human care. That philosophy shapes everything we build at VMRF — including GSBM. A business school located within the same ecosystem as GIEC is not a coincidence; it is a statement of intent. We want our students to graduate not just as managers, but as problem-solvers who create value for the communities they serve.',
+      'Medicine taught me that the best outcomes come from combining rigorous systems with genuine human care. That philosophy shapes everything we build at VMRF — including GSBM. A business school located within the same ecosystem as GIEC is not a coincidence; it is a statement of intent. We want our students to graduate    not just as managers, but as problem-solvers who create value for the communities they serve.',
   },
   {
     id: 'amirthavarshini',

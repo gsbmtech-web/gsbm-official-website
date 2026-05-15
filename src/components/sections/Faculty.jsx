@@ -49,19 +49,19 @@ const Faculty = () => (
       <SectionHeader
         kicker="Faculty & Research"
         title="Academic Excellence Meets Industry Experience"
-        subtitle="Our faculty bring doctoral credentials and real corporate experience into every classroom — ensuring students receive education that is both rigorous and genuinely relevant."
+        subtitle="Our Faculty bring Doctoral Credentials and real Corporate Experience into every classroom — ensuring students receive education that is both rigorous and genuinely relevant."
       />
 
       <Ac1 title="Faculty Overview & Teaching Philosophy" defaultOpen>
         <Ac2 title="Our Approach" defaultOpen>
           <p className="body-text faculty-mb12">
-            At GSBM, faculty are not just educators — they are practitioners, researchers, and mentors.
+            At GSBM, faculty are not just educators — they are Practitioners, Researchers, and Mentors.
             Each faculty member is selected for both their academic depth and practical industry exposure,
             creating a learning environment that is simultaneously rigorous and relevant.
           </p>
           <p className="body-text">
-            The teaching methodology combines case-based learning, industry simulations, live projects, and
-            regular interaction with visiting professionals from leading organisations across India.
+            The teaching methodology combines Case-based Learning, Industry Simulations, Live projects, and
+            Regular interaction with visiting Professionals from leading organisations across India.
           </p>
         </Ac2>
       </Ac1>
@@ -91,12 +91,12 @@ const Faculty = () => (
       <Ac1 title="Publications & Conferences">
         <Ac2 title="Research Output" defaultOpen>
           <p className="body-text faculty-mb12">
-            GSBM faculty contribute actively to academic and industry research through peer-reviewed journal
-            publications, conference papers, case studies, and textbook contributions.
+            GSBM faculty contribute actively to Academic and Industry research through peer-reviewed Journal
+            Publications, Conference papers, Case studies, and Textbook contributions.
           </p>
           <p className="body-text">
-            The institution participates in national-level management conferences, bringing together academics
-            and practitioners to exchange perspectives on the most pressing business challenges of the day.
+            The institution participates in National-Level Management Conferences, bringing together Academics
+            and Pactitioners to exchange perspectives on the most pressing business challenges of the day.
           </p>
         </Ac2>
       </Ac1>

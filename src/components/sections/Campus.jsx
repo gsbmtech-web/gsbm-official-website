@@ -21,9 +21,9 @@ import './Campus.css';
 // ─── Static data — outside component, never recreated ────────────────────────
 const CAMPUS_PHOTOS = [
   { src: campusImg1,  label: 'Smart Classroom'         },
-  { src: campusImg2,  label: 'MBA Seminar Hall'         },
+  { src: campusImg4,  label: 'MBA Seminar Hall'         },
   { src: campusImg3,  label: 'MBA Seminar Hall – View 2'},
-  { src: campusImg4,  label: 'Meeting Room'             },
+  { src: campusImg2,  label: 'Meeting Room'             },
   { src: campusImg5,  label: 'Discussion Spaces'        },
   { src: campusImg6,  label: 'Discussion Spaces – View 2'},
   { src: campusImg14, label: 'Sports Ground'            },

@@ -96,9 +96,9 @@ function Hero() {
 
           <div className="headline-block">
             <h1 className="headline">
-              <span className="hl-phrase hl-white">Shape Your Future.</span>
+              <span className="hl-phrase hl-white">Shape Your Future</span>
               <span className="hl-sep" aria-hidden="true">&mdash;</span>
-              <em className="hl-phrase hl-gold">Lead with Purpose.</em>
+              <em className="hl-phrase hl-gold">Lead with Purpose</em>
             </h1>
           </div>
 
@@ -109,8 +109,8 @@ function Hero() {
           <p className="desc">
             A boutique MBA institution under&nbsp;
             <strong>Vinayaka Mission's Research Foundation (Deemed to be University)</strong>,
-            Chennai. Industry-integrated curriculum, experienced faculty, and relentless focus on
-            employability — built over 25&nbsp;years of commitment to student success.
+            Chennai. Industry-Integrated Curriculum, Experienced faculty, and relentless focus on
+            Employability — built over 25&nbsp;years of Commitment to student success.
           </p>
 
           <div className="hero-btns">
