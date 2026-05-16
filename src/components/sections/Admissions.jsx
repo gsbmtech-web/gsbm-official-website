@@ -17,7 +17,7 @@ const admissionSteps = [
 const exams = ['TANCET', 'CAT', 'MAT', 'CMAT', 'XAT', 'ATMA', 'GSBM EXAM'];
 
 const faqs = [
-  { id: 'recognised',    q: 'Is the GSBM MBA recognised?',             a: "Yes. The MBA is awarded by Vinayaka Mission's Research Foundation (VMRF), a UGC-recognised deemed to be university with NAAC accreditation." },
+  { id: 'recognised',    q: 'Is the GSBM MBA recognised?',             a: "Yes. The MBA is awarded by Vinayaka Mission's Research Foundation (VMRF), a UGC-recognised Deemed to be University with NAAC accreditation." },
   { id: 'no-exam',       q: 'Can I apply without an entrance exam score?', a: 'Yes. Direct merit-based admission is available. The committee evaluates academic performance and personal interview scores.' },
   { id: 'scholarship',   q: 'Are scholarships available?',             a: 'Yes. Merit-based scholarships are available for academically strong candidates. Contact the admissions office for eligibility criteria.' },
   { id: 'hostel',        q: 'Is hostel accommodation available?',      a: 'Yes. The campus has hostel facilities for outstation students. Contact campus administration for current availability and fees.' },

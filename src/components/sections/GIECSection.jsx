@@ -87,9 +87,9 @@ const GIECSection = () => (
           </p>
 
           <p className="body-text giec-desc">
-            From co-founder pairing to funding access, training, and
-            incubation, we offer the infrastructure, mentorship, and networks
-            you need to turn your vision into a thriving, impactful venture.
+            From Co-founder pairing to funding access, Training, and
+            Incubation, we offer the infrastructure, mentorship, and networks
+            you needed to turn your vision into a thriving, impactful venture.
           </p>
         </div>
 
