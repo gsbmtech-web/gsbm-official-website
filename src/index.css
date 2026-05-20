@@ -39,6 +39,8 @@
 html {
   scroll-behavior: smooth;
   font-size: 18px;
+  /* FIX: prevent horizontal scroll on all devices */
+  overflow-x: hidden;
 }
 
 body {
@@ -49,11 +51,20 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  /* FIX: ensure body never causes horizontal scroll */
+  width: 100%;
+  max-width: 100vw;
+}
+
+/* FIX: global safety net — no element should ever overflow the viewport */
+* {
+  max-width: 100%;
 }
 
 img, video {
   display: block;
   max-width: 100%;
+  height: auto; /* FIX: was missing, causes tall images on mobile */
 }
 
 a {
@@ -69,6 +80,9 @@ button {
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--serif);
   line-height: 1.2;
+  /* FIX: allow headings to wrap instead of overflow */
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .body-text {
@@ -77,18 +91,18 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text2);
 }
 
-/* Layout wrappers */
-.W { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
-.W-md { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
+/* ── Layout wrappers ── */
+.W    { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+.W-md { max-width: 900px;  margin: 0 auto; padding: 0 2rem; }
 
-/* Section backgrounds */
-.sec { padding: 90px 0; background: var(--white); }
-.sec-sky { padding: 90px 0; background: var(--sky); }
-.sec-off { padding: 90px 0; background: var(--off); }
-.sec-navy { padding: 90px 0; background: var(--burgundy); }
-.sec-parch { padding: 90px 0; background: var(--parchment); }
+/* ── Section backgrounds ── */
+.sec       { padding: 90px 0; background: var(--white);     overflow-x: hidden; }
+.sec-sky   { padding: 90px 0; background: var(--sky);       overflow-x: hidden; }
+.sec-off   { padding: 90px 0; background: var(--off);       overflow-x: hidden; }
+.sec-navy  { padding: 90px 0; background: var(--burgundy);  overflow-x: hidden; }
+.sec-parch { padding: 90px 0; background: var(--parchment); overflow-x: hidden; }
 
-/* Buttons */
+/* ── Buttons ── */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -104,31 +118,33 @@ h1, h2, h3, h4, h5, h6 {
   transition: all 0.2s ease;
   white-space: nowrap;
   cursor: pointer;
+  /* FIX: ensure buttons meet 44px touch target on all devices */
+  min-height: 44px;
 }
-.btn-red { background: var(--burgundy); color: #fff; border-color: var(--burgundy); }
-.btn-red:hover { background: var(--red2); border-color: var(--red2); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(160,82,45,.22); }
-.btn-navy { background: var(--navy); color: #fff; border-color: var(--navy); }
-.btn-navy:hover { background: var(--gold); border-color: var(--gold); color: var(--navy); }
-.btn-wh { background: transparent; color: #fff; border-color: rgba(255,255,255,0.45); }
-.btn-wh:hover { background: rgba(160,82,45,0.15); border-color: rgba(255,255,255,0.7); }
-.btn-wh-filled { background: #fff; color: var(--burgundy); border-color: #fff; }
-.btn-wh-filled:hover { background: var(--gold); border-color: var(--gold); color: var(--navy); }
-.btn-out-blue { background: transparent; color: var(--blue); border-color: var(--blue); }
-.btn-out-blue:hover { background: var(--blue); color: #fff; }
-.btn-block { width: 100%; justify-content: center; }
+.btn-red         { background: var(--burgundy); color: #fff; border-color: var(--burgundy); }
+.btn-red:hover   { background: var(--red2); border-color: var(--red2); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(160,82,45,.22); }
+.btn-navy        { background: var(--navy); color: #fff; border-color: var(--navy); }
+.btn-navy:hover  { background: var(--gold); border-color: var(--gold); color: var(--navy); }
+.btn-wh          { background: transparent; color: #fff; border-color: rgba(255,255,255,0.45); }
+.btn-wh:hover    { background: rgba(160,82,45,0.15); border-color: rgba(255,255,255,0.7); }
+.btn-wh-filled        { background: #fff; color: var(--burgundy); border-color: #fff; }
+.btn-wh-filled:hover  { background: var(--gold); border-color: var(--gold); color: var(--navy); }
+.btn-out-blue         { background: transparent; color: var(--blue); border-color: var(--blue); }
+.btn-out-blue:hover   { background: var(--blue); color: #fff; }
+.btn-block       { width: 100%; justify-content: center; }
 
-/* Grid helpers */
-.g2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
-.g3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-.g4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+/* ── Grid helpers ── */
+.g2  { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
+.g3  { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.g4  { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
 .g21 { display: grid; grid-template-columns: 2fr 1fr; gap: 56px; }
-.as { align-items: start; }
+.as  { align-items: start; }
 .pin { position: sticky; top: 92px; }
 
-/* Animations */
+/* ── Animations ── */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(22px); }
-  to { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 .fu { animation: fadeUp .65s ease both; }
 .d1 { animation-delay: .10s; }
@@ -136,29 +152,28 @@ h1, h2, h3, h4, h5, h6 {
 .d3 { animation-delay: .34s; }
 .d4 { animation-delay: .46s; }
 
-/* ========== NEW PRODUCTION ADDITIONS (10/10) ========== */
-
-/* 1. SKELETON LOADER (shimmer effect) */
+/* ── Skeleton Loader ── */
 .skeleton-loader {
   min-height: 200px;
   width: 100%;
   background: #e2e8f0;
   position: relative;
   overflow: hidden;
+  transform: translateZ(0);
 }
 .skeleton-loader::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,0.4) 50%, transparent 70%);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
   animation: shimmer 1.5s infinite;
 }
 @keyframes shimmer {
-  0% { transform: translateX(-100%); }
+  0%   { transform: translateX(-100%); }
   100% { transform: translateX(100%); }
 }
 
-/* 2. SKIP LINK (accessibility) */
+/* ── Skip Link (accessibility) ── */
 .skip-link {
   position: absolute;
   top: -40px;
@@ -171,19 +186,16 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: bold;
   font-family: var(--sans);
 }
-.skip-link:focus {
-  top: 0;
-  outline: 2px solid var(--gold);
-}
+.skip-link:focus { top: 0; outline: 2px solid var(--gold); }
 
-/* 3. FOCUS VISIBLE (keyboard navigation) */
+/* ── Focus Visible ── */
 :focus-visible {
   outline: 2px solid var(--burgundy);
   outline-offset: 2px;
   border-radius: 2px;
 }
 
-/* 4. REDUCED MOTION (accessibility) */
+/* ── Reduced Motion ── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -192,34 +204,19 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-/* 5. TOUCH-FRIENDLY INTERACTIVE ELEMENTS */
+/* ── Touch-friendly ── */
 a, button, .btn, [role="button"] {
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
 }
 
-/* 6. RESPONSIVE TYPOGRAPHY (fine-tuned) */
-@media (max-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-  .body-text {
-    font-size: 1rem;
-  }
-}
-@media (max-width: 480px) {
-  html {
-    font-size: 15px;
-  }
-}
-
-/* 7. BUTTON ACTIVE STATE (premium feedback) */
+/* ── Button active state ── */
 .btn:active {
   transform: translateY(1px);
   transition-duration: 0.05s;
 }
 
-/* 8. ERROR FALLBACK STYLE (for ErrorBoundary) */
+/* ── Error Fallback ── */
 .error-fallback {
   text-align: center;
   padding: 3rem 1rem;
@@ -238,41 +235,50 @@ a, button, .btn, [role="button"] {
   cursor: pointer;
 }
 
-/* 9. ENSURE MAIN CONTENT IS FOCUSABLE (for skip link) */
-#main-content {
-  outline: none;
-}
+/* ── Skip link target ── */
+#main-content { outline: none; }
 
-/* Responsive overrides (keep your existing ones below, only extend) */
+/* ══════════════════════════════════════════
+   RESPONSIVE BREAKPOINTS
+   ══════════════════════════════════════════ */
+
+/* ── Large desktop → 1024px ── */
 @media (max-width: 1024px) {
   .g21 { grid-template-columns: 1fr; gap: 40px; }
   .pin { position: static; top: auto; }
 }
+
+/* ── Tablet → 768px ── */
 @media (max-width: 768px) {
+  html { font-size: 16px; }
+  .body-text { font-size: 1rem; }
   .W, .W-md { padding: 0 1.25rem; }
   .sec, .sec-sky, .sec-off, .sec-navy, .sec-parch { padding: 64px 0; }
   .g2, .g3, .g4 { grid-template-columns: 1fr; gap: 16px; }
 }
+
+/* ── Mobile → 640px ── */
 @media (max-width: 640px) {
   .W, .W-md { padding: 0 1rem; }
   .sec, .sec-sky, .sec-off, .sec-navy, .sec-parch { padding: 52px 0; }
 }
-.skeleton-loader {
-  min-height: 200px;
-  width: 100%;
-  background: #e2e8f0;
-  position: relative;
-  overflow: hidden;
-  transform: translateZ(0); /* forces GPU */
+
+/* ── Small mobile → 480px ── */
+@media (max-width: 480px) {
+  html { font-size: 15px; }
+  .W, .W-md { padding: 0 0.85rem; }
+  .btn { font-size: 0.78rem; padding: 11px 18px; }
 }
-.skeleton-loader::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-  animation: shimmer 1.5s infinite;
-}
-@keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+
+/* ── Lava Z3 / very small → 360px ── */
+@media (max-width: 360px) {
+  html { font-size: 14px; }
+  .W, .W-md { padding: 0 0.75rem; }
+  .sec, .sec-sky, .sec-off, .sec-navy, .sec-parch { padding: 40px 0; }
+  .g2 { grid-template-columns: 1fr; }
+  .btn {
+    font-size: 0.75rem;
+    padding: 10px 14px;
+    letter-spacing: 0.05em;
+  }
 }

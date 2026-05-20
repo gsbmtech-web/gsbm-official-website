@@ -16,7 +16,7 @@ const LOGOS = [
     height: 80,
   },
   {
-    src: 'https://res.cloudinary.com/damisreoh/image/upload/q_auto,f_auto,w_200/v1777091950/NAAC_zlgthg.png',
+    src: 'https://res.cloudinary.com/damisreoh/image/upload/v1779259623/NAAC_LOGO_1_wvpqpj.jpg',
     alt: 'NAAC – National Assessment and Accreditation Council logo',
     width: 200,
     height: 80,
