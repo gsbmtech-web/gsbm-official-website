@@ -7,30 +7,30 @@ import InfoCard from '../ui/InfoCard';
 import './Admissions.css';
 
 const admissionSteps = [
-  { id: 'apply',       title: 'Submit Application',  desc: 'Fill out the online form on this page or visit the Ganesan School of Business Management (GSBM) admissions office at Campus, Chennai.' },
-  { id: 'docs',        title: 'Document Submission',  desc: 'Submit mark sheets (10th, 12th, UG), entrance scorecard, ID proof, and two passport-size photographs.' },
-  { id: 'interview',   title: 'Personal Interview',   desc: 'Shortlisted candidates are invited for a personal interview or counselling session with the GSBM admissions committee.' },
-  { id: 'offer',       title: 'Offer Letter',         desc: 'Selected candidates receive an offer letter. Seat is confirmed on payment of the first semester fee.' },
-  { id: 'orientation', title: 'Orientation',          desc: 'New students attend a mandatory orientation program before commencement in July.' },
+  { id: 'apply', title: 'Submit Application', desc: 'Fill out the online form on this page or visit the Ganesan School of Business Management (GSBM) admissions office at Campus, Chennai.' },
+  { id: 'docs', title: 'Document Submission', desc: 'Submit mark sheets (10th, 12th, UG), entrance scorecard, ID proof, and two passport-size photographs.' },
+  { id: 'interview', title: 'Personal Interview', desc: 'Shortlisted candidates are invited for a personal interview or counselling session with the GSBM admissions committee.' },
+  { id: 'offer', title: 'Offer Letter', desc: 'Selected candidates receive an offer letter. Seat is confirmed on payment of the first semester fee.' },
+  { id: 'orientation', title: 'Orientation', desc: 'New students attend a mandatory orientation program before commencement in July.' },
 ];
 
 const exams = ['TANCET', 'CAT', 'MAT', 'CMAT', 'XAT', 'ATMA', 'GSBM EXAM'];
 
 const faqs = [
-  { id: 'recognised',    q: 'Is the GSBM MBA recognised?',             a: "Yes. The MBA is awarded by Vinayaka Mission's Research Foundation (VMRF), a UGC-recognised Deemed to be University with NAAC accreditation." },
-  { id: 'no-exam',       q: 'Can I apply without an entrance exam score?', a: 'Yes. Direct merit-based admission is available. The committee evaluates academic performance and personal interview scores.' },
-  { id: 'scholarship',   q: 'Are scholarships available?',             a: 'Yes. Merit-based scholarships are available for academically strong candidates. Contact the admissions office for eligibility criteria.' },
-  { id: 'hostel',        q: 'Is hostel accommodation available?',      a: 'Yes. The campus has hostel facilities for outstation students. Contact campus administration for current availability and fees.' },
-  { id: 'start-date',   q: 'When does the academic year begin?',      a: 'The MBA program commences in July each year. The exact date for 2026–2028 will be stated in your offer letter.' },
-  { id: 'placement',     q: 'What is the placement record?',           a: 'GSBM will transform and make you one of the most sought-after candidates by corporates. GSBM Promise!' },
+  { id: 'recognised', q: 'Is the GSBM MBA recognised?', a: "Yes. The MBA is awarded by Vinayaka Mission's Research Foundation (VMRF), a UGC-recognised Deemed to be University with NAAC accreditation." },
+  { id: 'no-exam', q: 'Can I apply without an entrance exam score?', a: 'Yes. Direct merit-based admission is available. The committee evaluates academic performance and personal interview scores.' },
+  { id: 'scholarship', q: 'Are scholarships available?', a: 'Yes. Merit-based scholarships are available. Candidates with 85 and above percentile score in CAT are eligible for scholarships. Contact the admissions office for more details.' },
+  { id: 'hostel', q: 'Is hostel accommodation available?', a: 'Yes. The campus has hostel facilities for outstation students. Contact campus administration for current availability and fees.' },
+  { id: 'start-date', q: 'When does the academic year begin?', a: 'The MBA program commences in July each year. The exact date for 2026–2028 will be stated in your offer letter.' },
+  { id: 'placement', q: 'What is the placement record?', a: 'GSBM will transform and make you one of the most sought-after candidates by corporates. GSBM Promise!' },
 ];
 
 const quickFactsRows = [
   { label: 'Applications Open', value: 'January 2026' },
-  { label: 'Last Date',         value: 'June 30, 2026' },
-  { label: 'Interviews',        value: 'May – June 2026' },
-  { label: 'Results',           value: 'Rolling basis' },
-  { label: 'Commencement',      value: 'July 2026' },
+  { label: 'Last Date', value: 'June 30, 2026' },
+  { label: 'Interviews', value: 'May – June 2026' },
+  { label: 'Results', value: 'Rolling basis' },
+  { label: 'Commencement', value: 'July 2026' },
 ];
 
 // ─── Sub-components ──────────────────────────────────────────────────────────
@@ -119,9 +119,9 @@ const Admissions = () => (
           <Ac1 title="Eligibility Criteria">
             <Ac2 title="Academic Requirements" defaultOpen>
               <InfoCard label="Basic Qualification" value="Any Bachelor's degree (10+2+3 or 10+2+4) from a recognised university with minimum 50% aggregate marks." />
-              <InfoCard label="Relaxation"          value="For government notified categories, 45% aggregate as per AICTE norms." />
+              <InfoCard label="Relaxation" value="For government notified categories, 45% aggregate as per AICTE norms." />
               <InfoCard label="Final Year Students" value="Students appearing in final year exams may apply. Admission is provisional until final results are submitted." />
-              <InfoCard label="Work Experience"     value="Not mandatory. Candidates with work experience receive additional weightage in the selection process." />
+              <InfoCard label="Work Experience" value="Not mandatory. Candidates with work experience receive additional weightage in the selection process." />
             </Ac2>
             <Ac2 title="Entrance Exams Accepted">
               <p className="body-text admissions-mb14">

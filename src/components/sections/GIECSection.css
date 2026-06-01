@@ -176,3 +176,35 @@
   color: var(--text3);
   white-space: nowrap;
 }
+/* Radio Section */
+.radio-section {
+  padding: 60px 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.radio-body {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.radio-logo {
+  width: 180px;
+  height: 180px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.radio-text {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .radio-body {
+    flex-direction: column;
+    text-align: center;
+  }
+}

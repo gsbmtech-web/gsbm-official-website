@@ -3,6 +3,7 @@ import giecLogo from '../../assets/clogos/Giec.jpeg';
 import iicLogo  from '../../assets/clogos/Iic.png';
 import ediiLogo from '../../assets/clogos/Edii.png';
 import msmeLogo from '../../assets/clogos/Msme.png';
+import radioLogo from '../../assets/clogos/Ganesa88FM.png'; // ✅ add your logo here
 import './GIECSection.css';
 
 const PARTNERS = [
@@ -53,59 +54,82 @@ const PartnerCard = ({ src, alt, name }) => {
 };
 
 const GIECSection = () => (
-  <section className="sec-sky giec-section" aria-labelledby="giec-heading">
-    <div className="W">
+  <>
+    <section className="sec-sky giec-section" aria-labelledby="giec-heading">
+      <div className="W">
 
-      {/* GIEC Logo + Part of GSBM tag */}
-      <div className="giec-brand fu d1">
+        {/* GIEC Logo + Part of GSBM tag */}
+        <div className="giec-brand fu d1">
+          <img
+            src={giecLogo}
+            alt="Ganesan Incubation and Entrepreneurship Centre"
+            className="giec-logo"
+            loading="lazy"
+            decoding="async"
+            width={420}
+            height={210}
+          />
+          <span className="giec-partof">— Part of GSBM</span>
+        </div>
+
+        {/* Two-col body */}
+        <div className="giec-body">
+
+          {/* Left: text */}
+          <div className="giec-text-col fu d2">
+            <p className="giec-eyebrow">Incubation &amp; Entrepreneurship</p>
+
+            <h2 id="giec-heading" className="giec-heading">
+              Ganesan Incubation and<br />
+              Entrepreneurship Centre
+            </h2>
+
+            <p className="giec-tagline">
+              Empowering Entrepreneurs with End-to-End Startup Support
+            </p>
+
+            <p className="body-text giec-desc">
+              From Co-founder pairing to funding access, Training, and
+              Incubation, we offer the infrastructure, mentorship, and networks
+              you needed to turn your vision into a thriving, impactful venture.
+            </p>
+          </div>
+
+          {/* Right: ecosystem partners */}
+          <div className="giec-partners-col fu d3">
+            <p className="giec-partners-label">Ecosystem Partners</p>
+            <div className="giec-partners-grid">
+              {PARTNERS.map((p) => (
+                <PartnerCard key={p.id} src={p.src} alt={p.alt} name={p.name} />
+              ))}
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    {/* ✅ NEW: Ganesa 88.8 FM Section */}
+    <section className="sec-sky radio-section" aria-labelledby="radio-heading">
+      <div className="W radio-body">
         <img
-          src={giecLogo}
-          alt="Ganesan Incubation and Entrepreneurship Centre"
-          className="giec-logo"
+          src={radioLogo}
+          alt="Ganesa 88.8 FM Community Radio"
+          className="radio-logo"
           loading="lazy"
           decoding="async"
-          width={420}
-          height={210}
+          width={180}
+          height={180}
         />
-        <span className="giec-partof">— Part of GSBM</span>
-      </div>
-
-      {/* Two-col body */}
-      <div className="giec-body">
-
-        {/* Left: text */}
-        <div className="giec-text-col fu d2">
-          <p className="giec-eyebrow">Incubation &amp; Entrepreneurship</p>
-
-          <h2 id="giec-heading" className="giec-heading">
-            Ganesan Incubation and<br />
-            Entrepreneurship Centre
+        <div className="radio-text">
+          <p className="giec-eyebrow">Community Radio</p>
+          <h2 id="radio-heading" className="giec-heading">
+            GSBM has Community Radio 88.8 FM
           </h2>
-
-          <p className="giec-tagline">
-            Empowering Entrepreneurs with End-to-End Startup Support
-          </p>
-
-          <p className="body-text giec-desc">
-            From Co-founder pairing to funding access, Training, and
-            Incubation, we offer the infrastructure, mentorship, and networks
-            you needed to turn your vision into a thriving, impactful venture.
-          </p>
         </div>
-
-        {/* Right: ecosystem partners */}
-        <div className="giec-partners-col fu d3">
-          <p className="giec-partners-label">Ecosystem Partners</p>
-          <div className="giec-partners-grid">
-            {PARTNERS.map((p) => (
-              <PartnerCard key={p.id} src={p.src} alt={p.alt} name={p.name} />
-            ))}
-          </div>
-        </div>
-
       </div>
-    </div>
-  </section>
+    </section>
+  </>
 );
 
 export default GIECSection;
