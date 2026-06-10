@@ -9,7 +9,9 @@ const KEY_DATES = [
   { label: 'Commencement', date: 'Jul 2026' },
 ];
 
-const STEP = { PHONE: 'phone', OTP: 'otp', FORM: 'form' };
+const STEP = { PHONE: 'phone', OTP: 'otp' };
+
+const ZOHO_FORM_URL = 'https://forms.zohopublic.in/gsbmtechgm1/form/GSBMChennaiMBAPROGRAM/formperma/TJrU6LXsWTqAWh5ZbxgeWMkmSW2-aK-lzoJ2xn3iEjQ';
 
 const ApplyNow = () => {
   const navigate = useNavigate();
@@ -88,8 +90,12 @@ const ApplyNow = () => {
         body: JSON.stringify({ phone: phone.replace(/\D/g, ''), otp: entered, token: otpToken }),
       });
       const data = await res.json();
-      if (data.success) { setStep(STEP.FORM); }
-      else { setError(data.message || 'Incorrect OTP. Please try again.'); }
+      if (data.success) {
+        // ── Redirect to Zoho form with phone pre-filled ──
+        window.location.href = `${ZOHO_FORM_URL}?PhoneNumber=${encodeURIComponent(phone.replace(/\D/g, ''))}`;
+      } else {
+        setError(data.message || 'Incorrect OTP. Please try again.');
+      }
     } catch { setError('Network error. Please try again.'); }
     finally { setLoading(false); }
   };
@@ -295,17 +301,6 @@ const ApplyNow = () => {
           -webkit-tap-highlight-color: transparent;
         }
 
-        /* Verified */
-        .otp-verified {
-          display: flex; align-items: center; gap: 8px;
-          background: #edfdf5; border: 1px solid #a3e6c4;
-          border-radius: 8px; padding: 10px 16px;
-          font-size: 13px; font-weight: 600; color: #1a7a4a; margin-bottom: 16px;
-        }
-
-        /* Iframe */
-        .ap-iframe { display: block; border: none; width: 100%; }
-
         /* ── FOOTER ── */
         .ap-footer {
           background: #eceae4; border-top: 1px solid #ddd8cf;
@@ -324,7 +319,6 @@ const ApplyNow = () => {
             padding: 16px 14px 48px;
             gap: 14px;
           }
-          /* Sidebar becomes a horizontal strip of 3 cards */
           .ap-sidebar {
             position: static;
             display: grid;
@@ -338,43 +332,24 @@ const ApplyNow = () => {
            MOBILE  ≤ 540px
         ════════════════════════════ */
         @media (max-width: 540px) {
-          /* Nav */
           .ap-nav { height: 48px; padding: 0 14px; }
           .ap-nav-logo { font-size: 14px; }
           .ap-back { padding: 5px 10px; font-size: 12px; }
-
-          /* Hero */
           .ap-hero { padding: 18px 14px 22px; }
           .ap-h1-sub { display: none; }
-
-          /* Body */
           .ap-body { padding: 12px 12px 40px; gap: 12px; }
-
-          /* Hide sidebar entirely on small mobile */
           .ap-sidebar { display: none; }
-
-          /* Panel */
           .ap-panel { border-radius: 10px; }
           .ap-panel-top { padding: 14px 16px 10px; }
           .ap-panel-title { font-size: 15px; }
-
-          /* OTP Gate */
           .otp-gate { padding: 24px 16px 28px; }
           .otp-title { font-size: 17px; }
           .otp-sub   { font-size: 12px; margin-bottom: 20px; }
-
-          /* OTP boxes — 6 across small screen */
           .otp-boxes { gap: 6px; }
           .otp-box   { width: 42px; height: 50px; font-size: 19px; border-radius: 8px; }
-
-          /* Button full width */
           .otp-btn { max-width: 100%; }
-
-          /* Phone row */
           .otp-phone-row { max-width: 100%; }
           .otp-error     { max-width: 100%; }
-
-          /* Footer */
           .ap-footer { flex-direction: column; gap: 3px; font-size: 10px; }
           .ap-footer-dot { display: none; }
         }
@@ -455,8 +430,7 @@ const ApplyNow = () => {
               <h2 className="ap-panel-title">Application Form</h2>
               <p className="ap-panel-hint">
                 {step === STEP.PHONE && 'Verify your mobile number to begin.'}
-                {step === STEP.OTP && 'Enter the OTP sent to your phone.'}
-                {step === STEP.FORM && 'Complete your application below.'}
+                {step === STEP.OTP   && 'Enter the OTP sent to your phone.'}
               </p>
             </div>
 
@@ -518,7 +492,7 @@ const ApplyNow = () => {
                 </div>
                 {error && <div className="otp-error">{error}</div>}
                 <button className="otp-btn" onClick={handleVerifyOTP} disabled={otp.join('').length < 6 || loading}>
-                  {loading ? <>↻ Verifying…</> : <><FiCheckCircle size={15} /> Verify & Continue</>}
+                  {loading ? <>↻ Redirecting…</> : <><FiCheckCircle size={15} /> Verify & Continue</>}
                 </button>
                 <div className="otp-resend">
                   <span>{resendTimer > 0 ? `Resend in ${resendTimer}s` : "Didn't receive it?"}</span>
@@ -534,15 +508,6 @@ const ApplyNow = () => {
               </div>
             )}
 
-            {/* ── STEP 3: Redirect to Zoho ── */}
-            {step === STEP.FORM && (() => {
-              window.location.href = `https://forms.zohopublic.in/gsbmtechgm1/form/GSBMChennaiMBAPROGRAM/formperma/TJrU6LXsWTqAWh5ZbxgeWMkmSW2-aK-lzoJ2xn3iEjQ?PhoneNumber=${encodeURIComponent(phone)}`;
-              return (
-                <div className="otp-gate">
-                  <p style={{ color: '#888', fontSize: '14px' }}>Redirecting to application form...</p>
-                </div>
-              );
-            })()}
           </section>
         </div>
 
