@@ -9,7 +9,7 @@ const ThankYou = () => {
   useEffect(() => {
     if (typeof window.gtag === 'function') {
       window.gtag('event', 'conversion', {
-        send_to: 'AW-XXXXXXXXXX/YYYYYYYYYYY', // 🔴 Replace with your actual conversion ID
+        send_to: 'AW-18134758434', // 🔴 Replace with your actual conversion ID
       });
     }
   }, []);
