@@ -4,26 +4,26 @@ import { FiArrowLeft, FiLock, FiPhone, FiShield, FiCheckCircle, FiRefreshCw } fr
 
 const KEY_DATES = [
   { label: 'Applications Open', date: 'Jan 2026' },
-  { label: 'Last Date',         date: 'Jun 30'   },
-  { label: 'Interviews',        date: 'May – Jun' },
-  { label: 'Commencement',      date: 'Jul 2026'  },
+  { label: 'Last Date', date: 'Jun 30' },
+  { label: 'Interviews', date: 'May – Jun' },
+  { label: 'Commencement', date: 'Jul 2026' },
 ];
 
 const STEP = { PHONE: 'phone', OTP: 'otp', FORM: 'form' };
 
 const ApplyNow = () => {
-  const navigate   = useNavigate();
+  const navigate = useNavigate();
   const handleBack = useCallback(() => navigate(-1), [navigate]);
 
-  const [step,        setStep]        = useState(STEP.PHONE);
-  const [phone,       setPhone]       = useState('');
-  const [otp,         setOtp]         = useState(['', '', '', '', '', '']);
-  const [loading,     setLoading]     = useState(false);
-  const [error,       setError]       = useState('');
+  const [step, setStep] = useState(STEP.PHONE);
+  const [phone, setPhone] = useState('');
+  const [otp, setOtp] = useState(['', '', '', '', '', '']);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const [resendTimer, setResendTimer] = useState(0);
-  const [otpToken,    setOtpToken]    = useState('');
+  const [otpToken, setOtpToken] = useState('');
   const timerRef = useRef(null);
-  const otpRefs  = useRef([]);
+  const otpRefs = useRef([]);
 
   const startCountdown = (sec = 30) => {
     setResendTimer(sec);
@@ -42,7 +42,7 @@ const ApplyNow = () => {
     if (cleaned.length !== 10) { setError('Please enter a valid 10-digit mobile number.'); return; }
     setLoading(true);
     try {
-      const res  = await fetch('/api/send-otp', {
+      const res = await fetch('/api/send-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ phone: cleaned }),
@@ -57,7 +57,7 @@ const ApplyNow = () => {
         setError(data.message || 'Failed to send OTP. Please try again.');
       }
     } catch { setError('Network error. Please try again.'); }
-    finally  { setLoading(false); }
+    finally { setLoading(false); }
   };
 
   const handleOtpChange = (i, val) => {
@@ -82,7 +82,7 @@ const ApplyNow = () => {
     if (entered.length < 6) { setError('Please enter the 6-digit OTP.'); return; }
     setLoading(true);
     try {
-      const res  = await fetch('/api/verify-otp', {
+      const res = await fetch('/api/verify-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ phone: phone.replace(/\D/g, ''), otp: entered, token: otpToken }),
@@ -91,14 +91,14 @@ const ApplyNow = () => {
       if (data.success) { setStep(STEP.FORM); }
       else { setError(data.message || 'Incorrect OTP. Please try again.'); }
     } catch { setError('Network error. Please try again.'); }
-    finally  { setLoading(false); }
+    finally { setLoading(false); }
   };
 
   const handleResend = async () => {
     if (resendTimer > 0) return;
     setOtp(['', '', '', '', '', '']); setError(''); setLoading(true);
     try {
-      const res  = await fetch('/api/send-otp', {
+      const res = await fetch('/api/send-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ phone: phone.replace(/\D/g, '') }),
@@ -107,7 +107,7 @@ const ApplyNow = () => {
       if (data.success) { setOtpToken(data.token); startCountdown(30); setTimeout(() => otpRefs.current[0]?.focus(), 100); }
       else { setError(data.message || 'Failed to resend OTP.'); }
     } catch { setError('Network error. Please try again.'); }
-    finally  { setLoading(false); }
+    finally { setLoading(false); }
   };
 
   /* ─────────────── RENDER ─────────────── */
@@ -455,8 +455,8 @@ const ApplyNow = () => {
               <h2 className="ap-panel-title">Application Form</h2>
               <p className="ap-panel-hint">
                 {step === STEP.PHONE && 'Verify your mobile number to begin.'}
-                {step === STEP.OTP   && 'Enter the OTP sent to your phone.'}
-                {step === STEP.FORM  && 'Complete your application below.'}
+                {step === STEP.OTP && 'Enter the OTP sent to your phone.'}
+                {step === STEP.FORM && 'Complete your application below.'}
               </p>
             </div>
 
@@ -478,7 +478,7 @@ const ApplyNow = () => {
                   <input
                     className="otp-input" type="tel" inputMode="numeric" maxLength={10}
                     placeholder="10-digit number" value={phone}
-                    onChange={e => { setPhone(e.target.value.replace(/\D/g,'').slice(0,10)); setError(''); }}
+                    onChange={e => { setPhone(e.target.value.replace(/\D/g, '').slice(0, 10)); setError(''); }}
                     onKeyDown={e => { if (e.key === 'Enter') handleSendOTP(); }}
                   />
                 </div>
@@ -527,36 +527,22 @@ const ApplyNow = () => {
                   </button>
                 </div>
                 <div className="otp-change">
-                  <button className="otp-change-btn" onClick={() => { setStep(STEP.PHONE); setOtp(['','','','','','']); setError(''); }}>
+                  <button className="otp-change-btn" onClick={() => { setStep(STEP.PHONE); setOtp(['', '', '', '', '', '']); setError(''); }}>
                     Change number
                   </button>
                 </div>
               </div>
             )}
 
-            {/* ── STEP 3: Form ── */}
-            {step === STEP.FORM && (
-              <>
-                <div className="otp-gate" style={{ paddingBottom: 14 }}>
-                  <div className="otp-steps">
-                    <div className="otp-step"><div className="otp-dot done">✓</div><span className="otp-lbl done">Verify</span></div>
-                    <div className="otp-line" />
-                    <div className="otp-step"><div className="otp-dot done">✓</div><span className="otp-lbl done">OTP</span></div>
-                    <div className="otp-line" />
-                    <div className="otp-step"><div className="otp-dot active">3</div><span className="otp-lbl active">Apply</span></div>
-                  </div>
-                  <div className="otp-verified">
-                    <FiCheckCircle size={15} />+91 {phone} verified successfully
-                  </div>
+            {/* ── STEP 3: Redirect to Zoho ── */}
+            {step === STEP.FORM && (() => {
+              window.location.href = `https://forms.zohopublic.in/gsbmtechgm1/form/GSBMChennaiMBAPROGRAM/formperma/TJrU6LXsWTqAWh5ZbxgeWMkmSW2-aK-lzoJ2xn3iEjQ?PhoneNumber=${encodeURIComponent(phone)}`;
+              return (
+                <div className="otp-gate">
+                  <p style={{ color: '#888', fontSize: '14px' }}>Redirecting to application form...</p>
                 </div>
-                <iframe
-                  src={`https://forms.zohopublic.in/gsbmtechgm1/form/GSBMChennaiMBAPROGRAM/formperma/TJrU6LXsWTqAWh5ZbxgeWMkmSW2-aK-lzoJ2xn3iEjQ?PhoneNumber=${encodeURIComponent(phone)}`}
-                  title="GSBM MBA Application Form"
-                  width="100%" height="900" className="ap-iframe"
-                  allow="geolocation" referrerPolicy="no-referrer-when-downgrade"
-                />
-              </>
-            )}
+              );
+            })()}
           </section>
         </div>
 
