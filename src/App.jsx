@@ -11,25 +11,21 @@ import NotFound from './components/ui/NotFound';
 import ThankYou from './components/sections/ThankYou.jsx';
 
 // ─── Lazy sections ────────────────────────────────────────────────────────────
-const Hero = lazy(() => import('./components/sections/Hero'));
-const LogoStrip = lazy(() => import('./components/sections/LogoStrip'));
-const About = lazy(() => import('./components/sections/About'));
-const Leadership = lazy(() => import('./components/sections/Leadership'));
-const Programs = lazy(() => import('./components/sections/Programs'));
-const Gsbmwhy = lazy(() => import('./components/sections/Gsbmwhy.jsx'));
-const Campus = lazy(() => import('./components/sections/Campus'));
+const Hero        = lazy(() => import('./components/sections/Hero'));
+const LogoStrip   = lazy(() => import('./components/sections/LogoStrip'));
+const About       = lazy(() => import('./components/sections/About'));
+const Leadership  = lazy(() => import('./components/sections/Leadership'));
+const Programs    = lazy(() => import('./components/sections/Programs'));
+const Gsbmwhy     = lazy(() => import('./components/sections/Gsbmwhy.jsx'));
+const Campus      = lazy(() => import('./components/sections/Campus'));
 const GIECSection = lazy(() => import('./components/sections/GIECSection.jsx'));
-const Admissions = lazy(() => import('./components/sections/Admissions'));
-const Faculty = lazy(() => import('./components/sections/Faculty'));
-const Placements = lazy(() => import('./components/sections/Placements'));
-const Contact = lazy(() => import('./components/sections/Contact'));
-const Calbutton = lazy(() => import('./components/sections/Calbutton.jsx'));
+const Admissions  = lazy(() => import('./components/sections/Admissions'));
+const Faculty     = lazy(() => import('./components/sections/Faculty'));
+const Placements  = lazy(() => import('./components/sections/Placements'));
+const Contact     = lazy(() => import('./components/sections/Contact'));
+const Calbutton   = lazy(() => import('./components/sections/Calbutton.jsx'));
 
 // ─── LazySection ─────────────────────────────────────────────────────────────
-// FIX: Removed the IntersectionObserver gate. All sections now mount immediately
-// on page load so their IDs exist in the DOM when navbar links are clicked from
-// any scroll position. JS chunks are still code-split via React.lazy above —
-// only the render-blocking gate is removed.
 const LazySection = ({ children, fallback }) => (
   <Suspense fallback={fallback ?? <SectionLoader />}>
     {children}
@@ -45,9 +41,9 @@ const ScrollToTop = memo(() => {
       const id = setTimeout(() => {
         const el = document.querySelector(hash);
         if (el) {
-          const nav = document.querySelector('.gsbm-nav');
+          const nav  = document.querySelector('.gsbm-nav');
           const navH = nav ? nav.getBoundingClientRect().height : 80;
-          const top = el.getBoundingClientRect().top + window.scrollY - navH;
+          const top  = el.getBoundingClientRect().top + window.scrollY - navH;
           window.scrollTo({ top, behavior: 'smooth' });
         }
       }, 300);
@@ -64,59 +60,19 @@ ScrollToTop.displayName = 'ScrollToTop';
 // ─── HomePage ─────────────────────────────────────────────────────────────────
 const HomePage = () => (
   <main id="main-content" tabIndex={-1}>
-
-    <Suspense fallback={<SectionLoader />}>
-      <Hero />
-    </Suspense>
-
-    <Suspense fallback={<SectionLoader />}>
-      <LogoStrip />
-    </Suspense>
-
-    <Suspense fallback={<SectionLoader />}>
-      <About />
-    </Suspense>
-
-    <LazySection>
-      <Leadership />
-    </LazySection>
-
-    <LazySection>
-      <Programs />
-    </LazySection>
-
-    <LazySection>
-      <Gsbmwhy />
-    </LazySection>
-
-    <LazySection>
-      <Campus />
-    </LazySection>
-
-    <LazySection>
-      <GIECSection />
-    </LazySection>
-
-    <LazySection>
-      <Admissions />
-    </LazySection>
-
-    <LazySection>
-      <Faculty />
-    </LazySection>
-
-    <LazySection>
-      <Placements />
-    </LazySection>
-
-    <LazySection>
-      <Contact />
-    </LazySection>
-
-    <LazySection>
-      <Calbutton />
-    </LazySection>
-
+    <Suspense fallback={<SectionLoader />}><Hero /></Suspense>
+    <Suspense fallback={<SectionLoader />}><LogoStrip /></Suspense>
+    <Suspense fallback={<SectionLoader />}><About /></Suspense>
+    <LazySection><Leadership /></LazySection>
+    <LazySection><Programs /></LazySection>
+    <LazySection><Gsbmwhy /></LazySection>
+    <LazySection><Campus /></LazySection>
+    <LazySection><GIECSection /></LazySection>
+    <LazySection><Admissions /></LazySection>
+    <LazySection><Faculty /></LazySection>
+    <LazySection><Placements /></LazySection>
+    <LazySection><Contact /></LazySection>
+    <LazySection><Calbutton /></LazySection>
   </main>
 );
 
@@ -168,6 +124,13 @@ export default function App() {
             </ErrorBoundary>
           } />
 
+          {/* ── Thank You page ── */}
+          <Route path="/thank-you" element={
+            <ErrorBoundary>
+              <ThankYou />
+            </ErrorBoundary>
+          } />
+
           <Route path="*" element={
             <ErrorBoundary>
               <Suspense fallback={<SectionLoader />}>
@@ -176,11 +139,6 @@ export default function App() {
             </ErrorBoundary>
           } />
         </Routes>
-        <Route path="/thank-you" element={
-          <ErrorBoundary>
-            <ThankYou />
-          </ErrorBoundary>
-        } />
 
       </BrowserRouter>
     </HelmetProvider>
