@@ -8,21 +8,22 @@ import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import ApplyNow from './components/sections/Applynow';
 import NotFound from './components/ui/NotFound';
+import ThankYou from './components/sections/ThankYou.jsx';
 
 // ─── Lazy sections ────────────────────────────────────────────────────────────
-const Hero        = lazy(() => import('./components/sections/Hero'));
-const LogoStrip   = lazy(() => import('./components/sections/LogoStrip'));
-const About       = lazy(() => import('./components/sections/About'));
-const Leadership  = lazy(() => import('./components/sections/Leadership'));
-const Programs    = lazy(() => import('./components/sections/Programs'));
-const Gsbmwhy     = lazy(() => import('./components/sections/Gsbmwhy.jsx'));
-const Campus      = lazy(() => import('./components/sections/Campus'));
+const Hero = lazy(() => import('./components/sections/Hero'));
+const LogoStrip = lazy(() => import('./components/sections/LogoStrip'));
+const About = lazy(() => import('./components/sections/About'));
+const Leadership = lazy(() => import('./components/sections/Leadership'));
+const Programs = lazy(() => import('./components/sections/Programs'));
+const Gsbmwhy = lazy(() => import('./components/sections/Gsbmwhy.jsx'));
+const Campus = lazy(() => import('./components/sections/Campus'));
 const GIECSection = lazy(() => import('./components/sections/GIECSection.jsx'));
-const Admissions  = lazy(() => import('./components/sections/Admissions'));
-const Faculty     = lazy(() => import('./components/sections/Faculty'));
-const Placements  = lazy(() => import('./components/sections/Placements'));
-const Contact     = lazy(() => import('./components/sections/Contact'));
-const Calbutton   = lazy(() => import('./components/sections/Calbutton.jsx'));
+const Admissions = lazy(() => import('./components/sections/Admissions'));
+const Faculty = lazy(() => import('./components/sections/Faculty'));
+const Placements = lazy(() => import('./components/sections/Placements'));
+const Contact = lazy(() => import('./components/sections/Contact'));
+const Calbutton = lazy(() => import('./components/sections/Calbutton.jsx'));
 
 // ─── LazySection ─────────────────────────────────────────────────────────────
 // FIX: Removed the IntersectionObserver gate. All sections now mount immediately
@@ -44,9 +45,9 @@ const ScrollToTop = memo(() => {
       const id = setTimeout(() => {
         const el = document.querySelector(hash);
         if (el) {
-          const nav  = document.querySelector('.gsbm-nav');
+          const nav = document.querySelector('.gsbm-nav');
           const navH = nav ? nav.getBoundingClientRect().height : 80;
-          const top  = el.getBoundingClientRect().top + window.scrollY - navH;
+          const top = el.getBoundingClientRect().top + window.scrollY - navH;
           window.scrollTo({ top, behavior: 'smooth' });
         }
       }, 300);
@@ -175,6 +176,11 @@ export default function App() {
             </ErrorBoundary>
           } />
         </Routes>
+        <Route path="/thank-you" element={
+          <ErrorBoundary>
+            <ThankYou />
+          </ErrorBoundary>
+        } />
 
       </BrowserRouter>
     </HelmetProvider>
