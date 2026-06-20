@@ -7,9 +7,18 @@ const ThankYou = () => {
 
   // ── Google Ads Conversion Tag ──
   useEffect(() => {
+    // Fire page_view for Google Analytics
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'page_view', {
+        page_path: '/thank-you/',
+        page_title: 'Application Submitted'
+      });
+    }
+
+    // Fire conversion event for Google Ads
     if (typeof window.gtag === 'function') {
       window.gtag('event', 'conversion', {
-        send_to: 'AW-18134758434', // 🔴 Replace with your actual conversion ID
+        send_to: 'AW-18134758434'
       });
     }
   }, []);
