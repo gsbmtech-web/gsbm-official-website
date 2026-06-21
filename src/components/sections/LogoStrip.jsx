@@ -10,6 +10,12 @@ const LOGOS = [
     height: 80,
   },
   {
+    src: 'https://res.cloudinary.com/damisreoh/image/upload/v1782051287/AVIT-Logo-PNG_jw4ov5.png',
+    alt: 'Aarupadai Veedu Institute of Technology (AVIT) logo',
+    width: 200,
+    height: 80,
+  },
+  {
     src: 'https://res.cloudinary.com/damisreoh/image/upload/q_auto,f_auto,w_200/v1777091751/AICTE_umarzo.webp',
     alt: 'AICTE – All India Council for Technical Education logo',
     width: 200,
