@@ -42,6 +42,24 @@ const ApplyNow = () => {
     }
   }, []);
 
+  // ── Inject gclid into Zoho form when it loads ──
+  useEffect(() => {
+    if (!gclid) return;
+    
+    const injectGclid = () => {
+      const gclidInput = document.querySelector('input[name="gclid"]');
+      if (gclidInput) {
+        gclidInput.value = gclid;
+      }
+    };
+    
+    // Try to inject immediately, then retry after delay
+    injectGclid();
+    const timer = setTimeout(injectGclid, 500);
+    
+    return () => clearTimeout(timer);
+  }, [gclid]);
+
   const startCountdown = (sec = 30) => {
     setResendTimer(sec);
     clearInterval(timerRef.current);
@@ -106,10 +124,10 @@ const ApplyNow = () => {
       });
       const data = await res.json();
       if (data.success) {
-        // ── Redirect to Zoho form with phone AND gclid pre-filled ──
+        // ── Redirect to Zoho form with phone pre-filled ──
+        // gclid will be injected by JavaScript once form loads
         const phoneParam = encodeURIComponent(phone.replace(/\D/g, ''));
-        const gclidParam = gclid ? `&gclid=${encodeURIComponent(gclid)}` : '';
-        window.location.href = `${ZOHO_FORM_URL}?PhoneNumber=${phoneParam}${gclidParam}`;
+        window.location.href = `${ZOHO_FORM_URL}?PhoneNumber=${phoneParam}`;
       } else {
         setError(data.message || 'Incorrect OTP. Please try again.');
       }
