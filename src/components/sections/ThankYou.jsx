@@ -5,7 +5,7 @@ import { FiCheckCircle, FiPhone, FiArrowLeft } from 'react-icons/fi';
 const ThankYou = () => {
   const navigate = useNavigate();
 
-  // ── Google Ads Conversion Tag ──
+  // ── Google Ads + Meta Pixel Conversion Tags ──
   useEffect(() => {
     // Fire page_view for Google Analytics
     if (typeof window.gtag === 'function') {
@@ -20,6 +20,11 @@ const ThankYou = () => {
       window.gtag('event', 'conversion', {
         send_to: 'AW-18134758434'
       });
+    }
+
+    // Fire Lead event for Meta Pixel
+    if (typeof window.fbq !== 'undefined') {
+      window.fbq('track', 'Lead');
     }
   }, []);
 
