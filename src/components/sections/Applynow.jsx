@@ -1,4 +1,4 @@
-import { useCallback, useState, useRef } from 'react';
+import { useCallback, useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FiArrowLeft, FiLock, FiPhone, FiShield, FiCheckCircle, FiRefreshCw } from 'react-icons/fi';
 
@@ -24,8 +24,23 @@ const ApplyNow = () => {
   const [error, setError] = useState('');
   const [resendTimer, setResendTimer] = useState(0);
   const [otpToken, setOtpToken] = useState('');
+  const [gclid, setGclid] = useState(''); // ← ADD THIS
   const timerRef = useRef(null);
   const otpRefs = useRef([]);
+
+  // ── Capture gclid from URL on mount ──
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const clickId = urlParams.get('gclid') || '';
+    if (clickId) {
+      setGclid(clickId);
+      localStorage.setItem('gclid', clickId);
+    } else {
+      // Check localStorage if not in URL
+      const stored = localStorage.getItem('gclid');
+      if (stored) setGclid(stored);
+    }
+  }, []);
 
   const startCountdown = (sec = 30) => {
     setResendTimer(sec);
@@ -91,8 +106,10 @@ const ApplyNow = () => {
       });
       const data = await res.json();
       if (data.success) {
-        // ── Redirect to Zoho form with phone pre-filled ──
-        window.location.href = `${ZOHO_FORM_URL}?PhoneNumber=${encodeURIComponent(phone.replace(/\D/g, ''))}`;
+        // ── Redirect to Zoho form with phone AND gclid pre-filled ──
+        const phoneParam = encodeURIComponent(phone.replace(/\D/g, ''));
+        const gclidParam = gclid ? `&gclid=${encodeURIComponent(gclid)}` : '';
+        window.location.href = `${ZOHO_FORM_URL}?PhoneNumber=${phoneParam}${gclidParam}`;
       } else {
         setError(data.message || 'Incorrect OTP. Please try again.');
       }
