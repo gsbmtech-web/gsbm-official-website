@@ -1,0 +1,33 @@
+.pp-page {
+  padding: 80px 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: inherit;
+}
+
+.pp-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #0a1f44;
+}
+
+.pp-updated {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 32px;
+}
+
+.pp-heading {
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 28px;
+  margin-bottom: 10px;
+  color: #0a1f44;
+}
+
+.pp-text {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #333;
+}
