@@ -48,10 +48,8 @@ const FAQS = [
 ];
 
 const KEY_DATES = [
-  { label: 'Applications Open', date: 'Jan 2026' },
-  { label: 'Last Date',         date: 'Jul 30, 2026' },
-  { label: 'Interviews',        date: 'May – Jun' },
-  { label: 'Commencement',      date: 'Jul 2026' },
+  { label: 'Applications Open', date: 'MBA Batch 2026–28' },
+  { label: 'Classes Commence',  date: 'August 2026' },
 ];
 
 const ZOHO_FORM_URL = 'https://forms.zohopublic.in/gsbmtechgm1/form/GSBMChennaiMBAPROGRAM/formperma/TJrU6LXsWTqAWh5ZbxgeWMkmSW2-aK-lzoJ2xn3iEjQ';
@@ -123,6 +121,9 @@ const ApplyNow = () => {
   const selectWho = (val) => { setWho(val); setStepNum(2); };
   const selectQual = (val) => { setQual(val); setStepNum(3); };
   const goBack = () => { setError(''); setStepNum(s => Math.max(1, s - 1)); };
+  const scrollToForm = () => {
+    document.getElementById('apply-form')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
   /**
    * Fire-and-forget lead save. Never blocks or gates the redirect.
@@ -212,17 +213,28 @@ const ApplyNow = () => {
         .ap-nav-tag   { font-size: 10px; color: rgba(255,255,255,.38); border-left: 1px solid rgba(255,255,255,.14); padding-left: 10px; }
         .ap-nav-sec   { display: flex; align-items: center; gap: 4px; font-size: 11px; color: rgba(255,255,255,.32); }
 
-        /* URGENCY */
+        /* HEADER */
         .ap-urgency {
           background: var(--red);
-          padding: 9px 16px;
+          padding: 14px 24px;
           display: flex; align-items: center; justify-content: center;
-          gap: 8px;
-          font-size: 12px; color: #fff; font-weight: 600;
-          text-align: center; flex-wrap: wrap;
+          gap: 20px; flex-wrap: wrap;
         }
-        .ap-urgency-dot { width: 7px; height: 7px; border-radius: 50%; background: #ffcc44; flex-shrink: 0; animation: blink 1.4s infinite; }
-        @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
+        .ap-urgency-text {
+          font-size: 14px; color: #fff; font-weight: 700;
+          letter-spacing: .01em;
+        }
+        .ap-urgency-btn {
+          background: var(--gold); color: var(--navy);
+          border: none; border-radius: 8px;
+          padding: 11px 28px;
+          font-size: 14px; font-weight: 800; font-family: inherit;
+          letter-spacing: .02em;
+          cursor: pointer; transition: all .15s;
+          -webkit-tap-highlight-color: transparent;
+        }
+        .ap-urgency-btn:hover { background: #dcb95c; transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,.2); }
+        .ap-urgency-btn:active { transform: scale(.98); }
 
         /* HERO */
         .ap-hero { background: linear-gradient(150deg, #1a2340 60%, #253060); flex: 1; }
@@ -364,7 +376,7 @@ const ApplyNow = () => {
         .f-sec { display: flex; align-items: center; justify-content: center; gap: 5px; font-size: 10.5px; color: #ccc; margin-top: 14px; }
 
         .f-divider { height: 1px; background: var(--border); margin: 20px 0; }
-        .f-dates   { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+        .f-dates   { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
         .f-date    { background: #fafafa; border: 1px solid var(--border); border-radius: 8px; padding: 8px 6px; text-align: center; }
         .f-date-val{ display: block; font-size: 12px; font-weight: 700; color: var(--red); }
         .f-date-lbl{ display: block; font-size: 9px; color: var(--muted); margin-top: 2px; }
@@ -420,7 +432,9 @@ const ApplyNow = () => {
         @media (max-width: 600px) {
           .ap-nav     { padding: 0 14px; }
           .ap-nav-tag { display: none; }
-          .ap-urgency { font-size: 11px; padding: 8px 12px; }
+          .ap-urgency { padding: 12px 14px; gap: 12px; }
+          .ap-urgency-text { font-size: 12.5px; }
+          .ap-urgency-btn  { padding: 9px 20px; font-size: 13px; }
           .ap-right   { padding: 22px 16px; }
           .ap-left    { padding: 24px 16px 36px; }
           .f-title    { font-size: 15px; }
@@ -459,10 +473,8 @@ const ApplyNow = () => {
         </nav>
 
         <div className="ap-urgency">
-          <div className="ap-urgency-dot" />
-          MBA Admissions 2026 Closing — Last Date:
-          <strong style={{ margin: '0 4px' }}>July 30, 2026</strong>
-          · Limited Seats · Apply Now
+          <span className="ap-urgency-text">Applications Open — MBA Batch 2026–28</span>
+          <button className="ap-urgency-btn" onClick={scrollToForm}>Apply Now</button>
         </div>
 
         <div className="ap-hero">
@@ -500,7 +512,7 @@ const ApplyNow = () => {
             </div>
 
             {/* RIGHT — QUIZ + FORM, NO OTP */}
-            <div className="ap-right">
+            <div className="ap-right" id="apply-form">
 
               <div className="f-badge">Admissions Closing 30 July 2026</div>
               <h2 className="f-title">Get a Free Counselling Callback</h2>
