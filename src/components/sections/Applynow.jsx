@@ -659,7 +659,7 @@ const ApplyNow = () => {
               <div key={i} className="testi-card">
                 <div className="testi-stars">{'★'.repeat(t.rating)}</div>
                 <p className="testi-text">"{t.text}"</p>
-                <div className="testi-name">{t.name}</div>
+                <div className="testi-name">{t.name}</div> http://192.168.29.17:5173/
                 <div className="testi-loc">{t.loc}</div>
               </div>
             ))}
