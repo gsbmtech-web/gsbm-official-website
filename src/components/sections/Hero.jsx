@@ -107,10 +107,11 @@ function Hero() {
           </p>
 
           <p className="desc">
-            A boutique MBA institution &nbsp;
-            <strong>in Chennai with </strong>
-            anIndustry-Integrated Curriculum, Experienced faculty, and relentless focus on Employability, built over 25&nbsp;years of of Commitment to student success.
-          </p>
+  A boutique MBA institution&nbsp;Chennai with an Industry-Integrated
+  Curriculum, experienced faculty, and a relentless focus on
+  Employability — built over 25&nbsp;years of commitment to
+  student success.
+</p>
 
           <div className="hero-btns">
             {/* ✅ useCallback handlers — no inline arrow functions */}
