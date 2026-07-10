@@ -93,7 +93,7 @@ const SOCIAL_LINKS = [
     id: 'linkedin',
     Icon: FiLinkedin,
     label: 'LinkedIn',
-    href: 'https://www.linkedin.com/company/ganesan-school-of-business-management',
+    href: 'https://www.linkedin.com/company/ganesan-school-of-business-management-chennai/about/?viewAsMember=true',
   },
   {
     id: 'twitter',
