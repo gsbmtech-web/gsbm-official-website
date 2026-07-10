@@ -2,21 +2,21 @@ import { memo, useEffect, useRef, useCallback, startTransition } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { go } from '../../utils/scroll';
 import vmrfLogoFull from '../../assets/vmrflogo.png';
-import aicteLogo    from '../../assets/logos/aicte.webp';
-import naacLogo     from '../../assets/logos/naac.png';
-import yearslogo    from '../../assets/logos/years.png';
+import aicteLogo from '../../assets/logos/aicte.webp';
+import naacLogo from '../../assets/logos/naac.png';
+import yearslogo from '../../assets/logos/years.png';
 import './Hero.css';
 
 // ─── Static data outside component — no re-creation on every render ──────────
 
 
-const VIDEO_SRC    = 'https://res.cloudinary.com/damisreoh/video/upload/f_auto,q_auto/AVIT_New_Video_eb764176d4_online-video-cutter.com_esmbi5.mp4';
+const VIDEO_SRC = 'https://res.cloudinary.com/damisreoh/video/upload/f_auto,q_auto/AVIT_New_Video_eb764176d4_online-video-cutter.com_esmbi5.mp4';
 const VIDEO_POSTER = 'https://res.cloudinary.com/damisreoh/video/upload/f_auto,q_auto,w_auto/so_0/AVIT_New_Video_eb764176d4_online-video-cutter.com_esmbi5.jpg';
 
 // ─── Hero ─────────────────────────────────────────────────────────────────────
 function Hero() {
-  const heroRef   = useRef(null);
-  const navigate  = useNavigate();
+  const heroRef = useRef(null);
+  const navigate = useNavigate();
 
   // ✅ useCallback — stable reference, no new function on every render
   const handleApplyClick = useCallback(() => {
@@ -27,13 +27,13 @@ function Hero() {
 
   // ✅ useCallback — stable reference for Explore button
   const handleExploreClick = useCallback(() => {
-  const link = document.createElement('a');
-  link.href = '/brochure.pdf'; // 👈 update this to match your exact filename
-  link.download = 'GSBM_Brochure.pdf'; // 👈 the name the user sees when downloading
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-}, []);
+    const link = document.createElement('a');
+    link.href = '/brochure.pdf'; // 👈 update this to match your exact filename
+    link.download = 'GSBM_Brochure.pdf'; // 👈 the name the user sees when downloading
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }, []);
 
   // ✅ Animations: use requestIdleCallback so it never blocks first paint
   useEffect(() => {
@@ -75,7 +75,7 @@ function Hero() {
       </video>
 
       <div className="hero-overlay" aria-hidden="true" />
-      <div className="hero-topbar"  aria-hidden="true" />
+      <div className="hero-topbar" aria-hidden="true" />
       <div className="hero-leftbar" aria-hidden="true" />
 
       <div className="hero-grid-wrap">
@@ -108,9 +108,8 @@ function Hero() {
 
           <p className="desc">
             A boutique MBA institution &nbsp;
-            <strong>in Chennai with an</strong>
-            Industry-Integrated Curriculum, Experienced faculty, and relentless focus on
-            Employability, built over 25&nbsp;years of Commitment to student success.
+            <strong>in Chennai with </strong>
+            anIndustry-Integrated Curriculum, Experienced faculty, and relentless focus on Employability, built over 25&nbsp;years of of Commitment to student success.
           </p>
 
           <div className="hero-btns">
@@ -132,8 +131,8 @@ function Hero() {
             </button>
           </div>
 
-          
-          
+
+
         </div>
       </div>
 
