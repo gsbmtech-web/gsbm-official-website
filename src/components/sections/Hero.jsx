@@ -107,10 +107,10 @@ function Hero() {
           </p>
 
           <p className="desc">
-            A boutique MBA institution under&nbsp;
-            <strong>Vinayaka Mission's Research Foundation (Deemed to be University)</strong>,
-            Chennai. Industry-Integrated Curriculum, Experienced faculty, and relentless focus on
-            Employability — built over 25&nbsp;years of Commitment to student success.
+            A boutique MBA institution &nbsp;
+            <strong>in Chennai with an</strong>
+            Industry-Integrated Curriculum, Experienced faculty, and relentless focus on
+            Employability, built over 25&nbsp;years of Commitment to student success.
           </p>
 
           <div className="hero-btns">
