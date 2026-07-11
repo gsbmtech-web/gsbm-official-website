@@ -101,12 +101,12 @@ const ContactInfo = memo(function ContactInfo() {
         The visible text is fine for sighted users.
       */}
       <a
-        href="mailto:manageradmissionsgsbm@vinayakamissions.com"
+        href="mailto:admissions@gsbm.co.in"
         className="about-contact-row"
-        aria-label="Email admissions at manageradmissionsgsbm@vinayakamissions.com"
+        aria-label="Email admissions at admissions@gsbm.co.in"
       >
         {EmailIcon}
-        <span>manageradmissionsgsbm@vinayakamissions.com</span>
+        <span>admissions@gsbm.co.in</span>
       </a>
     </div>
   );

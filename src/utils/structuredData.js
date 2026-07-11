@@ -17,7 +17,7 @@ export const generateOrganizationSchema = () => ({
     "@type": "ContactPoint",
     "telephone": "+918667690672",
     "contactType": "admissions",
-    "email": "manageradmissionsgsbm@vinayakamissions.com",
+    "email": "admissions@gsbm.co.in",
     "availableLanguage": "English"
   },
   "sameAs": [

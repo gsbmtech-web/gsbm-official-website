@@ -253,7 +253,7 @@ function Navbar() {
             </a>
             <span className="gsbm-divider" aria-hidden="true" />
             <a
-              href="mailto:manageradmissionsGSBM@vinayakamissions.com"
+              href="mailto:admissions@gsbm.co.in"
               className="gsbm-toplink"
               aria-label="Email admissions office"
             >

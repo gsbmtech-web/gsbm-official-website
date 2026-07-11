@@ -104,7 +104,7 @@ const Footer = () => {
             height={60}
           />
           <p className="footer-tagline">
-            Ganesan School of Business Management, under Vinayaka Mission's Research Foundation
+            Ganesan School of Business Management
             (Deemed to be University), Chennai — building employable, ethical, and industry-ready leaders.
           </p>
           <button className="footer-cta" onClick={handleApply}>
@@ -144,8 +144,8 @@ const Footer = () => {
           </div>
           <div className="footer-contact-item">
             <FiMail size={15} className="footer-contact-icon" aria-hidden="true" />
-            <a href="mailto:manageradmissionsgsbm@vinayakamissions.com">
-              manageradmissionsgsbm@vinayakamissions.com
+            <a href="mailto:admissions@gsbm.co.in">
+              admissions@gsbm.co.in
             </a>
           </div>
 

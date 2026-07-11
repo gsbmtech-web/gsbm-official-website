@@ -39,10 +39,10 @@ const CONTACT_CARDS = [
     label: 'Email',
     content: (
       <a
-        href="mailto:manageradmissionsgsbm@vinayakamissions.com"
+        href="mailto:admissions@gsbm.co.in"
         className="contact-card-value"
       >
-        manageradmissionsgsbm@vinayakamissions.com
+        admissions@gsbm.co.in
       </a>
     ),
   },

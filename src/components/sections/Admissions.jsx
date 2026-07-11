@@ -26,11 +26,9 @@ const faqs = [
 ];
 
 const quickFactsRows = [
-  { label: 'Applications Open', value: 'January 2026' },
-  { label: 'Last Date', value: 'June 30, 2026' },
-  { label: 'Interviews', value: 'May – June 2026' },
-  { label: 'Results', value: 'Rolling basis' },
-  { label: 'Commencement', value: 'July 2026' },
+  { label: 'Applications', value: 'Applications open for Batch 2026' },
+  { label: 'Admission', value: 'Based on entrance exam and interview' },
+  { label: 'Commencement', value: 'Class commencement August 2026' },
 ];
 
 // ─── Sub-components ──────────────────────────────────────────────────────────
