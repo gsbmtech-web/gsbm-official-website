@@ -35,13 +35,13 @@ const SOCIAL_LINKS = [
     id: 'facebook',
     Icon: FiFacebook,
     label: 'Facebook',
-    href: 'https://www.facebook.com/ganesanschoolofbusinessmanagement/',
+    href: 'https://www.facebook.com/share/1FzGTgtwYY/',
   },
   {
     id: 'instagram',
     Icon: FiInstagram,
     label: 'Instagram',
-    href: 'https://www.instagram.com/ganesanschoolofbusinessmanagem/',
+    href: 'https://www.instagram.com/gsbm_chennai/',
   },
   {
     id: 'linkedin',
@@ -49,12 +49,7 @@ const SOCIAL_LINKS = [
     label: 'LinkedIn',
     href: 'https://www.linkedin.com/company/ganesan-school-of-business-management-chennai/about/?viewAsMember=true',
   },
-  {
-    id: 'twitter',
-    Icon: FiTwitter,
-    label: 'X',
-    href: 'https://x.com/gsbmchennaiin',
-  },
+  
 ];
 
 const scrollToId = (id) => {
