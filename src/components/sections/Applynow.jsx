@@ -11,8 +11,8 @@ import {
 ───────────────────────────────────────── */
 const WHY_GSBM = [
   'AICTE Approved MBA Program in Chennai',
-  'Affiliated to Vinayaka Mission University (Deemed)',
-  'MBA Without Entrance Exam — Any Graduate Eligible',
+  "Affiliated to Vinayaka Mission's Research Foundation (Deemed to be University under Section 3 of the UGC Act, 1956)",
+  'Any Graduate Eligible',
   '100% Placement Support with Industry Partners',
   'Affordable MBA Fees with Scholarship Options',
   'UGC Recognised · NAAC Accredited Institution',
@@ -257,7 +257,6 @@ const ApplyNow = () => {
         .ap-badge-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); }
         .ap-h1 { font-size: clamp(1.6rem, 2.8vw, 2.4rem); font-weight: 800; color: #fff; line-height: 1.22; margin-bottom: 12px; }
         .ap-h1 em { color: var(--gold); font-style: normal; }
-        .ap-sub { font-size: 13.5px; color: rgba(255,255,255,.5); line-height: 1.72; margin-bottom: 28px; max-width: 440px; }
         .ap-points { display: flex; flex-direction: column; gap: 11px; margin-bottom: 32px; }
         .ap-point  { display: flex; align-items: flex-start; gap: 10px; font-size: 13.5px; color: rgba(255,255,255,.82); line-height: 1.5; }
         .ap-check  {
@@ -424,7 +423,6 @@ const ApplyNow = () => {
           .ap-left  { order: 2; padding: 32px 20px 40px; }
           .ap-stats { justify-content: center; gap: 20px; }
           .ap-h1    { font-size: clamp(1.45rem, 5vw, 2rem); }
-          .ap-sub   { max-width: 100%; }
           .how-grid   { grid-template-columns: 1fr; gap: 14px; max-width: 440px; }
           .testi-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
           .f-dates    { grid-template-columns: repeat(2, 1fr); }
@@ -489,10 +487,6 @@ const ApplyNow = () => {
                 Top MBA College in Chennai —<br />
                 <em>GSBM, Tamil Nadu</em>
               </h1>
-              <p className="ap-sub">
-                AICTE Approved · Affiliated to Vinayaka Mission's Research Foundation
-                (Deemed University) · MBA Without Entrance Exam · Admissions Open 2026
-              </p>
               <div className="ap-points">
                 {WHY_GSBM.map((point, i) => (
                   <div key={i} className="ap-point">
