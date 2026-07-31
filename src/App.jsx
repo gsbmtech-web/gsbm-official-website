@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useRef, useState, memo } from 'react';
+import { lazy, Suspense, useEffect, memo } from 'react';
 import { Analytics } from "@vercel/analytics/react"
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { HelmetProvider, Helmet } from 'react-helmet-async';
@@ -10,10 +10,12 @@ import ApplyNow from './components/sections/Applynow';
 import NotFound from './components/ui/NotFound';
 import ThankYou from './components/sections/ThankYou.jsx';
 
+// Eager — above-the-fold, first thing anyone sees on Home. Code-splitting
+// these caused a visible pop-in/layout-shift on first paint.
+import Hero from './components/sections/Hero';
+import LogoStrip from './components/sections/LogoStrip';
 
-// ─── Lazy sections ────────────────────────────────────────────────────────────
-const Hero = lazy(() => import('./components/sections/Hero'));
-const LogoStrip = lazy(() => import('./components/sections/LogoStrip'));
+// ─── Lazy sections (below-the-fold — fine to code-split) ─────────────────────
 const About = lazy(() => import('./components/sections/About'));
 const Leadership = lazy(() => import('./components/sections/Leadership'));
 const Programs = lazy(() => import('./components/sections/Programs'));
@@ -28,54 +30,186 @@ const Calbutton = lazy(() => import('./components/sections/Calbutton.jsx'));
 const PrivacyPolicy = lazy(() => import('./components/sections/PrivacyPolicy.jsx'));
 
 // ─── LazySection ─────────────────────────────────────────────────────────────
-const LazySection = ({ children, fallback }) => (
-  <Suspense fallback={fallback ?? <SectionLoader />}>
+// minHeight is a rough estimate of the section's real rendered height, used
+// only for the loading skeleton so nothing shoves the layout around as each
+// lazy section pops in. These are estimates — check real rendered heights
+// in the browser and tighten them if anything still visibly jumps.
+const LazySection = ({ children, minHeight }) => (
+  <Suspense fallback={<SectionLoader minHeight={minHeight} />}>
     {children}
   </Suspense>
 );
 
 // ─── ScrollToTop ──────────────────────────────────────────────────────────────
+// Standard multi-page behaviour: every route change resets scroll to top.
 const ScrollToTop = memo(() => {
-  const { pathname, hash } = useLocation();
-
+  const { pathname } = useLocation();
   useEffect(() => {
-    if (hash) {
-      const id = setTimeout(() => {
-        const el = document.querySelector(hash);
-        if (el) {
-          const nav = document.querySelector('.gsbm-nav');
-          const navH = nav ? nav.getBoundingClientRect().height : 80;
-          const top = el.getBoundingClientRect().top + window.scrollY - navH;
-          window.scrollTo({ top, behavior: 'smooth' });
-        }
-      }, 300);
-      return () => clearTimeout(id);
-    } else {
-      window.scrollTo({ top: 0, behavior: 'instant' });
-    }
-  }, [pathname, hash]);
-
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [pathname]);
   return null;
 });
 ScrollToTop.displayName = 'ScrollToTop';
 
+// ─── SEO meta per page ─────────────────────────────────────────────────────
+// Placeholder copy — swap for real, reviewed copy before this ships.
+const PAGE_META = {
+  home: {
+    title: 'GSBM – Ganesan School of Business Management | MBA College Chennai',
+    description: "Transform your career with GSBM's industry-focused MBA programs. AICTE approved, VMRF-DU affiliated. Apply now for the 2026–2028 batch.",
+    path: '/',
+  },
+  about: {
+    title: 'About GSBM | Ganesan School of Business Management, Chennai',
+    description: 'Approvals, accreditation, vision, mission, and leadership at Ganesan School of Business Management — an AICTE approved MBA institution in Chennai.',
+    path: '/about',
+  },
+  leadership: {
+    title: 'Leadership | GSBM Chennai',
+    description: 'Meet the leadership of Ganesan School of Business Management — Chancellor, Patrons, and Director.',
+    path: '/leadership',
+  },
+  programs: {
+    title: 'MBA Programmes & Specialisations | GSBM Chennai',
+    description: "Explore GSBM's MBA specialisations in Chennai — Marketing, HR, Finance, Business Analytics & AI, Operations, Logistics, and Healthcare Management.",
+    path: '/programs',
+  },
+  admissions: {
+    title: 'MBA Admissions 2026 | GSBM Chennai',
+    description: 'GSBM MBA admissions 2026 — eligibility, entrance exams accepted, the step-by-step process, and key dates.',
+    path: '/admissions',
+  },
+  faculty: {
+    title: 'Faculty | GSBM Chennai',
+    description: "Meet the faculty at GSBM — doctoral credentials and real corporate experience behind Chennai's industry-focused MBA programme.",
+    path: '/faculty',
+  },
+  placements: {
+    title: 'Placements | GSBM Chennai',
+    description: 'GSBM MBA placement training, recruiter partners, and student success stories.',
+    path: '/placements',
+  },
+  campus: {
+    title: 'Campus & Infrastructure | GSBM Chennai',
+    description: "Explore GSBM's campus on Old Mahabalipuram Road (OMR), Chennai — smart classrooms, library, labs, sports facilities, and the Ganesan Incubation and Entrepreneurship Centre.",
+    path: '/campus',
+  },
+  contact: {
+    title: 'Contact GSBM | Ganesan School of Business Management, Chennai',
+    description: 'Get in touch with GSBM admissions — phone, email, WhatsApp, campus address, and location map.',
+    path: '/contact',
+  },
+};
+
+const PageHelmet = ({ meta }) => (
+  <Helmet>
+    <title>{meta.title}</title>
+    <meta name="description" content={meta.description} />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content={meta.title} />
+    <meta property="og:description" content={meta.description} />
+    <meta property="og:image" content="/og-image.jpg" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href={`https://gsbm.co.in${meta.path === '/' ? '' : meta.path}`} />
+  </Helmet>
+);
+
+// ─── Standalone-page layout ──────────────────────────────────────────────────
+// Every dedicated section page uses this: Navbar + that section's content +
+// Footer, own ErrorBoundary, own SEO meta — same shape as the existing
+// ApplyPage.
+const StandalonePage = ({ metaKey, children }) => (
+  <ErrorBoundary>
+    <Navbar />
+    <main id="main-content" tabIndex={-1}>
+      <PageHelmet meta={PAGE_META[metaKey]} />
+      {children}
+    </main>
+    <Footer />
+  </ErrorBoundary>
+);
+
 // ─── HomePage ─────────────────────────────────────────────────────────────────
+// The full one-page scroll — every section, in order, exactly like the
+// original site.
 const HomePage = () => (
-  <main id="main-content" tabIndex={-1}>
-    <Suspense fallback={<SectionLoader />}><Hero /></Suspense>
-    <Suspense fallback={<SectionLoader />}><LogoStrip /></Suspense>
-    <Suspense fallback={<SectionLoader />}><About /></Suspense>
-    <LazySection><Leadership /></LazySection>
-    <LazySection><Programs /></LazySection>
-    <LazySection><Gsbmwhy /></LazySection>
-    <LazySection><Campus /></LazySection>
-    <LazySection><GIECSection /></LazySection>
-    <LazySection><Admissions /></LazySection>
-    <LazySection><Faculty /></LazySection>
-    <LazySection><Placements /></LazySection>
-    <LazySection><Contact /></LazySection>
-    <LazySection><Calbutton /></LazySection>
-  </main>
+  <ErrorBoundary>
+    <Navbar />
+    <main id="main-content" tabIndex={-1}>
+      <PageHelmet meta={PAGE_META.home} />
+      <Hero />
+      <LogoStrip />
+      <Suspense fallback={<SectionLoader minHeight={900} />}><About /></Suspense>
+      <LazySection minHeight={1400}><Leadership /></LazySection>
+      <LazySection minHeight={800}><Programs /></LazySection>
+      <LazySection minHeight={700}><Gsbmwhy /></LazySection>
+      <LazySection minHeight={900}><Campus /></LazySection>
+      <LazySection minHeight={500}><GIECSection /></LazySection>
+      <LazySection minHeight={1000}><Admissions /></LazySection>
+      <LazySection minHeight={600}><Faculty /></LazySection>
+      <LazySection minHeight={800}><Placements /></LazySection>
+      <LazySection minHeight={500}><Contact /></LazySection>
+      <LazySection minHeight={300}><Calbutton /></LazySection>
+    </main>
+    <Footer />
+  </ErrorBoundary>
+);
+
+// ─── Dedicated section pages ──────────────────────────────────────────────────
+const AboutPage = () => (
+  <StandalonePage metaKey="about">
+    <LazySection minHeight={900}><About /></LazySection>
+    <LazySection minHeight={300}><Calbutton /></LazySection>
+  </StandalonePage>
+);
+
+const LeadershipPage = () => (
+  <StandalonePage metaKey="leadership">
+    <LazySection minHeight={1400}><Leadership /></LazySection>
+    <LazySection minHeight={300}><Calbutton /></LazySection>
+  </StandalonePage>
+);
+
+const ProgramsPage = () => (
+  <StandalonePage metaKey="programs">
+    <LazySection minHeight={800}><Programs /></LazySection>
+    <LazySection minHeight={300}><Calbutton /></LazySection>
+  </StandalonePage>
+);
+
+const AdmissionsPage = () => (
+  <StandalonePage metaKey="admissions">
+    <LazySection minHeight={1000}><Admissions /></LazySection>
+  </StandalonePage>
+);
+
+const FacultyPage = () => (
+  <StandalonePage metaKey="faculty">
+    <LazySection minHeight={600}><Faculty /></LazySection>
+    <LazySection minHeight={300}><Calbutton /></LazySection>
+  </StandalonePage>
+);
+
+const PlacementsPage = () => (
+  <StandalonePage metaKey="placements">
+    <LazySection minHeight={800}><Placements /></LazySection>
+    <LazySection minHeight={300}><Calbutton /></LazySection>
+  </StandalonePage>
+);
+
+const CampusPage = () => (
+  <StandalonePage metaKey="campus">
+    <LazySection minHeight={900}><Campus /></LazySection>
+    <LazySection minHeight={500}><GIECSection /></LazySection>
+    <LazySection minHeight={300}><Calbutton /></LazySection>
+  </StandalonePage>
+);
+
+const ContactPage = () => (
+  <StandalonePage metaKey="contact">
+    <LazySection minHeight={500}><Contact /></LazySection>
+  </StandalonePage>
 );
 
 // ─── ApplyNow page layout ─────────────────────────────────────────────────────
@@ -96,29 +230,20 @@ export default function App() {
   return (
     <HelmetProvider>
       <BrowserRouter>
-        <Helmet>
-          <title>GSBM – Ganesan School of Business Management</title>
-          <meta name="description" content="Transform your career with GSBM's industry-focused MBA programs. Apply now for the 2026–2028 batch." />
-          <meta name="robots" content="index, follow" />
-          <meta property="og:title" content="GSBM – Ganesan School of Business Management" />
-          <meta property="og:description" content="Transform your career with GSBM's industry-focused MBA programs." />
-          <meta property="og:image" content="/og-image.jpg" />
-          <meta property="og:type" content="website" />
-          <meta name="twitter:card" content="summary_large_image" />
-          <link rel="canonical" href="https://gsbm.co.in" />
-        </Helmet>
-
         <a href="#main-content" className="skip-link">Skip to main content</a>
         <ScrollToTop />
 
         <Routes>
-          <Route path="/" element={
-            <ErrorBoundary>
-              <Navbar />
-              <HomePage />
-              <Footer />
-            </ErrorBoundary>
-          } />
+          <Route path="/" element={<HomePage />} />
+
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/leadership" element={<LeadershipPage />} />
+          <Route path="/programs" element={<ProgramsPage />} />
+          <Route path="/admissions" element={<AdmissionsPage />} />
+          <Route path="/faculty" element={<FacultyPage />} />
+          <Route path="/placements" element={<PlacementsPage />} />
+          <Route path="/campus" element={<CampusPage />} />
+          <Route path="/contact" element={<ContactPage />} />
 
           <Route path="/apply" element={
             <ErrorBoundary>

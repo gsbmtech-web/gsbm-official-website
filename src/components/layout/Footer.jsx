@@ -14,14 +14,14 @@ import LogoImg from '../../assets/mainlogo.png';
 import './Footer.css';
 
 const footerLinks = [
-  { label: 'About GSBM',  id: 'about'      },
-  { label: 'Leadership',  id: 'leadership'  },
-  { label: 'Programs',    id: 'programs'    },
-  { label: 'Campus',      id: 'campus'      },
-  { label: 'Admissions',  id: 'admissions'  },
-  { label: 'Faculty',     id: 'faculty'     },
-  { label: 'Placements',  id: 'placements'  },
-  { label: 'Contact',     id: 'contact'     },
+  { label: 'About GSBM',  id: 'about',      path: '/about'      },
+  { label: 'Leadership',  id: 'leadership', path: '/leadership' },
+  { label: 'Programs',    id: 'programs',   path: '/programs'   },
+  { label: 'Campus',      id: 'campus',     path: '/campus'     },
+  { label: 'Admissions',  id: 'admissions', path: '/admissions' },
+  { label: 'Faculty',     id: 'faculty',    path: '/faculty'    },
+  { label: 'Placements',  id: 'placements', path: '/placements' },
+  { label: 'Contact',     id: 'contact',    path: '/contact'    },
 ];
 
 const SOCIAL_LINKS = [
@@ -49,32 +49,16 @@ const SOCIAL_LINKS = [
     label: 'LinkedIn',
     href: 'https://www.linkedin.com/company/ganesan-school-of-business-management-chennai/about/?viewAsMember=true',
   },
-  
-];
 
-const scrollToId = (id) => {
-  const el = document.getElementById(id);
-  if (el) {
-    el.scrollIntoView({ behavior: 'smooth' });
-    return true;
-  }
-  return false;
-};
+];
 
 const Footer = () => {
   const navigate = useNavigate();
 
-  const handleScroll = useCallback((e) => {
+  // Plain route navigation — every link is a genuinely separate page now.
+  const handleNav = useCallback((e, path) => {
     e.preventDefault();
-    const id = e.currentTarget.dataset.scrollto;
-    if (!scrollToId(id)) {
-      startTransition(() => {
-        navigate('/');
-      });
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => scrollToId(id));
-      });
-    }
+    startTransition(() => navigate(path));
   }, [navigate]);
 
   const handleApply = useCallback((e) => {
@@ -114,10 +98,9 @@ const Footer = () => {
             {footerLinks.map((link) => (
               <a
                 key={link.id}
-                href={`#${link.id}`}
+                href={link.path}
                 className="footer-link"
-                data-scrollto={link.id}
-                onClick={handleScroll}
+                onClick={(e) => handleNav(e, link.path)}
               >
                 {link.label}
               </a>

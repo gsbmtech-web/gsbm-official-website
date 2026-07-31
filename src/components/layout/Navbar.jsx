@@ -1,21 +1,28 @@
 import { useState, useEffect, useCallback, useRef, startTransition, memo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import vmrfLogoFull from '../../assets/mainlogo.png';
 import './Navbar.css';
 
 // ─── Static data — outside component, never recreated ────────────────────────
 const NAV_ITEMS = [
-  { label: 'Home',       id: 'home'       },
-  { label: 'About',      id: 'about'      },
-  { label: 'Leadership', id: 'leadership' },
-  { label: 'Programs',   id: 'programs'   },
-  { label: 'Campus',     id: 'campus'     },
-  { label: 'Admissions', id: 'admissions' },
-  { label: 'Placements', id: 'placements' },
-  { label: 'Contact',    id: 'contact'    },
+  { label: 'Home',       id: 'home',       path: '/'            },
+  { label: 'About',      id: 'about',      path: '/about'       },
+  { label: 'Leadership', id: 'leadership', path: '/leadership'  },
+  { label: 'Programs',   id: 'programs',   path: '/programs'    },
+  { label: 'Campus',     id: 'campus',     path: '/campus'      },
+  { label: 'Admissions', id: 'admissions', path: '/admissions'  },
+  { label: 'Placements', id: 'placements', path: '/placements'  },
+  { label: 'Contact',    id: 'contact',    path: '/contact'     },
 ];
 
-const SECTION_IDS = NAV_ITEMS.map((i) => i.id);
+const SECTION_IDS = NAV_ITEMS.map((i) => i.id).filter((id) => id !== 'home');
+
+// Best-effort initial active item from the current URL, so there's no flash
+// of "Home" highlighted before the IntersectionObserver corrects it.
+const pathToId = (pathname) => {
+  const match = NAV_ITEMS.find((i) => i.path === pathname);
+  return match ? match.id : 'home';
+};
 
 // ─── Static SVG icons ─────────────────────────────────────────────────────────
 const PhoneIcon = (
@@ -51,12 +58,12 @@ const CloseIcon = (
 // ─── NavLink ──────────────────────────────────────────────────────────────────
 const NavLink = memo(function NavLink({ item, isActive, onClick }) {
   const handleClick = useCallback(
-    (e) => onClick(e, item.id),
-    [onClick, item.id]
+    (e) => onClick(e, item.path),
+    [onClick, item.path]
   );
   return (
     <a
-      href={`#${item.id}`}
+      href={item.path}
       className={`gsbm-navlink${isActive ? ' gsbm-navlink--active' : ''}`}
       onClick={handleClick}
       aria-current={isActive ? 'page' : undefined}
@@ -69,12 +76,12 @@ const NavLink = memo(function NavLink({ item, isActive, onClick }) {
 // ─── DrawerLink ───────────────────────────────────────────────────────────────
 const DrawerLink = memo(function DrawerLink({ item, isActive, isOpen, index, onClick }) {
   const handleClick = useCallback(
-    (e) => onClick(e, item.id),
-    [onClick, item.id]
+    (e) => onClick(e, item.path),
+    [onClick, item.path]
   );
   return (
     <a
-      href={`#${item.id}`}
+      href={item.path}
       className={`gsbm-drawer-link${isActive ? ' gsbm-drawer-link--active' : ''}`}
       onClick={handleClick}
       style={{ '--delay': `${index * 45}ms` }}
@@ -89,9 +96,10 @@ const DrawerLink = memo(function DrawerLink({ item, isActive, isOpen, index, onC
 
 // ─── Navbar ───────────────────────────────────────────────────────────────────
 function Navbar() {
+  const location = useLocation();
   const [scrolled,   setScrolled]   = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [activeNav,  setActiveNav]  = useState('home');
+  const [activeNav,  setActiveNav]  = useState(() => pathToId(location.pathname));
   const navigate  = useNavigate();
   const drawerRef = useRef(null);
   const hamRef    = useRef(null);
@@ -103,19 +111,17 @@ function Navbar() {
   }, [navigate]);
 
   // ── Logo click ────────────────────────────────────────────────────────────────
-  // If already on home, smooth scroll to top.
-  // If on another route, navigate to home — ScrollToTop handles the scroll.
   const handleLogoClick = useCallback((e) => {
     e.preventDefault();
     setMobileOpen(false);
-    if (window.location.pathname === '/') {
+    if (location.pathname === '/') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
       startTransition(() => navigate('/'));
     }
-  }, [navigate]);
+  }, [navigate, location.pathname]);
 
-  // ── Scroll detection ─────────────────────────────────────────────────────────
+  // ── Scroll detection (navbar shrink/shadow state) ────────────────────────────
   useEffect(() => {
     let ticking = false;
     const onScroll = () => {
@@ -131,6 +137,13 @@ function Navbar() {
   }, []);
 
   // ── Active section tracking via IntersectionObserver ─────────────────────────
+  // On Home, every section id exists in the DOM, so this behaves like a
+  // classic scroll-spy — the nav highlights whichever section you're
+  // scrolled past. On a standalone page (e.g. /programs), only that one
+  // section's id exists, so it naturally becomes — and stays — the active
+  // item without any extra branching. Runs fresh on every mount, which
+  // happens automatically on every route change since these are genuinely
+  // separate pages now.
   useEffect(() => {
     const observers = SECTION_IDS.reduce((acc, id) => {
       const el = document.getElementById(id);
@@ -197,36 +210,15 @@ function Navbar() {
     return () => document.removeEventListener('keydown', trap);
   }, [mobileOpen]);
 
-  // ── Smooth scroll to section (works from any route) ──────────────────────────
-  // FIX: If not on home page, navigate to /#id so ScrollToTop handles the scroll.
-  // If already on home, scroll directly — but sections like Campus/Admissions/
-  // Placements/Contact are LazySection-wrapped and may not be in the DOM yet
-  // if the user hasn't scrolled near them. So we first trigger their render by
-  // navigating with the hash, which causes a re-mount with the hash in the URL,
-  // then ScrollToTop (with its 300ms delay) finds the element after it mounts.
-  const handleNavClick = useCallback((e, id) => {
+  // ── Nav click — plain route navigation ────────────────────────────────────────
+  // Every item is a genuinely separate page now, so this is just a normal
+  // client-side navigate. No scroll math needed here — the destination page
+  // renders at the top (ScrollToTop in App.jsx resets scroll on every route
+  // change) and, on Home, the browser is already there naturally.
+  const handleNavClick = useCallback((e, path) => {
     e.preventDefault();
-    setActiveNav(id);
     setMobileOpen(false);
-
-    if (window.location.pathname !== '/') {
-      // On a different route — navigate home with hash; ScrollToTop handles scroll
-      startTransition(() => navigate(`/#${id}`));
-      return;
-    }
-
-    // On home page — try direct scroll first
-    const el = document.getElementById(id);
-    if (el) {
-      const nav  = document.querySelector('.gsbm-nav');
-      const navH = nav ? nav.getBoundingClientRect().height : 80;
-      const top  = el.getBoundingClientRect().top + window.scrollY - navH;
-      window.scrollTo({ top, behavior: 'smooth' });
-    } else {
-      // Section not in DOM yet (lazy, hasn't mounted) — use hash navigation
-      // so ScrollToTop retries after the section renders
-      startTransition(() => navigate(`/#${id}`));
-    }
+    startTransition(() => navigate(path));
   }, [navigate]);
 
   // ── Toggle mobile menu ────────────────────────────────────────────────────────
