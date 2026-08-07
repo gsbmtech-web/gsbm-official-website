@@ -1,27 +1,40 @@
 import { useState, useEffect, useCallback, useRef, startTransition, memo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { getAllBlogSlugs } from '../../utils/BlogPosts';
 import vmrfLogoFull from '../../assets/mainlogo.png';
 import './Navbar.css';
 
 // ─── Static data — outside component, never recreated ────────────────────────
 const NAV_ITEMS = [
-  { label: 'Home',       id: 'home',       path: '/'            },
-  { label: 'About',      id: 'about',      path: '/about'       },
-  { label: 'Leadership', id: 'leadership', path: '/leadership'  },
-  { label: 'Programs',   id: 'programs',   path: '/programs'    },
-  { label: 'Campus',     id: 'campus',     path: '/campus'      },
-  { label: 'Admissions', id: 'admissions', path: '/admissions'  },
-  { label: 'Placements', id: 'placements', path: '/placements'  },
-  { label: 'Contact',    id: 'contact',    path: '/contact'     },
+  { label: 'Home',       id: 'home'       },
+  { label: 'About',      id: 'about'      },
+  { label: 'Leadership', id: 'leadership' },
+  { label: 'Programs',   id: 'programs'   },
+  { label: 'Campus',     id: 'campus'     },
+  { label: 'Admissions', id: 'admissions' },
+  { label: 'Placements', id: 'placements' },
+  { label: 'Contact',    id: 'contact'    },
 ];
 
-const SECTION_IDS = NAV_ITEMS.map((i) => i.id).filter((id) => id !== 'home');
+const SECTION_IDS = NAV_ITEMS.map((i) => i.id);
 
-// Best-effort initial active item from the current URL, so there's no flash
-// of "Home" highlighted before the IntersectionObserver corrects it.
-const pathToId = (pathname) => {
-  const match = NAV_ITEMS.find((i) => i.path === pathname);
-  return match ? match.id : 'home';
+// Blog isn't a homepage section — it's a real standalone route (like
+// /apply), so it's kept out of NAV_ITEMS/SECTION_IDS (which drive the
+// scroll-spy) and handled as a plain route link instead.
+const BLOG_NAV_ITEM = { label: 'Blogs', id: 'blog', path: '/blog' };
+
+// Every standalone page (visited directly via URL, not just by clicking a
+// scroll-nav item) needs to resolve to the right active nav id on load —
+// scroll-spy only works on the homepage, where these ids exist as
+// in-page sections.
+const ROUTE_TO_NAV_ID = {
+  '/about': 'about',
+  '/leadership': 'leadership',
+  '/programs': 'programs',
+  '/campus': 'campus',
+  '/admissions': 'admissions',
+  '/placements': 'placements',
+  '/contact': 'contact',
 };
 
 // ─── Static SVG icons ─────────────────────────────────────────────────────────
@@ -58,12 +71,12 @@ const CloseIcon = (
 // ─── NavLink ──────────────────────────────────────────────────────────────────
 const NavLink = memo(function NavLink({ item, isActive, onClick }) {
   const handleClick = useCallback(
-    (e) => onClick(e, item.path),
-    [onClick, item.path]
+    (e) => onClick(e, item),
+    [onClick, item]
   );
   return (
     <a
-      href={item.path}
+      href={item.path || `#${item.id}`}
       className={`gsbm-navlink${isActive ? ' gsbm-navlink--active' : ''}`}
       onClick={handleClick}
       aria-current={isActive ? 'page' : undefined}
@@ -76,12 +89,12 @@ const NavLink = memo(function NavLink({ item, isActive, onClick }) {
 // ─── DrawerLink ───────────────────────────────────────────────────────────────
 const DrawerLink = memo(function DrawerLink({ item, isActive, isOpen, index, onClick }) {
   const handleClick = useCallback(
-    (e) => onClick(e, item.path),
-    [onClick, item.path]
+    (e) => onClick(e, item),
+    [onClick, item]
   );
   return (
     <a
-      href={item.path}
+      href={item.path || `#${item.id}`}
       className={`gsbm-drawer-link${isActive ? ' gsbm-drawer-link--active' : ''}`}
       onClick={handleClick}
       style={{ '--delay': `${index * 45}ms` }}
@@ -96,11 +109,11 @@ const DrawerLink = memo(function DrawerLink({ item, isActive, isOpen, index, onC
 
 // ─── Navbar ───────────────────────────────────────────────────────────────────
 function Navbar() {
-  const location = useLocation();
   const [scrolled,   setScrolled]   = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [activeNav,  setActiveNav]  = useState(() => pathToId(location.pathname));
+  const [activeNav,  setActiveNav]  = useState('home');
   const navigate  = useNavigate();
+  const location  = useLocation();
   const drawerRef = useRef(null);
   const hamRef    = useRef(null);
 
@@ -111,17 +124,19 @@ function Navbar() {
   }, [navigate]);
 
   // ── Logo click ────────────────────────────────────────────────────────────────
+  // If already on home, smooth scroll to top.
+  // If on another route, navigate to home — ScrollToTop handles the scroll.
   const handleLogoClick = useCallback((e) => {
     e.preventDefault();
     setMobileOpen(false);
-    if (location.pathname === '/') {
+    if (window.location.pathname === '/') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
       startTransition(() => navigate('/'));
     }
-  }, [navigate, location.pathname]);
+  }, [navigate]);
 
-  // ── Scroll detection (navbar shrink/shadow state) ────────────────────────────
+  // ── Scroll detection ─────────────────────────────────────────────────────────
   useEffect(() => {
     let ticking = false;
     const onScroll = () => {
@@ -137,13 +152,6 @@ function Navbar() {
   }, []);
 
   // ── Active section tracking via IntersectionObserver ─────────────────────────
-  // On Home, every section id exists in the DOM, so this behaves like a
-  // classic scroll-spy — the nav highlights whichever section you're
-  // scrolled past. On a standalone page (e.g. /programs), only that one
-  // section's id exists, so it naturally becomes — and stays — the active
-  // item without any extra branching. Runs fresh on every mount, which
-  // happens automatically on every route change since these are genuinely
-  // separate pages now.
   useEffect(() => {
     const observers = SECTION_IDS.reduce((acc, id) => {
       const el = document.getElementById(id);
@@ -158,6 +166,32 @@ function Navbar() {
     }, []);
     return () => observers.forEach((o) => o.disconnect());
   }, []);
+
+  // ── Active nav from the URL itself ────────────────────────────────────────────
+  // Scroll-spy (above) only works on the homepage, where #about/#programs/etc.
+  // exist as in-page sections. Anyone landing directly on /about, /blog, or a
+  // blog post (not by clicking a nav item) needs the right item highlighted
+  // immediately — this resolves that from the route, and runs before scroll-spy
+  // gets a chance to fire on the homepage.
+  useEffect(() => {
+    const path = location.pathname;
+
+    if (path === '/') {
+      setActiveNav('home');
+      return;
+    }
+    if (ROUTE_TO_NAV_ID[path]) {
+      setActiveNav(ROUTE_TO_NAV_ID[path]);
+      return;
+    }
+    const slug = path.replace(/^\//, '');
+    if (path === '/blog' || getAllBlogSlugs().includes(slug)) {
+      setActiveNav('blog');
+      return;
+    }
+    // /apply, /thank-you, /privacy-policy, and unknown paths aren't in the nav
+    setActiveNav('');
+  }, [location.pathname]);
 
   // ── Body scroll lock ─────────────────────────────────────────────────────────
   useEffect(() => {
@@ -210,15 +244,46 @@ function Navbar() {
     return () => document.removeEventListener('keydown', trap);
   }, [mobileOpen]);
 
-  // ── Nav click — plain route navigation ────────────────────────────────────────
-  // Every item is a genuinely separate page now, so this is just a normal
-  // client-side navigate. No scroll math needed here — the destination page
-  // renders at the top (ScrollToTop in App.jsx resets scroll on every route
-  // change) and, on Home, the browser is already there naturally.
-  const handleNavClick = useCallback((e, path) => {
+  // ── Smooth scroll to section (works from any route) ──────────────────────────
+  // FIX: If not on home page, navigate to /#id so ScrollToTop handles the scroll.
+  // If already on home, scroll directly — but sections like Campus/Admissions/
+  // Placements/Contact are LazySection-wrapped and may not be in the DOM yet
+  // if the user hasn't scrolled near them. So we first trigger their render by
+  // navigating with the hash, which causes a re-mount with the hash in the URL,
+  // then ScrollToTop (with its 300ms delay) finds the element after it mounts.
+  //
+  // Blog is a plain route (item.path set) — navigate straight there, no
+  // scroll-spy or hash handling involved.
+  const handleNavClick = useCallback((e, item) => {
     e.preventDefault();
     setMobileOpen(false);
-    startTransition(() => navigate(path));
+
+    if (item.path) {
+      setActiveNav(item.id);
+      startTransition(() => navigate(item.path));
+      return;
+    }
+
+    setActiveNav(item.id);
+
+    if (window.location.pathname !== '/') {
+      // On a different route — navigate home with hash; ScrollToTop handles scroll
+      startTransition(() => navigate(`/#${item.id}`));
+      return;
+    }
+
+    // On home page — try direct scroll first
+    const el = document.getElementById(item.id);
+    if (el) {
+      const nav  = document.querySelector('.gsbm-nav');
+      const navH = nav ? nav.getBoundingClientRect().height : 80;
+      const top  = el.getBoundingClientRect().top + window.scrollY - navH;
+      window.scrollTo({ top, behavior: 'smooth' });
+    } else {
+      // Section not in DOM yet (lazy, hasn't mounted) — use hash navigation
+      // so ScrollToTop retries after the section renders
+      startTransition(() => navigate(`/#${item.id}`));
+    }
   }, [navigate]);
 
   // ── Toggle mobile menu ────────────────────────────────────────────────────────
@@ -289,6 +354,11 @@ function Navbar() {
                 onClick={handleNavClick}
               />
             ))}
+            <NavLink
+              item={BLOG_NAV_ITEM}
+              isActive={activeNav === BLOG_NAV_ITEM.id}
+              onClick={handleNavClick}
+            />
           </nav>
 
           {/* Desktop CTA */}
@@ -372,6 +442,13 @@ function Navbar() {
               onClick={handleNavClick}
             />
           ))}
+          <DrawerLink
+            item={BLOG_NAV_ITEM}
+            isActive={activeNav === BLOG_NAV_ITEM.id}
+            isOpen={mobileOpen}
+            index={NAV_ITEMS.length}
+            onClick={handleNavClick}
+          />
         </nav>
 
         <div className="gsbm-drawer-footer">

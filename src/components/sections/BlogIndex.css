@@ -1,0 +1,99 @@
+/* src/components/sections/BlogIndex.css
+   No access to your global design tokens from here, so this uses
+   sensible fallbacks (var(--gsbm-navy, #0f2a4a) etc.) — if your project
+   already defines --gsbm-navy / --gsbm-accent / font vars globally,
+   these will pick them up automatically. Otherwise swap the fallback
+   values for your real brand colors. */
+
+.blog-index {
+  padding: 64px 24px 96px;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.blog-index-container {
+  width: 100%;
+}
+
+.blog-index-h1 {
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 700;
+  color: var(--gsbm-navy, #0f2a4a);
+  margin: 0 0 12px;
+  line-height: 1.15;
+}
+
+.blog-index-subhead {
+  font-size: 1.05rem;
+  color: var(--gsbm-text-muted, #5a6472);
+  margin: 0 0 48px;
+  max-width: 640px;
+}
+
+.blog-index-empty {
+  color: var(--gsbm-text-muted, #5a6472);
+  font-size: 1rem;
+  padding: 32px 0;
+}
+
+.blog-index-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.blog-index-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 28px;
+  border-radius: 14px;
+  border: 1px solid var(--gsbm-border, #e4e8ee);
+  background: var(--gsbm-surface, #ffffff);
+  text-decoration: none;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.blog-index-card:hover,
+.blog-index-card:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(15, 42, 74, 0.1);
+  border-color: var(--gsbm-accent, #c0392b);
+}
+
+.blog-index-card:focus-visible {
+  outline: 2px solid var(--gsbm-accent, #c0392b);
+  outline-offset: 3px;
+}
+
+.blog-index-card-title {
+  font-size: 1.15rem;
+  font-weight: 650;
+  line-height: 1.35;
+  color: var(--gsbm-navy, #0f2a4a);
+  margin: 0;
+}
+
+.blog-index-card-desc {
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--gsbm-text-muted, #5a6472);
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.blog-index-card-cta {
+  margin-top: auto;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--gsbm-accent, #c0392b);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blog-index-card {
+    transition: none;
+  }
+}

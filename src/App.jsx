@@ -29,6 +29,11 @@ const Contact = lazy(() => import('./components/sections/Contact'));
 const Calbutton = lazy(() => import('./components/sections/Calbutton.jsx'));
 const PrivacyPolicy = lazy(() => import('./components/sections/PrivacyPolicy.jsx'));
 
+// Blog — BlogIndex lists every post; BlogPost renders one, looked up
+// by the :slug URL param against src/data/blogPosts.js.
+const BlogIndex = lazy(() => import('./components/sections/BlogIndex.jsx'));
+const BlogPost = lazy(() => import('./components/sections/BlogPost.jsx'));
+
 // ─── LazySection ─────────────────────────────────────────────────────────────
 // minHeight is a rough estimate of the section's real rendered height, used
 // only for the loading skeleton so nothing shoves the layout around as each
@@ -225,6 +230,38 @@ const ApplyPage = () => (
   </>
 );
 
+// ─── Blog index page layout ─────────────────────────────────────────────────────
+// <BlogIndex> builds its own <Helmet>, same idea as BlogPostPage below.
+const BlogIndexPage = () => (
+  <ErrorBoundary>
+    <Navbar />
+    <main id="main-content" tabIndex={-1}>
+      <LazySection minHeight={800}>
+        <BlogIndex />
+      </LazySection>
+    </main>
+    <Footer />
+  </ErrorBoundary>
+);
+
+// ─── Blog post page layout ─────────────────────────────────────────────────────
+// <BlogPost> builds its own <Helmet> (title/description/canonical/OG/
+// JSON-LD) from the matching entry in src/data/blogPosts.js, keyed by
+// the :slug route param — so this wrapper only needs Navbar/Footer/
+// ErrorBoundary, same shape as every other StandalonePage.
+const BlogPostPage = () => (
+  <ErrorBoundary>
+    <Navbar />
+    <main id="main-content" tabIndex={-1}>
+      <LazySection minHeight={1200}>
+        <BlogPost />
+      </LazySection>
+      <LazySection minHeight={300}><Calbutton /></LazySection>
+    </main>
+    <Footer />
+  </ErrorBoundary>
+);
+
 // ─── App ──────────────────────────────────────────────────────────────────────
 export default function App() {
   return (
@@ -268,6 +305,16 @@ export default function App() {
               <Footer />
             </ErrorBoundary>
           } />
+
+          {/* ── Blog index — must come before the /:slug route below,
+               otherwise /:slug would match "blog" as a slug first. ── */}
+          <Route path="/blog" element={<BlogIndexPage />} />
+
+          {/* ── Blog posts — any slug present in src/data/blogPosts.js.
+               Kept last (before the catch-all) so it never shadows a
+               real page path like /about or /programs. BlogPost renders
+               <NotFound /> itself when the slug isn't a known post. ── */}
+          <Route path="/:slug" element={<BlogPostPage />} />
 
           <Route path="*" element={
             <ErrorBoundary>

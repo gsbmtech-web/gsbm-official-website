@@ -1,0 +1,162 @@
+/* src/components/sections/BlogPost.css
+   Same fallback-token approach as BlogIndex.css — if your project already
+   defines --gsbm-navy / --gsbm-gold / --gsbm-accent globally, this picks
+   those up automatically. Otherwise these fallbacks (navy #0d1f3c, gold
+   #c8963e, maroon accent #8a1c24) are pulled from your logo/hero-image
+   palette, so it'll look right even without a shared token file. */
+
+.blog-post {
+  --bp-navy: var(--gsbm-navy, #0d1f3c);
+  --bp-gold: var(--gsbm-gold, #c8963e);
+  --bp-accent: var(--gsbm-accent, #8a1c24);
+  --bp-text: #2b2f36;
+  --bp-text-muted: #5a6472;
+  --bp-border: #e6e2d8;
+  --bp-surface: #fbfaf7;
+}
+
+.blog-post-container {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 48px 24px 96px;
+}
+
+/* ── Hero image ─────────────────────────────────────────────────────── */
+
+.blog-hero-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  box-shadow: 0 16px 40px rgba(13, 31, 60, 0.18);
+  margin-bottom: 40px;
+}
+
+/* ── Headline ───────────────────────────────────────────────────────── */
+
+.blog-h1 {
+  font-family: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+  font-size: clamp(1.9rem, 4vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.22;
+  color: var(--bp-navy);
+  margin: 0 0 40px;
+  padding-bottom: 24px;
+  border-bottom: 3px solid var(--bp-gold);
+}
+
+/* ── Sections & headings ────────────────────────────────────────────── */
+
+.blog-section {
+  margin-bottom: 44px;
+}
+
+.blog-section h2 {
+  font-family: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--bp-navy);
+  margin: 0 0 18px;
+  padding-left: 16px;
+  border-left: 4px solid var(--bp-gold);
+}
+
+.blog-section h3 {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 1.1rem;
+  font-weight: 650;
+  color: var(--bp-navy);
+  margin: 28px 0 10px;
+}
+
+/* ── Body copy ──────────────────────────────────────────────────────── */
+
+.blog-paragraph {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 1.03rem;
+  line-height: 1.8;
+  color: var(--bp-text);
+  margin: 0 0 18px;
+}
+
+.blog-paragraph strong {
+  color: var(--bp-navy);
+  font-weight: 700;
+  border-bottom: 2px solid var(--bp-gold);
+}
+
+.blog-list {
+  margin: 0 0 18px;
+  padding-left: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 10px;
+}
+
+.blog-list li {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 0.96rem;
+  color: var(--bp-text);
+  padding: 10px 14px;
+  background: var(--bp-surface);
+  border-left: 3px solid var(--bp-gold);
+  border-radius: 6px;
+}
+
+/* ── How-To guide ───────────────────────────────────────────────────── */
+
+.blog-howto {
+  padding: 8px 0 0;
+}
+
+.blog-howto-item {
+  padding: 22px 0;
+  border-top: 1px solid var(--bp-border);
+}
+
+.blog-howto-item:first-of-type {
+  border-top: none;
+}
+
+.blog-howto-item h3 {
+  margin-top: 0;
+}
+
+/* ── FAQ ────────────────────────────────────────────────────────────── */
+
+.blog-faq-item {
+  padding: 20px 22px;
+  margin-bottom: 14px;
+  background: var(--bp-surface);
+  border: 1px solid var(--bp-border);
+  border-left: 4px solid var(--bp-accent);
+  border-radius: 8px;
+}
+
+.blog-faq-item h3 {
+  margin: 0 0 10px;
+  font-size: 1.02rem;
+}
+
+.blog-faq-item .blog-paragraph {
+  margin-bottom: 0;
+  font-size: 0.98rem;
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  .blog-post-container {
+    padding: 32px 18px 72px;
+  }
+
+  .blog-h1 {
+    margin-bottom: 28px;
+    padding-bottom: 18px;
+  }
+
+  .blog-list {
+    grid-template-columns: 1fr;
+  }
+}

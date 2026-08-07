@@ -21,6 +21,7 @@ const footerLinks = [
   { label: 'Admissions',  id: 'admissions', path: '/admissions' },
   { label: 'Faculty',     id: 'faculty',    path: '/faculty'    },
   { label: 'Placements',  id: 'placements', path: '/placements' },
+  { label: 'Blog',        id: 'blog',       path: '/blog'       },
   { label: 'Contact',     id: 'contact',    path: '/contact'    },
 ];
 
