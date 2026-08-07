@@ -139,79 +139,79 @@ const BlogIndex = () => {
           )}
         </div>
 
-        {/* ── Sidebar ── */}
-        <aside className="blogx-sidebar">
-          <div className="blogx-search-block">
-            <label htmlFor="blogx-search" className="blogx-sidebar-label">
-              Search for:
-            </label>
+        {/* ── Sidebar pieces — each is its own grid item (grid-area in
+             CSS), not wrapped in one block, so mobile can place "search"
+             before "main" while keeping "recent"/"contact" after it. ── */}
+        <div className="blogx-search-block">
+          <label htmlFor="blogx-search" className="blogx-sidebar-label">
+            Search for:
+          </label>
+          <input
+            id="blogx-search"
+            type="text"
+            className="blogx-search-input"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder=""
+          />
+        </div>
+
+        <div className="blogx-recent-panel">
+          <h3>Recent Posts</h3>
+          <ul>
+            {recentPosts.map((post) => (
+              <li key={post.slug}>
+                <Link to={`/${post.slug}`}>{post.h1}</Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="blogx-contact-panel">
+          <h3>Contact Form</h3>
+          <form onSubmit={handleContactSubmit}>
+            <label htmlFor="cf-name">Name</label>
             <input
-              id="blogx-search"
+              id="cf-name"
               type="text"
-              className="blogx-search-input"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder=""
+              placeholder="Please enter name."
+              value={contactForm.name}
+              onChange={handleContactChange('name')}
+              required
             />
-          </div>
 
-          <div className="blogx-recent-panel">
-            <h3>Recent Posts</h3>
-            <ul>
-              {recentPosts.map((post) => (
-                <li key={post.slug}>
-                  <Link to={`/${post.slug}`}>{post.h1}</Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+            <label htmlFor="cf-email">Email ID</label>
+            <input
+              id="cf-email"
+              type="email"
+              placeholder="Please enter email."
+              value={contactForm.email}
+              onChange={handleContactChange('email')}
+              required
+            />
 
-          <div className="blogx-contact-panel">
-            <h3>Contact Form</h3>
-            <form onSubmit={handleContactSubmit}>
-              <label htmlFor="cf-name">Name</label>
-              <input
-                id="cf-name"
-                type="text"
-                placeholder="Please enter name."
-                value={contactForm.name}
-                onChange={handleContactChange('name')}
-                required
-              />
+            <label htmlFor="cf-phone">Phone</label>
+            <input
+              id="cf-phone"
+              type="tel"
+              placeholder="Please enter phone."
+              value={contactForm.phone}
+              onChange={handleContactChange('phone')}
+            />
 
-              <label htmlFor="cf-email">Email ID</label>
-              <input
-                id="cf-email"
-                type="email"
-                placeholder="Please enter email."
-                value={contactForm.email}
-                onChange={handleContactChange('email')}
-                required
-              />
+            <label htmlFor="cf-message">Message</label>
+            <textarea
+              id="cf-message"
+              rows={4}
+              value={contactForm.message}
+              onChange={handleContactChange('message')}
+            />
 
-              <label htmlFor="cf-phone">Phone</label>
-              <input
-                id="cf-phone"
-                type="tel"
-                placeholder="Please enter phone."
-                value={contactForm.phone}
-                onChange={handleContactChange('phone')}
-              />
-
-              <label htmlFor="cf-message">Message</label>
-              <textarea
-                id="cf-message"
-                rows={4}
-                value={contactForm.message}
-                onChange={handleContactChange('message')}
-              />
-
-              <button type="submit" className="blogx-submit">
-                Submit
-              </button>
-            </form>
-          </div>
-        </aside>
+            <button type="submit" className="blogx-submit">
+              Submit
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );
