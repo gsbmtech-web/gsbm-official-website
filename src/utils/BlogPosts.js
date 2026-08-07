@@ -19,11 +19,17 @@ const blogPosts = {
       imageFileName: 'top-mba-colleges-in-chennai.png',
       imageWidth: 1536,
       imageHeight: 1024,
+      // Square (1:1) version for og:image/twitter:image — WhatsApp,
+      // Facebook, etc. center-crop whatever image you give them to a
+      // square, and the wide 3:2 hero above loses its headline text
+      // when that happens. This one's composed to survive that crop.
+      socialImageFileName: 'top-mba-colleges-in-chennai-social.png',
       imageAlt:
         'Top MBA Colleges in Chennai offering quality management education and excellent career opportunities',
       canonicalUrl: 'https://gsbm.co.in/top-mba-colleges-in-chennai',
       publishedDate: '2026-08-07',
       modifiedDate: '2026-08-07',
+      category: 'MBA Admissions',
     },
 
     // ── Content ──────────────────────────────────────────────────────
