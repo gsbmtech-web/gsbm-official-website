@@ -6,6 +6,7 @@ import ErrorBoundary from './components/ErrorBoundary';
 import SectionLoader from './components/ui/SectionLoader';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
+import FloatingActions from './components/layout/FloatingActions';
 import ApplyNow from './components/sections/Applynow';
 import NotFound from './components/ui/NotFound';
 import ThankYou from './components/sections/ThankYou.jsx';
@@ -269,6 +270,7 @@ export default function App() {
       <BrowserRouter>
         <a href="#main-content" className="skip-link">Skip to main content</a>
         <ScrollToTop />
+        <FloatingActions />
 
         <Routes>
           <Route path="/" element={<HomePage />} />

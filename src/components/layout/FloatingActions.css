@@ -1,0 +1,72 @@
+/* src/components/layout/FloatingActions.css */
+
+.fa-stack {
+  --fa-navy: var(--gsbm-navy, #0d1f3c);
+  --fa-accent: var(--gsbm-accent, #8a1c24);
+
+  position: fixed;
+  right: 20px;
+  bottom: 28px;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.fa-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 6px 16px rgba(13, 31, 60, 0.28);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.fa-btn:hover,
+.fa-btn:focus-visible {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 10px 22px rgba(13, 31, 60, 0.34);
+}
+
+.fa-btn--call,
+.fa-btn--apply {
+  background: var(--fa-accent);
+}
+
+.fa-btn--social {
+  width: 38px;
+  height: 38px;
+  background: var(--fa-navy);
+}
+
+.fa-divider {
+  width: 24px;
+  height: 1px;
+  background: rgba(13, 31, 60, 0.25);
+  margin: 2px 0;
+}
+
+@media (max-width: 640px) {
+  .fa-stack {
+    right: 14px;
+    bottom: 18px;
+    gap: 10px;
+  }
+
+  .fa-btn {
+    width: 44px;
+    height: 44px;
+  }
+
+  .fa-btn--social {
+    width: 34px;
+    height: 34px;
+  }
+}
