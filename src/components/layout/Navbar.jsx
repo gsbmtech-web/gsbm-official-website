@@ -21,7 +21,9 @@ const SECTION_IDS = NAV_ITEMS.map((i) => i.id);
 // Blog isn't a homepage section — it's a real standalone route (like
 // /apply), so it's kept out of NAV_ITEMS/SECTION_IDS (which drive the
 // scroll-spy) and handled as a plain route link instead.
-const BLOG_NAV_ITEM = { label: 'Blogs', id: 'blog', path: '/blog' };
+// Blog now lives in the Footer only, not the header nav — but blog pages
+// still need activeNav set to something that matches no header item, so
+// Home doesn't incorrectly show as active (see the route-sync effect below).
 
 // Every standalone page (visited directly via URL, not just by clicking a
 // scroll-nav item) needs to resolve to the right active nav id on load —
@@ -354,11 +356,6 @@ function Navbar() {
                 onClick={handleNavClick}
               />
             ))}
-            <NavLink
-              item={BLOG_NAV_ITEM}
-              isActive={activeNav === BLOG_NAV_ITEM.id}
-              onClick={handleNavClick}
-            />
           </nav>
 
           {/* Desktop CTA */}
@@ -442,13 +439,6 @@ function Navbar() {
               onClick={handleNavClick}
             />
           ))}
-          <DrawerLink
-            item={BLOG_NAV_ITEM}
-            isActive={activeNav === BLOG_NAV_ITEM.id}
-            isOpen={mobileOpen}
-            index={NAV_ITEMS.length}
-            onClick={handleNavClick}
-          />
         </nav>
 
         <div className="gsbm-drawer-footer">

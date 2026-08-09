@@ -7,7 +7,7 @@
 
 import { useCallback, startTransition } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FiPhone, FiArrowRight, FiYoutube, FiFacebook, FiInstagram, FiLinkedin } from 'react-icons/fi';
+import { FiPhone, FiEdit3, FiYoutube, FiFacebook, FiInstagram, FiLinkedin } from 'react-icons/fi';
 import './FloatingActions.css';
 
 const SOCIAL_LINKS = [
@@ -42,7 +42,7 @@ const FloatingActions = () => {
         aria-label="Apply Online"
         title="Apply Online"
       >
-        <FiArrowRight size={19} />
+        <FiEdit3 size={19} />
       </button>
 
       <div className="fa-divider" aria-hidden="true" />
