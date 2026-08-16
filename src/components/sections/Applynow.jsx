@@ -2,8 +2,7 @@ import { useCallback, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   FiArrowLeft, FiLock, FiPhone, FiCheckCircle, FiUser,
-  FiFileText, FiMessageSquare,
-  FiChevronDown, FiChevronUp, FiCheck, FiArrowRight
+  FiFileText, FiMessageSquare, FiChevronDown, FiChevronUp, FiCheck
 } from 'react-icons/fi';
 
 /* ─────────────────────────────────────────
@@ -26,24 +25,26 @@ const STATS = [
   { value: 'AICTE', label: 'Approved & Accredited' },
 ];
 
+// Copy updated to match the new single-form flow — the old text described
+// the quiz ("quick questions, no typing") which no longer exists.
 const HOW_IT_WORKS = [
-  { icon: <FiUser size={22} strokeWidth={1.5} />,         step: '01', title: 'Quick Questions', desc: 'Tell us a bit about yourself — takes 10 seconds, no typing.' },
-  { icon: <FiFileText size={22} strokeWidth={1.5} />,     step: '02', title: 'Share Your Details', desc: 'Just your name and number — we call you, you don\'t have to fill forms.' },
-  { icon: <FiMessageSquare size={22} strokeWidth={1.5} />,step: '03', title: 'Counsellor Calls You', desc: 'Our admissions team calls within 24 hours to guide your next steps.' },
+  { icon: <FiUser size={22} strokeWidth={1.5} />,          step: '01', title: 'Fill the Form',        desc: 'Enter your name and mobile number — takes less than a minute.' },
+  { icon: <FiFileText size={22} strokeWidth={1.5} />,      step: '02', title: 'Complete Application', desc: 'You go straight to the application form with your details already filled in.' },
+  { icon: <FiMessageSquare size={22} strokeWidth={1.5} />, step: '03', title: 'Counsellor Calls You', desc: 'Our admissions team calls within 24 hours to guide your next steps.' },
 ];
 
 const TESTIMONIALS = [
-  { name: 'Priya R.',  loc: 'Chennai',     rating: 5, text: 'GSBM gave me the career boost I needed. Best MBA college in Chennai with excellent faculty and outstanding placement support!' },
-  { name: 'Arjun K.',  loc: 'Tamil Nadu',  rating: 5, text: 'I was looking for an MBA college in Chennai without entrance exam. GSBM was the perfect choice. Highly recommend to all freshers!' },
+  { name: 'Priya R.',  loc: 'Chennai',    rating: 5, text: 'GSBM gave me the career boost I needed. Best MBA college in Chennai with excellent faculty and outstanding placement support!' },
+  { name: 'Arjun K.',  loc: 'Tamil Nadu', rating: 5, text: 'I was looking for an MBA college in Chennai without entrance exam. GSBM was the perfect choice. Highly recommend to all freshers!' },
   { name: 'Divya S.',  loc: 'Coimbatore', rating: 5, text: 'AICTE approved, great campus, affordable fees. The admissions team was very helpful throughout my MBA application process.' },
 ];
 
 const FAQS = [
-  { q: 'Is GSBM an AICTE approved MBA college in Chennai?',         a: 'Yes. GSBM – Ganesan School of Business Management is AICTE approved and affiliated to Vinayaka Mission\'s Research Foundation (Deemed University), which is UGC recognised and NAAC accredited.' },
-  { q: 'Can I get MBA admission in Chennai without entrance exam?',  a: 'Yes! GSBM offers MBA admission without any entrance exam. Any graduate with minimum 50% marks is directly eligible to apply through this form.' },
+  { q: 'Is GSBM an AICTE approved MBA college in Chennai?',        a: 'Yes. GSBM – Ganesan School of Business Management is AICTE approved and affiliated to Vinayaka Mission\'s Research Foundation (Deemed University), which is UGC recognised and NAAC accredited.' },
+  { q: 'Can I get MBA admission in Chennai without entrance exam?', a: 'Yes! GSBM offers MBA admission without any entrance exam. Any graduate with minimum 50% marks is directly eligible to apply through this form.' },
   { q: 'What is the MBA admission process at GSBM Chennai?',        a: 'Simple 3-step process: Submit online application → Attend a personal interview → Receive admission confirmation. Our admissions team guides you throughout.' },
   { q: 'Is GSBM one of the top MBA colleges in Tamil Nadu?',        a: 'Yes. GSBM is recognised as one of the best MBA colleges in Chennai and Tamil Nadu, offering an industry-integrated curriculum with 100% placement support.' },
-  { q: 'What is the last date for MBA admission 2026?',             a: 'The last date for MBA admission 2026 at GSBM Chennai is July 30, 2026. Limited seats are available so we recommend applying as early as possible.' },
+  { q: 'What is the last date for MBA admission 2026?',             a: 'The last date for MBA admission 2026 at GSBM Chennai is August 30, 2026. Limited seats are available so we recommend applying as early as possible.' },
   { q: 'Does GSBM offer MBA for working professionals?',            a: 'Yes. GSBM offers MBA programs suitable for both fresh graduates and working professionals in Chennai. Contact our admissions team for batch timing details.' },
 ];
 
@@ -54,8 +55,8 @@ const KEY_DATES = [
 
 const ZOHO_FORM_URL = 'https://forms.zohopublic.in/gsbmtechgm1/form/GSBMChennaiMBAPROGRAM/formperma/TJrU6LXsWTqAWh5ZbxgeWMkmSW2-aK-lzoJ2xn3iEjQ';
 
-const WHO_OPTIONS   = ['Yes, for myself', 'On behalf of someone else'];
-const QUAL_OPTIONS  = ['Graduate', 'Final Year Student', 'Working Professional'];
+const COUNSELLOR_PHONE         = '+918667690672';
+const COUNSELLOR_PHONE_DISPLAY = '+91 8667690672';
 
 /* ─────────────────────────────────────────
    FAQ ACCORDION
@@ -80,9 +81,6 @@ const ApplyNow = () => {
   const navigate   = useNavigate();
   const handleBack = useCallback(() => navigate(-1), [navigate]);
 
-  const [stepNum, setStepNum] = useState(1); // 1: who, 2: qualification, 3: name+phone
-  const [who,     setWho]     = useState('');
-  const [qual,    setQual]    = useState('');
   const [name,    setName]    = useState('');
   const [phone,   setPhone]   = useState('');
   const [loading, setLoading] = useState(false);
@@ -105,7 +103,7 @@ const ApplyNow = () => {
       url: 'https://www.gsbm.co.in',
       description: 'Top MBA College in Chennai Tamil Nadu. AICTE Approved MBA. Vinayaka Mission University. MBA Without Entrance Exam. Admissions 2026 Open.',
       address: { '@type': 'PostalAddress', addressLocality: 'Chennai', addressRegion: 'Tamil Nadu', addressCountry: 'IN' },
-      telephone: '+918667690672',
+      telephone: COUNSELLOR_PHONE,
     };
     const faqSchema = {
       '@context': 'https://schema.org', '@type': 'FAQPage',
@@ -118,18 +116,16 @@ const ApplyNow = () => {
     return () => { document.head.removeChild(s1); document.head.removeChild(s2); };
   }, []);
 
-  const selectWho = (val) => { setWho(val); setStepNum(2); };
-  const selectQual = (val) => { setQual(val); setStepNum(3); };
-  const goBack = () => { setError(''); setStepNum(s => Math.max(1, s - 1)); };
   const scrollToForm = () => {
     document.getElementById('apply-form')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.getElementById('name-input')?.focus({ preventScroll: true });
   };
 
   /**
    * Fire-and-forget lead save. Never blocks or gates the redirect.
-   * Needs a lightweight /api/save-lead serverless function that writes
-   * { name, phone, who, qualification, gclid, source, ts } somewhere
-   * (Zoho CRM, a sheet, a DB). No OTP/SMS involved at all.
+   * who/qualification are kept in the payload as null so the existing
+   * /api/save-lead schema doesn't break — the quiz that collected them
+   * has been removed.
    */
   const saveLeadNonBlocking = (payload) => {
     try {
@@ -147,11 +143,17 @@ const ApplyNow = () => {
   const handleSubmit = () => {
     setError('');
     const cleanedPhone = phone.replace(/\D/g, '');
-    if (!name.trim())            { setError('Please enter your name.'); return; }
-    if (cleanedPhone.length !== 10) { setError('Please enter a valid 10-digit mobile number.'); return; }
+    if (!name.trim())               { setError('Enter your name to continue.'); return; }
+    if (cleanedPhone.length !== 10) { setError('Enter a valid 10-digit mobile number.'); return; }
 
     setLoading(true);
-    saveLeadNonBlocking({ name: name.trim(), phone: cleanedPhone, who, qualification: qual, gclid: gclid || null });
+    saveLeadNonBlocking({
+      name: name.trim(),
+      phone: cleanedPhone,
+      who: null,
+      qualification: null,
+      gclid: gclid || null,
+    });
 
     const params = new URLSearchParams({ PhoneNumber: cleanedPhone, Name: name.trim() });
     if (gclid) params.set('gclid', gclid);
@@ -220,10 +222,7 @@ const ApplyNow = () => {
           display: flex; align-items: center; justify-content: center;
           gap: 20px; flex-wrap: wrap;
         }
-        .ap-urgency-text {
-          font-size: 14px; color: #fff; font-weight: 700;
-          letter-spacing: .01em;
-        }
+        .ap-urgency-text { font-size: 14px; color: #fff; font-weight: 700; letter-spacing: .01em; }
         .ap-urgency-btn {
           background: var(--gold); color: var(--navy);
           border: none; border-radius: 8px;
@@ -233,7 +232,7 @@ const ApplyNow = () => {
           cursor: pointer; transition: all .15s;
           -webkit-tap-highlight-color: transparent;
         }
-        .ap-urgency-btn:hover { background: #dcb95c; transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,.2); }
+        .ap-urgency-btn:hover  { background: #dcb95c; transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,.2); }
         .ap-urgency-btn:active { transform: scale(.98); }
 
         /* HERO */
@@ -266,7 +265,7 @@ const ApplyNow = () => {
           display: flex; align-items: center; justify-content: center;
           flex-shrink: 0; margin-top: 1px; color: var(--gold);
         }
-        .ap-stats  { display: flex; gap: 28px; flex-wrap: wrap; }
+        .ap-stats    { display: flex; gap: 28px; flex-wrap: wrap; }
         .ap-stat-val { font-size: 1.5rem; font-weight: 800; color: var(--gold); line-height: 1; }
         .ap-stat-lbl { font-size: 10px; color: rgba(255,255,255,.4); margin-top: 3px; }
 
@@ -290,49 +289,8 @@ const ApplyNow = () => {
         .f-title { font-size: 17px; font-weight: 800; color: var(--navy); margin-bottom: 4px; line-height: 1.3; }
         .f-sub   { font-size: 12.5px; color: var(--muted); margin-bottom: 20px; line-height: 1.5; }
 
-        /* progress */
-        .f-prog { display: flex; align-items: center; background: #f8f9ff; border: 1px solid #e8ecff; border-radius: 10px; padding: 12px 16px; margin-bottom: 24px; }
-        .f-prog-step  { display: flex; align-items: center; gap: 7px; flex: 1; }
-        .f-prog-step:last-child { flex: none; }
-        .f-prog-circle { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; transition: all .3s; }
-        .f-prog-circle.done    { background: var(--navy); color: #fff; }
-        .f-prog-circle.active  { background: var(--gold); color: var(--navy); box-shadow: 0 0 0 3px rgba(201,168,76,.22); }
-        .f-prog-circle.pending { background: #eee; color: #bbb; }
-        .f-prog-lbl     { font-size: 10.5px; font-weight: 600; color: var(--navy); }
-        .f-prog-lbl.dim { color: #ccc; }
-        .f-prog-line    { flex: 1; height: 2px; background: #e0e0e0; margin: 0 6px; max-width: 36px; }
-        .f-prog-line.done { background: var(--navy); }
-
-        .f-otp-icon { width: 52px; height: 52px; border-radius: 16px; background: #f0f4ff; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; color: var(--navy); }
-        .f-otp-h   { font-size: 18px; font-weight: 800; color: var(--navy); margin-bottom: 6px; text-align: center; }
-        .f-otp-sub { font-size: 12.5px; color: var(--muted); text-align: center; line-height: 1.65; margin-bottom: 22px; }
-
-        /* quiz options */
-        .f-quiz { display: flex; flex-direction: column; gap: 10px; margin-bottom: 8px; }
-        .f-quiz-option {
-          display: flex; align-items: center; justify-content: space-between;
-          width: 100%; text-align: left;
-          border: 1.5px solid var(--border); border-radius: 10px;
-          padding: 14px 16px; background: #fff;
-          font-family: inherit; font-size: 14px; font-weight: 600; color: var(--navy);
-          cursor: pointer; transition: all .15s;
-          -webkit-tap-highlight-color: transparent;
-        }
-        .f-quiz-option:hover { border-color: var(--gold); background: #fffbf0; }
-        .f-quiz-option svg { color: #ccc; flex-shrink: 0; }
-        .f-quiz-option:hover svg { color: var(--gold); }
-
-        .f-back-link {
-          background: none; border: none; cursor: pointer;
-          font-size: 12px; font-family: inherit; color: var(--muted);
-          padding: 0; margin-bottom: 16px;
-          display: flex; align-items: center; gap: 5px;
-          -webkit-tap-highlight-color: transparent;
-        }
-        .f-back-link:hover { color: var(--navy); }
-
         /* inputs */
-        .f-lbl { font-size: 11px; font-weight: 700; color: var(--navy); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 7px; display: block; }
+        .f-lbl   { font-size: 11px; font-weight: 700; color: var(--navy); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 7px; display: block; }
         .f-field { margin-bottom: 16px; }
         .f-phone-row { display: flex; gap: 8px; }
         .f-prefix {
@@ -373,6 +331,42 @@ const ApplyNow = () => {
         }
 
         .f-sec { display: flex; align-items: center; justify-content: center; gap: 5px; font-size: 10.5px; color: #ccc; margin-top: 14px; }
+
+        /* ── COUNSELLOR DIRECT HELP ─────────────────────────────────
+           Sits right under the submit button — the point where anyone
+           who can't complete the form is looking for a way out. */
+        .f-help {
+          margin-top: 18px;
+          background: linear-gradient(180deg, #fffaef 0%, #fdf5e3 100%);
+          border: 1.5px solid rgba(201,168,76,.55);
+          border-left: 4px solid var(--gold);
+          border-radius: 12px;
+          padding: 16px 16px 15px;
+        }
+        .f-help-head {
+          display: flex; align-items: center; gap: 8px;
+          margin-bottom: 4px;
+        }
+        .f-help-icon {
+          width: 26px; height: 26px; border-radius: 8px;
+          background: var(--gold); color: var(--navy);
+          display: flex; align-items: center; justify-content: center;
+          flex-shrink: 0;
+        }
+        .f-help-t   { font-size: 13px; font-weight: 800; color: var(--navy); line-height: 1.3; }
+        .f-help-d   { font-size: 12px; color: #6b6250; line-height: 1.55; margin-bottom: 12px; }
+        .f-help-org { font-size: 11px; font-weight: 700; color: var(--navy); text-transform: uppercase; letter-spacing: .04em; margin-bottom: 8px; line-height: 1.4; }
+        .f-help-num {
+          display: flex; align-items: center; justify-content: center; gap: 8px;
+          background: var(--navy); color: #fff; text-decoration: none;
+          border-radius: 9px; padding: 12px 16px;
+          font-size: 15px; font-weight: 800; letter-spacing: .02em;
+          transition: all .15s;
+          -webkit-tap-highlight-color: transparent;
+        }
+        .f-help-num:hover  { background: #253060; transform: translateY(-1px); box-shadow: 0 6px 16px rgba(26,35,64,.22); }
+        .f-help-num:active { transform: scale(.99); }
+        .f-help-hours { font-size: 10.5px; color: #9a927f; text-align: center; margin-top: 7px; }
 
         .f-divider { height: 1px; background: var(--border); margin: 20px 0; }
         .f-dates   { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
@@ -436,7 +430,7 @@ const ApplyNow = () => {
           .ap-right   { padding: 22px 16px; }
           .ap-left    { padding: 24px 16px 36px; }
           .f-title    { font-size: 15px; }
-          .f-otp-h    { font-size: 16px; }
+          .f-help-num { font-size: 16px; padding: 13px 16px; }
           .ap-section { padding: 40px 16px; }
           .faq-q      { font-size: 13px; padding: 14px 14px; }
           .faq-a      { padding: 0 14px 14px; }
@@ -449,11 +443,16 @@ const ApplyNow = () => {
           .ap-nav-back span { display: none; }
           .f-dates { grid-template-columns: repeat(2, 1fr); gap: 5px; }
           .f-date-val { font-size: 11px; }
+          .f-help-num { font-size: 15px; }
         }
         @media (min-width: 1400px) {
           .ap-hero-inner { max-width: 1280px; grid-template-columns: 1fr 460px; }
           .ap-left  { padding: 60px 56px 60px 40px; }
           .ap-right { padding: 44px 40px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          * { transition: none !important; animation: none !important; }
+          .f-btn:hover:not(:disabled), .f-help-num:hover, .ap-urgency-btn:hover { transform: none; }
         }
       `}</style>
 
@@ -505,114 +504,76 @@ const ApplyNow = () => {
               </div>
             </div>
 
-            {/* RIGHT — QUIZ + FORM, NO OTP */}
+            {/* RIGHT — SINGLE DIRECT FORM (no steps, no quiz, no OTP) */}
             <div className="ap-right" id="apply-form">
 
-              <div className="f-badge">Admissions Closing 30 July 2026</div>
-              <h2 className="f-title">Get a Free Counselling Callback</h2>
+              <div className="f-badge">Admissions Closing 30 August 2026</div>
+              <h2 className="f-title">Apply for MBA 2026–28</h2>
               <p className="f-sub">
-                {stepNum === 1 && 'Step 1 of 3 — Quick question to get started.'}
-                {stepNum === 2 && 'Step 2 of 3 — Almost there.'}
-                {stepNum === 3 && 'Step 3 of 3 — Where should we call you?'}
+                Enter your name and mobile number to go straight to the application form.
+                Our admissions counsellor will call you within 24 hours.
               </p>
 
-              {/* PROGRESS */}
-              <div className="f-prog">
-                <div className="f-prog-step">
-                  <div className={`f-prog-circle ${stepNum > 1 ? 'done' : 'active'}`}>{stepNum > 1 ? '✓' : '1'}</div>
-                  <span className="f-prog-lbl">About You</span>
-                </div>
-                <div className={`f-prog-line ${stepNum > 1 ? 'done' : ''}`} />
-                <div className="f-prog-step">
-                  <div className={`f-prog-circle ${stepNum > 2 ? 'done' : stepNum === 2 ? 'active' : 'pending'}`}>{stepNum > 2 ? '✓' : '2'}</div>
-                  <span className={`f-prog-lbl${stepNum >= 2 ? '' : ' dim'}`}>Qualification</span>
-                </div>
-                <div className={`f-prog-line ${stepNum > 2 ? 'done' : ''}`} />
-                <div className="f-prog-step">
-                  <div className={`f-prog-circle ${stepNum === 3 ? 'active' : 'pending'}`}>3</div>
-                  <span className={`f-prog-lbl${stepNum === 3 ? '' : ' dim'}`}>Your Details</span>
-                </div>
+              <div className="f-field">
+                <label className="f-lbl" htmlFor="name-input">Your Name</label>
+                <input
+                  id="name-input"
+                  className="f-input"
+                  type="text"
+                  autoComplete="name"
+                  placeholder="Enter your full name"
+                  value={name}
+                  onChange={e => { setName(e.target.value); setError(''); }}
+                  onKeyDown={e => { if (e.key === 'Enter') handleSubmit(); }}
+                />
               </div>
 
-              {/* ── STEP 1: WHO ── */}
-              {stepNum === 1 && (
-                <>
-                  <div className="f-otp-icon"><FiUser size={22} strokeWidth={1.5} /></div>
-                  <h3 className="f-otp-h">Looking for admission for yourself?</h3>
-                  <p className="f-otp-sub">This helps us connect you with the right counsellor.</p>
-                  <div className="f-quiz">
-                    {WHO_OPTIONS.map(opt => (
-                      <button key={opt} className="f-quiz-option" onClick={() => selectWho(opt)}>
-                        {opt} <FiArrowRight size={15} />
-                      </button>
-                    ))}
-                  </div>
-                </>
-              )}
+              <div className="f-field">
+                <label className="f-lbl" htmlFor="ph-input">Your Mobile Number</label>
+                <div className="f-phone-row">
+                  <div className="f-prefix">🇮🇳 +91</div>
+                  <input
+                    id="ph-input"
+                    className="f-input"
+                    type="tel" inputMode="numeric" maxLength={10}
+                    autoComplete="tel-national"
+                    placeholder="Enter 10-digit number"
+                    value={phone}
+                    onChange={e => { setPhone(e.target.value.replace(/\D/g, '').slice(0, 10)); setError(''); }}
+                    onKeyDown={e => { if (e.key === 'Enter') handleSubmit(); }}
+                  />
+                </div>
+                <p className="f-hint">Used only to schedule your counselling call. No spam, ever.</p>
+              </div>
 
-              {/* ── STEP 2: QUALIFICATION ── */}
-              {stepNum === 2 && (
-                <>
-                  <button className="f-back-link" onClick={goBack}><FiArrowLeft size={12} />Back</button>
-                  <div className="f-otp-icon"><FiFileText size={22} strokeWidth={1.5} /></div>
-                  <h3 className="f-otp-h">What's your highest qualification?</h3>
-                  <p className="f-otp-sub">So we can tell you about the right batch and eligibility.</p>
-                  <div className="f-quiz">
-                    {QUAL_OPTIONS.map(opt => (
-                      <button key={opt} className="f-quiz-option" onClick={() => selectQual(opt)}>
-                        {opt} <FiArrowRight size={15} />
-                      </button>
-                    ))}
-                  </div>
-                </>
-              )}
+              {error && <div className="f-err">⚠ {error}</div>}
 
-              {/* ── STEP 3: NAME + PHONE ── */}
-              {stepNum === 3 && (
-                <>
-                  <button className="f-back-link" onClick={goBack}><FiArrowLeft size={12} />Back</button>
-                  <div className="f-otp-icon"><FiPhone size={22} strokeWidth={1.5} /></div>
-                  <h3 className="f-otp-h">Almost done!</h3>
-                  <p className="f-otp-sub">Share your name and number — our counsellor will call you.</p>
+              <button className="f-btn" onClick={handleSubmit} disabled={loading}>
+                {loading ? <>↻ Opening application…</> : <><FiCheckCircle size={14} />Continue to Application Form</>}
+              </button>
 
-                  <div className="f-field">
-                    <label className="f-lbl" htmlFor="name-input">Your Name</label>
-                    <input
-                      id="name-input"
-                      className="f-input"
-                      type="text"
-                      placeholder="Enter your full name"
-                      value={name}
-                      onChange={e => { setName(e.target.value); setError(''); }}
-                    />
-                  </div>
+              <div className="f-sec"><FiLock size={10} />100% secure · Used only for MBA admissions</div>
 
-                  <div className="f-field">
-                    <label className="f-lbl" htmlFor="ph-input">Your Mobile Number</label>
-                    <div className="f-phone-row">
-                      <div className="f-prefix">🇮🇳 +91</div>
-                      <input
-                        id="ph-input"
-                        className="f-input"
-                        type="tel" inputMode="numeric" maxLength={10}
-                        placeholder="Enter 10-digit number"
-                        value={phone}
-                        onChange={e => { setPhone(e.target.value.replace(/\D/g, '').slice(0, 10)); setError(''); }}
-                        onKeyDown={e => { if (e.key === 'Enter') handleSubmit(); }}
-                      />
-                    </div>
-                    <p className="f-hint">Used only to schedule your counselling call. No spam, ever.</p>
-                  </div>
-
-                  {error && <div className="f-err">⚠ {error}</div>}
-
-                  <button className="f-btn" onClick={handleSubmit} disabled={loading}>
-                    {loading ? <>↻ Connecting…</> : <><FiCheckCircle size={14} />Get a Callback from GSBM Admissions</>}
-                  </button>
-
-                  <div className="f-sec"><FiLock size={10} />100% secure · Used only for MBA admissions</div>
-                </>
-              )}
+              {/* ── ADMISSIONS COUNSELLOR — DIRECT HELP ── */}
+              <div className="f-help">
+                <div className="f-help-head">
+                  <div className="f-help-icon"><FiPhone size={14} strokeWidth={2.2} /></div>
+                  <p className="f-help-t">Can't fill the form? Call us directly</p>
+                </div>
+                <p className="f-help-d">
+                  Speak to an admissions counsellor — we'll take your details over the phone and complete the application for you.
+                </p>
+                <p className="f-help-org">Ganesan School of Business Management</p>
+                <a
+                  className="f-help-num"
+                  href={`tel:${COUNSELLOR_PHONE}`}
+                  aria-label={`Call GSBM admissions counsellor at ${COUNSELLOR_PHONE_DISPLAY}`}
+                >
+                  <FiPhone size={16} strokeWidth={2.2} />
+                  {COUNSELLOR_PHONE_DISPLAY}
+                </a>
+                <p className="f-help-hours">Admissions helpline · Mon–Sat, 9 AM – 6 PM</p>
+              </div>
 
               <div className="f-divider" />
               <p style={{ fontSize: '10px', color: '#bbb', textAlign: 'center', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '.06em', fontWeight: 700 }}>
