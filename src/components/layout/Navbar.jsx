@@ -4,16 +4,17 @@ import { getAllBlogSlugs } from '../../utils/BlogPosts';
 import vmrfLogoFull from '../../assets/mainlogo.png';
 import './Navbar.css';
 
+
 // ─── Static data — outside component, never recreated ────────────────────────
 const NAV_ITEMS = [
-  { label: 'Home',       id: 'home'       },
-  { label: 'About',      id: 'about'      },
-  { label: 'Leadership', id: 'leadership' },
-  { label: 'Programs',   id: 'programs'   },
-  { label: 'Campus',     id: 'campus'     },
-  { label: 'Admissions', id: 'admissions' },
-  { label: 'Placements', id: 'placements' },
-  { label: 'Contact',    id: 'contact'    },
+  { label: 'Home',       id: 'home',       path: '/'           },
+  { label: 'About',      id: 'about',      path: '/about'      },
+  { label: 'Leadership', id: 'leadership', path: '/leadership' },
+  { label: 'Programs',   id: 'programs',   path: '/programs'   },
+  { label: 'Campus',     id: 'campus',     path: '/campus'     },
+  { label: 'Admissions', id: 'admissions', path: '/admissions' },
+  { label: 'Placements', id: 'placements', path: '/placements' },
+  { label: 'Contact',    id: 'contact',    path: '/contact'    },
 ];
 
 const SECTION_IDS = NAV_ITEMS.map((i) => i.id);
