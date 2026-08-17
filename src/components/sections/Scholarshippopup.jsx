@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import scholarshipCreative from '../../../public/images/scholarship-popup/scholarship-popup.jpg';
-import './ScholarshipPopup.css';
+import './Scholarshippopup.css';
 
 /* ─────────────────────────────────────────────────────────────
    Seconds before the close button becomes active.
