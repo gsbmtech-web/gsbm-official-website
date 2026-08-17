@@ -1,34 +1,98 @@
 // src/components/sections/BlogPost.jsx
 //
-// Generic renderer for any entry in src/data/blogPosts.js. Handles SEO
+// Generic renderer for any entry in the blogPosts registry. Handles SEO
 // meta tags, Open Graph/Twitter tags, canonical URL, and JSON-LD
-// (Article + FAQPage — the FAQPage schema is what lets FAQ content show
-// up as rich results / gets picked up by AI answer engines).
+// (Article + FAQPage + HowTo — the FAQPage and HowTo schemas are what let
+// this content show up as rich results / get picked up by AI answer
+// engines).
 //
-// Usage: <BlogPost slug="top-mba-colleges-in-chennai" />
+// Supported per-post fields:
+//   intro        — array of paragraphs rendered above the first H2
+//   sections[]   — { heading, paragraphs, list, paragraphsAfterList,
+//                    subsections: [{ title, paragraphs }],
+//                    table: { caption, headers, rows } }
+//   howTo        — { heading, description, items: [{ title, paragraphs }] }
+//   faqs         — [{ question, answer }]
+//   finalNote    — { heading, paragraphs }
+//
+// Paragraph text supports **bold** and [label](url) links. Links starting
+// with "/" render as react-router <Link> (SPA navigation, no reload);
+// everything else renders as an external anchor with rel="noopener".
 
 import { Helmet } from 'react-helmet-async';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { getBlogPost } from '../../utils/BlogPosts';
 import NotFound from '../ui/NotFound';
 import './BlogPost.css';
 
 const SITE_URL = 'https://gsbm.co.in';
 
-// Turns **bold** markers into <strong> without pulling in a full markdown
-// parser — the SEO content only ever needs this one inline style.
-const renderInline = (text) => {
-  const parts = text.split(/(\*\*[^*]+\*\*)/g);
-  return parts.map((part, i) =>
-    part.startsWith('**') && part.endsWith('**') ? (
-      <strong key={i}>{part.slice(2, -2)}</strong>
-    ) : (
-      <span key={i}>{part}</span>
-    )
-  );
-};
+// Splits on **bold** and [label](url) in one pass, so the SEO content can
+// use both without pulling in a full markdown parser.
+const INLINE_RE = /(\*\*[^*]+\*\*|\[[^\]]+\]\([^)]+\))/g;
+
+const renderInline = (text) =>
+  text.split(INLINE_RE).map((part, i) => {
+    if (part.startsWith('**') && part.endsWith('**')) {
+      return <strong key={i}>{part.slice(2, -2)}</strong>;
+    }
+
+    const link = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+    if (link) {
+      const [, label, href] = link;
+      return href.startsWith('/') ? (
+        <Link key={i} to={href} className="blog-link">
+          {label}
+        </Link>
+      ) : (
+        <a
+          key={i}
+          href={href}
+          className="blog-link blog-link--external"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {label}
+        </a>
+      );
+    }
+
+    return <span key={i}>{part}</span>;
+  });
 
 const Paragraph = ({ children }) => <p className="blog-paragraph">{renderInline(children)}</p>;
+
+const BlogTable = ({ table }) => (
+  <div className="blog-table-wrap">
+    <table className="blog-table">
+      {table.caption && <caption className="blog-table-caption">{table.caption}</caption>}
+      <thead>
+        <tr>
+          {table.headers.map((h) => (
+            <th key={h} scope="col">
+              {h}
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {table.rows.map((row) => (
+          <tr key={row[0]}>
+            {row.map((cell, i) =>
+              i === 0 ? (
+                <th key={i} scope="row">
+                  {cell}
+                </th>
+              ) : (
+                <td key={i}>{cell}</td>
+              )
+            )}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+);
 
 const BlogPost = ({ slug: slugProp }) => {
   const { slug: slugParam } = useParams();
@@ -37,9 +101,14 @@ const BlogPost = ({ slug: slugProp }) => {
 
   if (!post) return <NotFound />;
 
-  const { seo, h1, sections, howTo, faqs, finalNote } = post;
+  const { seo, h1, intro, sections, howTo, faqs, finalNote } = post;
   const canonical = seo.canonicalUrl || `${SITE_URL}/${seo.slug}`;
   const imageUrl = `${SITE_URL}/images/blog/${seo.imageFileName}`;
+  // Social platforms centre-crop to a square, which cuts the headline off a
+  // wide hero — use the square variant for OG/Twitter when one is provided.
+  const socialImageUrl = seo.socialImageFileName
+    ? `${SITE_URL}/images/blog/${seo.socialImageFileName}`
+    : imageUrl;
 
   const articleSchema = {
     '@context': 'https://schema.org',
@@ -70,6 +139,24 @@ const BlogPost = ({ slug: slugProp }) => {
       }
     : null;
 
+  // HowTo schema — only emitted when the steps are actually visible on the
+  // page, which is Google's requirement for this markup.
+  const howToSchema = howTo?.items?.length
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'HowTo',
+        name: howTo.heading,
+        description: howTo.description || seo.description,
+        step: howTo.items.map((item, i) => ({
+          '@type': 'HowToStep',
+          position: i + 1,
+          name: item.title,
+          text: item.paragraphs.join(' '),
+          url: `${canonical}#howto-step-${i + 1}`,
+        })),
+      }
+    : null;
+
   return (
     <article className="blog-post">
       <Helmet>
@@ -81,22 +168,24 @@ const BlogPost = ({ slug: slugProp }) => {
         <meta property="og:type" content="article" />
         <meta property="og:title" content={seo.title} />
         <meta property="og:description" content={seo.description} />
-        <meta property="og:image" content={imageUrl} />
+        <meta property="og:image" content={socialImageUrl} />
         <meta property="og:url" content={canonical} />
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={seo.title} />
         <meta name="twitter:description" content={seo.description} />
-        <meta name="twitter:image" content={imageUrl} />
+        <meta name="twitter:image" content={socialImageUrl} />
 
         <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
         {faqSchema && <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>}
+        {howToSchema && <script type="application/ld+json">{JSON.stringify(howToSchema)}</script>}
       </Helmet>
 
       <div className="blog-post-container">
         <img
           src={`/images/blog/${seo.imageFileName}`}
           alt={seo.imageAlt}
+          title={seo.imageTitle || seo.imageAlt}
           className="blog-hero-image"
           width={seo.imageWidth || 1536}
           height={seo.imageHeight || 1024}
@@ -107,10 +196,18 @@ const BlogPost = ({ slug: slugProp }) => {
 
         <h1 className="blog-h1">{h1}</h1>
 
+        {intro?.length > 0 && (
+          <div className="blog-intro">
+            {intro.map((p, i) => (
+              <Paragraph key={i}>{p}</Paragraph>
+            ))}
+          </div>
+        )}
+
         {sections.map((section) => (
           <section key={section.heading} className="blog-section">
             <h2>{section.heading}</h2>
-            {section.paragraphs.map((p, i) => (
+            {section.paragraphs?.map((p, i) => (
               <Paragraph key={i}>{p}</Paragraph>
             ))}
             {section.list && (
@@ -120,6 +217,15 @@ const BlogPost = ({ slug: slugProp }) => {
                 ))}
               </ul>
             )}
+            {section.table && <BlogTable table={section.table} />}
+            {section.subsections?.map((sub) => (
+              <div key={sub.title} className="blog-subsection">
+                <h3>{sub.title}</h3>
+                {sub.paragraphs.map((p, i) => (
+                  <Paragraph key={i}>{p}</Paragraph>
+                ))}
+              </div>
+            ))}
             {section.paragraphsAfterList?.map((p, i) => (
               <Paragraph key={`after-${i}`}>{p}</Paragraph>
             ))}
@@ -129,11 +235,11 @@ const BlogPost = ({ slug: slugProp }) => {
         {howTo && (
           <section className="blog-section blog-howto">
             <h2>{howTo.heading}</h2>
-            {howTo.items.map((item) => (
-              <div key={item.title} className="blog-howto-item">
+            {howTo.items.map((item, i) => (
+              <div key={item.title} id={`howto-step-${i + 1}`} className="blog-howto-item">
                 <h3>{item.title}</h3>
-                {item.paragraphs.map((p, i) => (
-                  <Paragraph key={i}>{p}</Paragraph>
+                {item.paragraphs.map((p, j) => (
+                  <Paragraph key={j}>{p}</Paragraph>
                 ))}
               </div>
             ))}
