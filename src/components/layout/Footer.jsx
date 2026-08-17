@@ -8,7 +8,6 @@ import {
   FiFacebook,
   FiInstagram,
   FiLinkedin,
-  FiTwitter,
 } from 'react-icons/fi';
 import LogoImg from '../../assets/mainlogo.png';
 import './Footer.css';
@@ -21,7 +20,7 @@ const footerLinks = [
   { label: 'Admissions',  id: 'admissions', path: '/admissions' },
   { label: 'Faculty',     id: 'faculty',    path: '/faculty'    },
   { label: 'Placements',  id: 'placements', path: '/placements' },
-  { label: 'Blogs',        id: 'blog',       path: '/blog'       },
+  { label: 'Blogs',       id: 'blog',       path: '/blog'       },
   { label: 'Contact',     id: 'contact',    path: '/contact'    },
 ];
 
@@ -50,7 +49,6 @@ const SOCIAL_LINKS = [
     label: 'LinkedIn',
     href: 'https://www.linkedin.com/company/ganesan-school-of-business-management-chennai/about/?viewAsMember=true',
   },
-
 ];
 
 const Footer = () => {
@@ -166,8 +164,24 @@ const Footer = () => {
 
       <div className="footer-divider" />
 
+      {/* Bottom bar — copyright + legal links on the left, credit on the
+          right. Legal links live here rather than in Quick Links: that's
+          where users and ad-platform reviewers expect to find them. */}
       <div className="footer-bottom">
-        <span className="footer-copy">© 2026 Ganesan School of Business Management. All rights reserved.</span>
+        <div className="footer-bottom-left">
+          <span className="footer-copy">
+            © 2026 Ganesan School of Business Management. All rights reserved.
+          </span>
+          <span className="footer-legal-sep" aria-hidden="true">|</span>
+          <a
+            href="/privacy-policy"
+            className="footer-legal-link"
+            onClick={(e) => handleNav(e, '/privacy-policy')}
+          >
+            Privacy Policy
+          </a>
+        </div>
+
         <div className="footer-credit">
           <span className="footer-credit-label">Designed &amp; Developed by</span>
           <a
