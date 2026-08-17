@@ -11,6 +11,10 @@ import ApplyNow from './components/sections/Applynow';
 import NotFound from './components/ui/NotFound';
 import ThankYou from './components/sections/ThankYou.jsx';
 
+// Scholarship interstitial — homepage only, mounted inside <HomePage> below.
+// Kept eager (not lazy) so it paints immediately rather than fading in late.
+import ScholarshipPopup from './components/sections/Scholarshippopup.jsx';
+
 // Eager — above-the-fold, first thing anyone sees on Home. Code-splitting
 // these caused a visible pop-in/layout-shift on first paint.
 import Hero from './components/sections/Hero';
@@ -139,8 +143,14 @@ const StandalonePage = ({ metaKey, children }) => (
 // ─── HomePage ─────────────────────────────────────────────────────────────────
 // The full one-page scroll — every section, in order, exactly like the
 // original site.
+//
+// <ScholarshipPopup /> lives HERE and not at the <App> level on purpose:
+// mounting it in App would fire it on /apply, /about, and every blog post
+// too. Google Ads point at /apply, so the interstitial must never appear
+// on that route.
 const HomePage = () => (
   <ErrorBoundary>
+    <ScholarshipPopup />
     <Navbar />
     <main id="main-content" tabIndex={-1}>
       <PageHelmet meta={PAGE_META.home} />

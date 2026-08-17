@@ -1,0 +1,143 @@
+/* ═══════════════════════════════════════════════════
+   ScholarshipPopup.css
+   Full-screen interstitial on the GSBM homepage.
+   ═══════════════════════════════════════════════════ */
+
+.gsp-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(10, 14, 30, 0.82);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  animation: gsp-fade 0.25s ease-out;
+}
+
+@keyframes gsp-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.gsp-modal {
+  position: relative;
+  max-width: min(460px, 100%);
+  max-height: 100%;
+  display: flex;
+  animation: gsp-rise 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes gsp-rise {
+  from { opacity: 0; transform: translateY(18px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ── Creative (the whole thing is the CTA) ── */
+.gsp-creative-btn {
+  position: relative;
+  display: block;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.18s ease;
+  max-height: calc(100vh - 48px);
+}
+.gsp-creative-btn:hover  { transform: translateY(-2px); }
+.gsp-creative-btn:active { transform: scale(0.995); }
+.gsp-creative-btn:focus-visible {
+  outline: 3px solid #c9a84c;
+  outline-offset: 3px;
+}
+
+.gsp-creative {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: calc(100vh - 48px);
+  object-fit: contain;
+}
+
+/* Small affordance so it's obvious the poster is clickable */
+.gsp-tap-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  transform: translateX(-50%);
+  background: rgba(10, 14, 30, 0.72);
+  color: #f3e2b3;
+  font-family: 'Outfit', system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 20px;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* ── Close button / countdown ── */
+.gsp-close {
+  position: absolute;
+  top: -14px;
+  right: -14px;
+  z-index: 2;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid rgba(201, 168, 76, 0.75);
+  background: #ffffff;
+  color: #1a2340;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: not-allowed;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+  font-family: 'Outfit', system-ui, sans-serif;
+  transition: background 0.18s, transform 0.18s, color 0.18s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.gsp-count {
+  font-size: 15px;
+  font-weight: 800;
+  color: #8b1a1a;
+  font-variant-numeric: tabular-nums;
+}
+
+.gsp-close--ready {
+  cursor: pointer;
+}
+.gsp-close--ready:hover {
+  background: #1a2340;
+  color: #ffffff;
+  transform: rotate(90deg);
+}
+.gsp-close:focus-visible {
+  outline: 3px solid #c9a84c;
+  outline-offset: 2px;
+}
+
+/* ── Mobile ── */
+@media (max-width: 600px) {
+  .gsp-overlay { padding: 44px 14px 20px; }
+  .gsp-close   { top: -6px; right: -6px; width: 36px; height: 36px; }
+  .gsp-creative-btn,
+  .gsp-creative { max-height: calc(100vh - 72px); }
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .gsp-overlay,
+  .gsp-modal { animation: none; }
+  .gsp-creative-btn:hover,
+  .gsp-close--ready:hover { transform: none; }
+}
