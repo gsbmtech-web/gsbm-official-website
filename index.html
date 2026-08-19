@@ -12,7 +12,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-59Q353Q5');</script>
 <!-- End Google Tag Manager -->
 
-<!-- Meta Pixel Code -->
+<!-- Meta Pixel Code — the matching <noscript> lives at the top of <body>,
+     not here: an <img> inside <head> is invalid HTML and makes every
+     Vite build emit a parse error. -->
 <script>
 !function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -25,9 +27,6 @@ s.parentNode.insertBefore(t,s)}(window, document,'script',
 fbq('init', '1372487208102592');
 fbq('track', 'PageView');
 </script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=1372487208102592&ev=PageView&noscript=1"
-/></noscript>
 <!-- End Meta Pixel Code -->
 
 <!-- Google tag (gtag.js) / GA4 + Google Ads -->
@@ -40,8 +39,6 @@ gtag('config', 'G-3B10DM7PKX');
 gtag('config', 'AW-18134758434');
 </script>
 
-
-
 <!-- Favicon -->
 <link rel="icon" href="/favicon.ico" />
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
@@ -49,25 +46,28 @@ gtag('config', 'AW-18134758434');
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 <link rel="manifest" href="/site.webmanifest" />
 
-<!-- Primary Meta Tags -->
+<!-- Primary Meta Tags — these are the FALLBACK values. On every route,
+     react-helmet-async (see PAGE_META in src/App.jsx) replaces them at
+     runtime. Keep this block in sync with PAGE_META.home. -->
 <title>GSBM – Top MBA College in Chennai | Ganesan School of Business Management</title>
 <meta name="description" content="Join GSBM Chennai — AICTE approved, NAAC accredited MBA college. Specialisations in Marketing, Finance, HR & Business Analytics. 100% placement support. Apply for 2026–2028 batch now." />
-<meta name="keywords" content="MBA Chennai, top MBA college Chennai, GSBM Chennai, MBA admissions 2026, AICTE approved MBA Chennai, MBA marketing Chennai, MBA finance Chennai, business school Chennai, MBA placements Chennai, Ganesan School of Business Management" />
-<meta name="author" content="GSBM Chennai" />
+<meta name="keywords" content="top mba colleges in chennai, best mba colleges in chennai, mba colleges in chennai, top private mba colleges in chennai, best private mba colleges in chennai, top mba colleges in chennai with placements, mba admission in chennai, mba admission 2026 in chennai, mba colleges in chennai fees, mba courses in chennai, full time mba colleges in chennai, Ganesan School of Business Management" />
+<meta name="author" content="GSBM" />
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
 <meta name="language" content="English" />
 <meta name="geo.region" content="IN-TN" />
 <meta name="geo.placename" content="Chennai" />
 
-<!-- Canonical -->
-<link rel="canonical" href="https://gsbm.co.in/" />
+<!-- Canonical — WWW host, matching the primary domain in Vercel and the
+     canonical tags generated in src/App.jsx. -->
+<link rel="canonical" href="https://www.gsbm.co.in/" />
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://gsbm.co.in/" />
+<meta property="og:url" content="https://www.gsbm.co.in/" />
 <meta property="og:title" content="GSBM – Top MBA College in Chennai | Ganesan School of Business Management" />
 <meta property="og:description" content="Join GSBM Chennai — AICTE approved, NAAC accredited MBA college. Specialisations in Marketing, Finance, HR & Business Analytics. 100% placement support. Apply for 2026–2028 batch now." />
-<meta property="og:image" content="https://gsbm.co.in/og-default.jpg" />
+<meta property="og:image" content="https://www.gsbm.co.in/og-default.jpg" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:site_name" content="GSBM Chennai" />
@@ -75,10 +75,10 @@ gtag('config', 'AW-18134758434');
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:url" content="https://gsbm.co.in/" />
+<meta name="twitter:url" content="https://www.gsbm.co.in/" />
 <meta name="twitter:title" content="GSBM – Top MBA College in Chennai | Ganesan School of Business Management" />
 <meta name="twitter:description" content="Join GSBM Chennai — AICTE approved, NAAC accredited MBA college. Specialisations in Marketing, Finance, HR & Business Analytics. Apply for 2026–2028 batch now." />
-<meta name="twitter:image" content="https://gsbm.co.in/og-default.jpg" />
+<meta name="twitter:image" content="https://www.gsbm.co.in/og-default.jpg" />
 
 <!-- Schema Markup — College/University -->
 <script type="application/ld+json">
@@ -86,20 +86,26 @@ gtag('config', 'AW-18134758434');
   "@context": "https://schema.org",
   "@type": "CollegeOrUniversity",
   "name": "Ganesan School of Business Management",
-  "alternateName": "GSBM Chennai",
-  "url": "https://gsbm.co.in",
-  "logo": "https://gsbm.co.in/favicon-32x32.png",
-  "image": "https://gsbm.co.in/og-default.jpg",
+  "alternateName": "GSBM",
+  "url": "https://www.gsbm.co.in",
+  "logo": "https://www.gsbm.co.in/images/Logo.png",
+  "image": "https://www.gsbm.co.in/og-default.jpg",
   "description": "AICTE approved, NAAC accredited MBA college in Chennai offering specialisations in Marketing, Finance, HR and Business Analytics.",
   "address": {
     "@type": "PostalAddress",
+    "streetAddress": "Vinayaka Nagar, Old Mahabalipuram Road",
     "addressLocality": "Chennai",
     "addressRegion": "Tamil Nadu",
+    "postalCode": "603104",
     "addressCountry": "IN"
   },
   "telephone": "+918667690672",
+  "email": "admissions@gsbm.co.in",
   "sameAs": [
-    "https://gsbm.co.in"
+    "https://www.instagram.com/gsbm_chennai/",
+    "https://www.facebook.com/gsbm.mba.chennai",
+    "https://www.linkedin.com/company/ganesan-school-of-business-management-chennai/",
+    "https://www.youtube.com/@GanesanSchoolofBusinessManagem"
   ],
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
@@ -120,7 +126,7 @@ gtag('config', 'AW-18134758434');
 </script>
 
 <!-- Performance -->
-<link rel="preload" as="image" href="/src/assets/mainlogo.png" fetchpriority="high" />
+<link rel="preload" as="image" href="/images/Logo.png" fetchpriority="high" />
 <link rel="preconnect" href="https://res.cloudinary.com" />
 <link rel="preconnect" href="https://forms.zohopublic.in" />
 </head>
@@ -129,6 +135,13 @@ gtag('config', 'AW-18134758434');
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-59Q353Q5"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+
+<!-- Meta Pixel (noscript) — must stay in <body>, never in <head>. -->
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1372487208102592&ev=PageView&noscript=1"
+alt="" /></noscript>
+<!-- End Meta Pixel (noscript) -->
+
 <div id="root"></div>
 <script type="module" src="/src/main.jsx"></script>
 </body>
