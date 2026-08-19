@@ -110,6 +110,11 @@ const PAGE_META = {
     description: 'Get in touch with GSBM admissions — phone, email, WhatsApp, campus address, and location map.',
     path: '/contact',
   },
+    apply: {
+    title: 'Apply for MBA 2026–28 | GSBM Chennai Admissions',
+    description: 'Apply online for the GSBM MBA 2026–2028 batch in Chennai. AICTE approved, VMRF-DU awarded. Talk to an admissions counsellor for eligibility, fees and scholarships.',
+    path: '/apply',
+  },
 };
 
 const PageHelmet = ({ meta }) => (

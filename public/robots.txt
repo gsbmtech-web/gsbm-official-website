@@ -1,3 +1,11 @@
+# public/robots.txt
+# Served at https://gsbm.co.in/robots.txt
+
 User-agent: *
 Allow: /
+
+# The thank-you page is a post-submission confirmation with no standalone
+# value in search results — keeping it out avoids a thin page in the index.
+Disallow: /thank-you
+
 Sitemap: https://gsbm.co.in/sitemap.xml
