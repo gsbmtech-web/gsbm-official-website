@@ -64,9 +64,10 @@ ScrollToTop.displayName = 'ScrollToTop';
 // ─── SEO meta per page ─────────────────────────────────────────────────────
 // Placeholder copy — swap for real, reviewed copy before this ships.
 const PAGE_META = {
-  home: {
-    title: 'GSBM – Ganesan School of Business Management | MBA College Chennai',
-    description: "Transform your career with GSBM's industry-focused MBA programs. AICTE approved, VMRF-DU affiliated. Apply now for the 2026–2028 batch.",
+    home: {
+    title: 'GSBM – Top MBA College in Chennai | Ganesan School of Business Management',
+    description: 'Join GSBM Chennai — AICTE approved, NAAC accredited MBA college. Specialisations in Marketing, Finance, HR & Business Analytics. 100% placement support. Apply for 2026–2028 batch now.',
+    keywords: 'MBA Chennai, top MBA college Chennai, GSBM Chennai, MBA admissions 2026, AICTE approved MBA Chennai, MBA marketing Chennai, MBA finance Chennai, business school Chennai, MBA placements Chennai, Ganesan School of Business Management',
     path: '/',
   },
   about: {
@@ -115,6 +116,7 @@ const PageHelmet = ({ meta }) => (
   <Helmet>
     <title>{meta.title}</title>
     <meta name="description" content={meta.description} />
+    {meta.keywords && <meta name="keywords" content={meta.keywords} />}
     <meta name="robots" content="index, follow" />
     <meta property="og:title" content={meta.title} />
     <meta property="og:description" content={meta.description} />

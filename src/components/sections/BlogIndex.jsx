@@ -3,8 +3,12 @@
 // Structure modeled on reva.edu.in/blog (dark hero band, category filter
 // pills, single-column post list with thumbnail + excerpt + Read More,
 // sidebar with search + Recent Posts + contact form) — restyled in GSBM's
-// navy/gold. Reads every post from blogPosts.js, so new posts just need
-// a `category` field to slot into the filter pills automatically.
+// navy/gold. Reads every post from the blogPosts registry, so new posts
+// just need a `category` field to slot into the filter pills automatically.
+//
+// Ordering: newest first, by seo.publishedDate. Registry order is ignored,
+// so a new post added at the bottom of blogPosts.js still appears at the
+// top of the list here.
 
 import { useState, useMemo, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
@@ -20,10 +24,17 @@ const formatDate = (iso) => {
   return d.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
 };
 
+// Newest first. Posts without a date sort last rather than breaking the sort.
+const byNewest = (a, b) => {
+  const da = a.seo?.publishedDate ? new Date(a.seo.publishedDate).getTime() : 0;
+  const db = b.seo?.publishedDate ? new Date(b.seo.publishedDate).getTime() : 0;
+  return db - da;
+};
+
 const BlogIndex = () => {
   const slugs = getAllBlogSlugs();
   const posts = useMemo(
-    () => slugs.map((slug) => ({ slug, ...blogPosts[slug] })),
+    () => slugs.map((slug) => ({ slug, ...blogPosts[slug] })).sort(byNewest),
     [slugs]
   );
 
@@ -44,6 +55,7 @@ const BlogIndex = () => {
     });
   }, [posts, activeCategory, search]);
 
+  // Already sorted newest-first above.
   const recentPosts = posts.slice(0, 6);
 
   const [contactForm, setContactForm] = useState({ name: '', email: '', phone: '', message: '' });
