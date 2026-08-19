@@ -1,7 +1,11 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import scholarshipCreative from '../../../public/images/scholarship-popup/scholarship-popup.jpg';
 import './Scholarshippopup.css';
+
+/* Files in public/ are served from the site root — reference them by URL,
+   never import them. A relative import reaching into public/ breaks the
+   Vite build. Path is case-sensitive on Vercel. */
+const scholarshipCreative = '/images/scholarship-popup/scholarship-popup.jpg';
 
 /* ─────────────────────────────────────────────────────────────
    Seconds before the close button becomes active.

@@ -26,7 +26,7 @@ const blogPosts = {
       socialImageFileName: 'top-mba-colleges-in-chennai-social.png',
       imageAlt:
         'Top MBA Colleges in Chennai offering quality management education and excellent career opportunities',
-      canonicalUrl: 'https://gsbm.co.in/top-mba-colleges-in-chennai',
+      canonicalUrl: 'https://www.gsbm.co.in/top-mba-colleges-in-chennai',
       publishedDate: '2026-08-07',
       modifiedDate: '2026-08-07',
       category: 'MBA Admissions',
@@ -467,7 +467,7 @@ const blogPosts = {
         'Best MBA Colleges in Chennai – GSBM MBA Programme at Ganesan School of Business Management',
       imageTitle:
         'Best MBA Colleges in Chennai – Ganesan School of Business Management',
-      canonicalUrl: 'https://gsbm.co.in/best-mba-colleges-in-chennai',
+      canonicalUrl: 'https://www.gsbm.co.in/best-mba-colleges-in-chennai',
       publishedDate: '2026-08-17',
       modifiedDate: '2026-08-17',
       category: 'MBA Admissions',

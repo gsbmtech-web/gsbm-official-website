@@ -16,7 +16,7 @@ import { Link } from 'react-router-dom';
 import blogPosts, { getAllBlogSlugs } from '../../utils/BlogPosts';
 import './BlogIndex.css';
 
-const SITE_URL = 'https://gsbm.co.in';
+const SITE_URL = 'https://www.gsbm.co.in';
 
 const formatDate = (iso) => {
   if (!iso) return '';

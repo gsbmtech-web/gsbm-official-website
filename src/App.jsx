@@ -128,7 +128,7 @@ const PageHelmet = ({ meta }) => (
     <meta property="og:image" content="/og-image.jpg" />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
-    <link rel="canonical" href={`https://gsbm.co.in${meta.path === '/' ? '' : meta.path}`} />
+    <link rel="canonical" href={`https://www.gsbm.co.in${meta.path === '/' ? '' : meta.path}`} />
   </Helmet>
 );
 

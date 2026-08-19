@@ -28,7 +28,7 @@ const PrivacyPolicy = () => (
         content="How Ganesan School of Business Management (GSBM), Chennai collects, uses, stores and protects personal information submitted through its website, admission forms and advertising channels."
       />
       <meta name="robots" content="index, follow" />
-      <link rel="canonical" href="https://gsbm.co.in/privacy-policy" />
+      <link rel="canonical" href="https://www.gsbm.co.in/privacy-policy" />
     </Helmet>
 
     <div className="pp-container">

@@ -25,7 +25,7 @@ import { getBlogPost } from '../../utils/BlogPosts';
 import NotFound from '../ui/NotFound';
 import './BlogPost.css';
 
-const SITE_URL = 'https://gsbm.co.in';
+const SITE_URL = 'https://www.gsbm.co.in';
 
 // Splits on **bold** and [label](url) in one pass, so the SEO content can
 // use both without pulling in a full markdown parser.

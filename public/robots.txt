@@ -1,5 +1,5 @@
 # public/robots.txt
-# Served at https://gsbm.co.in/robots.txt
+# Served at https://www.gsbm.co.in/robots.txt
 
 User-agent: *
 Allow: /
@@ -8,4 +8,4 @@ Allow: /
 # value in search results — keeping it out avoids a thin page in the index.
 Disallow: /thank-you
 
-Sitemap: https://gsbm.co.in/sitemap.xml
+Sitemap: https://www.gsbm.co.in/sitemap.xml
