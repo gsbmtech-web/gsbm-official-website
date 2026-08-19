@@ -259,7 +259,7 @@ const PrivacyPolicy = () => (
         <p className="pp-text">
           If your concern is not resolved to your satisfaction, you may escalate it to our
           Grievance Officer, appointed in accordance with applicable Indian law:{' '}
-          <strong>[Prof Balaganapthy S ]</strong>, <strong>[Balaganapthy@gsbm.co.in]</strong>.
+          <strong>[Prof Balaganapthy S ]</strong>, <strong>[director@gsbm.co.in]</strong>.
           We aim to acknowledge grievances within a reasonable period and to resolve them
           promptly.
         </p>
