@@ -41,9 +41,9 @@ const SEO = {
 };
 
 const HERO_POINTS = [
-  "UGC Recognised Degree Framework",
+  "UGC Recognised Degree",
   "AICTE Approved",
-  "UGC Recognised • NAAC Accredited Institutional Framework",
+  "NAAC Accredited",
   'Graduates from Any Discipline Can Apply',
   'Structured Career Development and Placement Support',
   'Merit Scholarships Available',
