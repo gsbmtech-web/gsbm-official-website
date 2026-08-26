@@ -9,7 +9,7 @@ import './PrivacyPolicy.css';
 // reason a policy stops being accurate.
 // ─────────────────────────────────────────────────────────────────────
 
-const LAST_UPDATED = 'August 2026';
+const LAST_UPDATED = '2026';
 
 const CONTACT = {
   email: 'admissions@gsbm.co.in',
@@ -259,7 +259,7 @@ const PrivacyPolicy = () => (
         <p className="pp-text">
           If your concern is not resolved to your satisfaction, you may escalate it to our
           Grievance Officer, appointed in accordance with applicable Indian law:{' '}
-          <strong>[Prof Balaganapthy S ]</strong>, <strong>[director@gsbm.co.in]</strong>.
+          <strong>Prof Balaganapthy S</strong>, <strong>director@gsbm.co.in</strong>.
           We aim to acknowledge grievances within a reasonable period and to resolve them
           promptly.
         </p>

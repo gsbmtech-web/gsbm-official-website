@@ -20,8 +20,7 @@ const Calbutton = () => {
         <span className="ctab-kicker">MBA Admissions 2026–2028</span>
         <h2>Ready to Transform Your Career?</h2>
         <p>
-          Limited seats available. Apply now for the 2026–2028 MBA batch and secure your future
-          with Chennai's most transformative and employability-driven MBA program.
+          Limited seats available. Apply to GSBM and begin your MBA journey with a program built around academic rigour, industry exposure and career readiness. This also avoids an unsupported superlative such as “Chennai’s most transformative”.
         </p>
         <div className="ctab-btns">
           <a

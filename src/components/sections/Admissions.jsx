@@ -7,11 +7,11 @@ import InfoCard from '../ui/InfoCard';
 import './Admissions.css';
 
 const admissionSteps = [
-  { id: 'apply', title: 'Submit Application', desc: 'Fill out the online form on this page or visit the Ganesan School of Business Management (GSBM) admissions office at Campus, Chennai.' },
+  { id: 'apply', title: 'Submit Application', desc: 'Complete the online application or visit the GSBM Admissions Office in Chennai.' },
   { id: 'docs', title: 'Document Submission', desc: 'Submit mark sheets (10th, 12th, UG), entrance scorecard, ID proof, and two passport-size photographs.' },
-  { id: 'interview', title: 'Personal Interview', desc: 'Shortlisted candidates are invited for a personal interview or counselling session with the GSBM admissions committee.' },
+  { id: 'interview', title: 'Personal Interview', desc: 'Shortlisted candidates are invited for a personal interview or counselling interaction with the GSBM admissions team.' },
   { id: 'offer', title: 'Offer Letter', desc: 'Selected candidates receive an offer letter. Seat is confirmed on payment of the first semester fee.' },
-  { id: 'orientation', title: 'Orientation', desc: 'New students attend a mandatory orientation program before commencement in July.' },
+  { id: 'orientation', title: 'Orientation', desc: 'New students participate in an orientation and induction programme before regular academic sessions commence.' },
 ];
 
 const exams = ['TANCET', 'CAT', 'MAT', 'CMAT', 'XAT', 'ATMA', 'GSBM EXAM'];
@@ -22,7 +22,7 @@ const faqs = [
   { id: 'scholarship', q: 'Are scholarships available?', a: 'Yes. Merit-based scholarships are available. Candidates with 85 and above percentile score in CAT are eligible for scholarships. Contact the admissions office for more details.' },
   { id: 'hostel', q: 'Is hostel accommodation available?', a: 'Yes. The campus has hostel facilities for outstation students. Contact campus administration for current availability and fees.' },
   { id: 'start-date', q: 'When does the academic year begin?', a: 'The MBA program commences in July each year. The exact date for 2026–2028 will be stated in your offer letter.' },
-  { id: 'placement', q: 'What is the placement record?', a: 'GSBM will transform and make you one of the most sought-after candidates by corporates. GSBM Promise!' },
+  { id: 'placement', q: 'How does GSBM prepare students for careers?', a: 'Career preparation at GSBM begins from the first semester, with structured development across aptitude, communication, business problem solving, internships, interviews, personal branding and workplace readiness.' },
 ];
 
 const quickFactsRows = [
@@ -77,9 +77,9 @@ const ContactInfo = () => (
       <FiPhone size={16} aria-hidden="true" focusable="false" />
       <span>+91 8667690672</span>
     </a>
-    <a href="mailto:manageradmissionsgsbm@vinayakamissions.com" className="admissions-contact-row">
+    <a href="mailto:admissions@gsbm.co.in." className="admissions-contact-row">
       <FiMail size={16} aria-hidden="true" focusable="false" />
-      <span>manageradmissionsgsbm@vinayakamissions.com</span>
+      <span>admissions@gsbm.co.in.</span>
     </a>
   </div>
 );
@@ -103,9 +103,7 @@ const Admissions = () => (
           <Ac1 title="Admission Overview" defaultOpen>
             <Ac2 title="About the Process" defaultOpen>
               <p className="body-text admissions-mb12">
-                GSBM admits students annually for the MBA program commencing in July of every year.
-                Admissions are based on academic merit, entrance exam performance, and a personal interview
-                or counselling session conducted by the admissions committee.
+                GSBM admits students annually to its MBA program. Admissions are based on academic merit, entrance exam performance and a personal interview or counselling interaction with the admissions team.
               </p>
               <p className="body-text">
                 The process is designed to be transparent, student-friendly, and focused on identifying

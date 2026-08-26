@@ -11,6 +11,7 @@ const NAV_ITEMS = [
   { label: 'About',      id: 'about',      path: '/about'      },
   { label: 'Leadership', id: 'leadership', path: '/leadership' },
   { label: 'Programs',   id: 'programs',   path: '/programs'   },
+  { label: 'Faculty',    id: 'faculty',    path: '/faculty'    },
   { label: 'Campus',     id: 'campus',     path: '/campus'     },
   { label: 'Admissions', id: 'admissions', path: '/admissions' },
   { label: 'Placements', id: 'placements', path: '/placements' },
@@ -18,6 +19,13 @@ const NAV_ITEMS = [
 ];
 
 const SECTION_IDS = NAV_ITEMS.map((i) => i.id);
+
+// ─── Standalone landing pages ────────────────────────────────────────────────
+// These routes render their OWN header (logo + Download Brochure) and must not
+// show the site chrome — no top strip, no nav, no Apply button, no hamburger.
+// Keeping them in one list means Footer/social-rail can import the same idea.
+// Add any future campaign landing pages here.
+const CHROMELESS_ROUTES = ['/apply'];
 
 // Blog isn't a homepage section — it's a real standalone route (like
 // /apply), so it's kept out of NAV_ITEMS/SECTION_IDS (which drive the
@@ -34,6 +42,7 @@ const ROUTE_TO_NAV_ID = {
   '/about': 'about',
   '/leadership': 'leadership',
   '/programs': 'programs',
+  '/faculty': 'faculty',
   '/campus': 'campus',
   '/admissions': 'admissions',
   '/placements': 'placements',
@@ -120,6 +129,8 @@ function Navbar() {
   const drawerRef = useRef(null);
   const hamRef    = useRef(null);
 
+  const isChromeless = CHROMELESS_ROUTES.includes(location.pathname);
+
   // ── Navigate to /apply ───────────────────────────────────────────────────────
   const goToApply = useCallback(() => {
     setMobileOpen(false);
@@ -139,8 +150,18 @@ function Navbar() {
     }
   }, [navigate]);
 
+  // ── Close the drawer on every route change ────────────────────────────────────
+  // Matters for chromeless routes: if the drawer was open when the user tapped
+  // "Apply Now", the navbar stops rendering but the body scroll-lock effect below
+  // would still see mobileOpen === true and keep <body> frozen. Resetting here
+  // guarantees the landing page is always scrollable.
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [location.pathname]);
+
   // ── Scroll detection ─────────────────────────────────────────────────────────
   useEffect(() => {
+    if (isChromeless) return;           // nothing rendered — don't listen
     let ticking = false;
     const onScroll = () => {
       if (ticking) return;
@@ -152,10 +173,11 @@ function Navbar() {
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  }, [isChromeless]);
 
   // ── Active section tracking via IntersectionObserver ─────────────────────────
   useEffect(() => {
+    if (isChromeless) return;
     const observers = SECTION_IDS.reduce((acc, id) => {
       const el = document.getElementById(id);
       if (!el) return acc;
@@ -168,7 +190,7 @@ function Navbar() {
       return acc;
     }, []);
     return () => observers.forEach((o) => o.disconnect());
-  }, []);
+  }, [isChromeless]);
 
   // ── Active nav from the URL itself ────────────────────────────────────────────
   // Scroll-spy (above) only works on the homepage, where #about/#programs/etc.
@@ -292,6 +314,11 @@ function Navbar() {
   // ── Toggle mobile menu ────────────────────────────────────────────────────────
   const toggleMobile = useCallback(() => setMobileOpen((v) => !v), []);
   const closeMobile  = useCallback(() => setMobileOpen(false), []);
+
+  // ── Chromeless routes render nothing ──────────────────────────────────────────
+  // Must sit AFTER every hook above — React requires hooks to run in the same
+  // order on every render, so this early return is only safe here.
+  if (isChromeless) return null;
 
   return (
     <>

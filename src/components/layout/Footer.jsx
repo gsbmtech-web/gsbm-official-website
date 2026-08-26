@@ -82,8 +82,7 @@ const Footer = () => {
             height={60}
           />
           <p className="footer-tagline">
-            Ganesan School of Business Management
-            (Deemed to be University), Chennai — building employable, ethical, and industry-ready leaders.
+           Ganesan School of Business Management, Chennai. Building employable, ethical and industry ready leaders.
           </p>
           <button className="footer-cta" onClick={handleApply}>
             Apply Now <span className="footer-cta-arrow">→</span>
@@ -183,7 +182,7 @@ const Footer = () => {
         </div>
 
         <div className="footer-credit">
-          <span className="footer-credit-label">Designed &amp; Developed by</span>
+          <span className="footer-credit-label">Designed &amp; Maintained by</span>
           <a
             href="https://ariartech.com"
             target="_blank"

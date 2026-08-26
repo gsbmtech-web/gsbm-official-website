@@ -1,36 +1,80 @@
-import { useCallback, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import {
-  FiArrowLeft, FiLock, FiPhone, FiCheckCircle, FiUser,
-  FiFileText, FiMessageSquare, FiChevronDown, FiChevronUp, FiCheck
+  FiLock, FiPhone, FiCheckCircle, FiUser, FiArrowRight, FiDownload,
+  FiFileText, FiMessageSquare, FiChevronDown, FiChevronUp, FiCheck, FiStar
 } from 'react-icons/fi';
 
-/* ─────────────────────────────────────────
-   STATIC DATA
-───────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════════════
+   ⚠️  1. LOGO — fix path for where this file lives.
+          Navbar.jsx uses '../../assets/mainlogo.png'
+          If ApplyNow.jsx is in src/pages/ → '../assets/mainlogo.png'
+
+   ⚠️  2. PHOTOS in /public
+          /public/campus.jpg        — hero background (1920×1080+, <400KB)
+          /public/campus-about.jpg  — About section (800×600+); falls back
+                                      to campus.jpg if you don't add one
+
+   ⚠️  3. BROCHURE — /public/brochure.pdf
+   ═══════════════════════════════════════════════════════════════════════ */
+import gsbmLogo from '../../assets/mainlogo.png';
+import './Applynow.css';
+
+const CAMPUS_PHOTO  = '/campus.jpg';
+const ABOUT_PHOTO   = '/campus-about.jpg';
+const BROCHURE_FILE      = '/brochure.pdf';        // update to match your exact filename
+const BROCHURE_DOWNLOAD  = 'GSBM_Brochure.pdf';    // the name the user sees when downloading
+
+/* ── SEO ───────────────────────────────────────────────────────────────── */
+const SEO = {
+  title: 'MBA Admission in Chennai 2026 | AICTE Approved MBA College | GSBM',
+  description:
+    'Apply for MBA admission 2026–28 at GSBM Chennai. AICTE approved MBA college in Chennai, UGC recognised and NAAC accredited framework. Any graduate eligible. 100% placement support. Scholarships available. Apply in 20 seconds.',
+  canonical: 'https://www.gsbm.co.in/apply',
+  keywords:
+    'MBA admission Chennai, MBA college in Chennai, AICTE approved MBA Chennai, best MBA college Tamil Nadu, MBA without entrance exam Chennai, MBA admission 2026, top MBA colleges Chennai, MBA fees Chennai, management college Chennai',
+};
+
 const WHY_GSBM = [
-  'AICTE Approved MBA Program in Chennai',
-  "Affiliated to Vinayaka Mission's Research Foundation (Deemed to be University under Section 3 of the UGC Act, 1956)",
-  'Any Graduate Eligible',
-  '100% Placement Support with Industry Partners',
-  'Affordable MBA Fees with Scholarship Options',
-  'UGC Recognised · NAAC Accredited Institution',
-  'Top MBA College in Tamil Nadu Since 25+ Years',
+  "AICTE Approved",
+  "UGC Recognised Degree Framework",
+  "NAAC Accredited Institutional Framework",
+  'Graduates from Any Discipline Can Apply',
+  'Structured Career Development and Placement Support',
+  'Merit Scholarships Available',
+  "25+ Years of Educational Experience",
+  "100% Career Development Support",
+  
+
 ];
 
-const STATS = [
-  { value: '25+',   label: 'Years of Excellence' },
-  { value: '2000+', label: 'Alumni Network' },
-  { value: '100%',  label: 'Placement Support' },
-  { value: 'AICTE', label: 'Approved & Accredited' },
+const HERO_POINTS = [
+  "UGC Recognised Degree Framework",
+  "AICTE Approved",
+  "UGC Recognised • NAAC Accredited Institutional Framework",
+  'Graduates from Any Discipline Can Apply',
+  'Structured Career Development and Placement Support',
+  'Merit Scholarships Available',
+  "25+ Years of Educational Experience",
+  "100% Career Development Support"
+  
 ];
 
-// Copy updated to match the new single-form flow — the old text described
-// the quiz ("quick questions, no typing") which no longer exists.
+/* Accreditation logos — same sources as the site's LogoStrip component.
+   VMRF dropped here on request — AICTE / NAAC / 25-years only. */
+const HERO_BADGES = [
+  { src: 'https://res.cloudinary.com/damisreoh/image/upload/q_auto,f_auto,w_200/v1777091751/AICTE_umarzo.webp',
+    alt: 'AICTE – All India Council for Technical Education' },
+  { src: 'https://res.cloudinary.com/damisreoh/image/upload/v1779259623/NAAC_LOGO_1_wvpqpj.jpg',
+    alt: 'NAAC – National Assessment and Accreditation Council' },
+  { src: 'https://res.cloudinary.com/damisreoh/image/upload/q_auto,f_auto,w_200/v1777091881/25-_NEW_final_tfkexe.png',
+    alt: 'GSBM – 25 years of excellence' },
+]
+
 const HOW_IT_WORKS = [
-  { icon: <FiUser size={22} strokeWidth={1.5} />,          step: '01', title: 'Fill the Form',        desc: 'Enter your name and mobile number — takes less than a minute.' },
-  { icon: <FiFileText size={22} strokeWidth={1.5} />,      step: '02', title: 'Complete Application', desc: 'You go straight to the application form with your details already filled in.' },
-  { icon: <FiMessageSquare size={22} strokeWidth={1.5} />, step: '03', title: 'Counsellor Calls You', desc: 'Our admissions team calls within 24 hours to guide your next steps.' },
+  { icon: <FiUser size={26} strokeWidth={2} />,          step: '1', title: 'Fill the Form',        desc: 'Fill the Form Enter your name and mobile number to get started. It takes less than a minute' },
+  { icon: <FiFileText size={26} strokeWidth={2} />,      step: '2', title: 'Complete Application', desc: 'Complete Your Application Continue to the application form and provide the required academic and admissions details.' },
+  { icon: <FiCheckCircle size={26} strokeWidth={2} />,   step: '3', title: 'Counsellor Calls You', desc: 'Speak to an Admissions Counsellor Our admissions team will connect with you to guide you through the next steps.' },
 ];
 
 const TESTIMONIALS = [
@@ -40,54 +84,145 @@ const TESTIMONIALS = [
 ];
 
 const FAQS = [
-  { q: 'Is GSBM an AICTE approved MBA college in Chennai?',        a: 'Yes. GSBM – Ganesan School of Business Management is AICTE approved and affiliated to Vinayaka Mission\'s Research Foundation (Deemed University), which is UGC recognised and NAAC accredited.' },
-  { q: 'Can I get MBA admission in Chennai without entrance exam?', a: 'Yes! GSBM offers MBA admission without any entrance exam. Any graduate with minimum 50% marks is directly eligible to apply through this form.' },
-  { q: 'What is the MBA admission process at GSBM Chennai?',        a: 'Simple 3-step process: Submit online application → Attend a personal interview → Receive admission confirmation. Our admissions team guides you throughout.' },
-  { q: 'Is GSBM one of the top MBA colleges in Tamil Nadu?',        a: 'Yes. GSBM is recognised as one of the best MBA colleges in Chennai and Tamil Nadu, offering an industry-integrated curriculum with 100% placement support.' },
-  { q: 'What is the last date for MBA admission 2026?',             a: 'The last date for MBA admission 2026 at GSBM Chennai is August 30, 2026. Limited seats are available so we recommend applying as early as possible.' },
-  { q: 'Does GSBM offer MBA for working professionals?',            a: 'Yes. GSBM offers MBA programs suitable for both fresh graduates and working professionals in Chennai. Contact our admissions team for batch timing details.' },
+  { q: 'Is GSBM an AICTE approved MBA college in Chennai?',        a: "Yes. GSBM offers an AICTE approved MBA in Chennai within a UGC recognised and NAAC accredited institutional framework." },
+  { q: 'Can I get MBA admission in Chennai without entrance exam?', a: "Candidates may apply to GSBM through the applicable admission routes. Eligibility is based on academic qualifications and the prevailing admission requirements. Our admissions team can guide you on the appropriate route." },
+  { q: 'What is the MBA admission process at GSBM Chennai?',        a: "The process is simple: submit your application, complete the required admission interaction and, if selected, receive your admission offer. Our admissions team will guide you throughout the process." },
+  { q: 'Why should I consider GSBM for my MBA?',                    a: " GSBM offers an industry integrated MBA experience built around academic rigour, personalised learning, industry exposure, career development and a strong focus on employability." },
+   { q: 'What is the last date for MBA admission 2026?',             a: 'The last date for MBA admission 2026 at GSBM Chennai is August 30, 2026. Limited seats are available so we recommend applying as early as possible.' },
+  { q: 'Can working professionals apply for the GSBM MBA??',         a: "Yes. Eligible working professionals may apply to the full time MBA program, subject to the applicable admission " },
+  
 ];
 
-const KEY_DATES = [
-  { label: 'Applications Open', date: 'MBA Batch 2026–28' },
-  { label: 'Classes Commence',  date: 'August 2026' },
-];
 
 const ZOHO_FORM_URL = 'https://forms.zohopublic.in/gsbmtechgm1/form/GSBMChennaiMBAPROGRAM/formperma/TJrU6LXsWTqAWh5ZbxgeWMkmSW2-aK-lzoJ2xn3iEjQ';
 
 const COUNSELLOR_PHONE         = '+918667690672';
 const COUNSELLOR_PHONE_DISPLAY = '+91 8667690672';
+const WHATSAPP_NUMBER          = '918667690672'; // country code, no + and no spaces
+const WHATSAPP_MSG             = 'Hi, I would like to know more about MBA admissions at GSBM.';
+const WHATSAPP_URL             = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MSG)}`;
 
-/* ─────────────────────────────────────────
-   FAQ ACCORDION
-───────────────────────────────────────── */
+/* Small inline WhatsApp glyph — avoids pulling in a whole icon set for
+   one icon. currentColor so it follows the button's text colour. */
+const WhatsAppIcon = ({ size = 18 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2Zm5.8 14.02c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.95-.31-1.64-.6-2.88-1.24-4.76-4.15-4.9-4.34-.14-.19-1.17-1.56-1.17-2.98 0-1.42.74-2.11 1-2.4.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.42-.07.65.5.24.58.82 2 .89 2.14.07.14.11.31.02.5-.09.19-.14.31-.28.48-.14.17-.29.37-.42.5-.14.14-.28.29-.12.57.16.28.71 1.17 1.52 1.9 1.05.94 1.93 1.23 2.21 1.37.28.14.44.12.6-.07.16-.19.68-.79.87-1.06.19-.28.37-.23.62-.14.26.09 1.63.77 1.91.91.28.14.47.21.54.33.07.12.07.68-.17 1.35Z" />
+  </svg>
+);
+
 const FAQItem = ({ q, a }) => {
   const [open, setOpen] = useState(false);
   return (
-    <div className={`faq-item${open ? ' open' : ''}`} onClick={() => setOpen(o => !o)}>
-      <div className="faq-q">
+    <div className={`ap-faq-i${open ? ' open' : ''}`}>
+      <button className="ap-faq-q" onClick={() => setOpen(o => !o)} aria-expanded={open}>
         <span>{q}</span>
-        {open ? <FiChevronUp size={15} /> : <FiChevronDown size={15} />}
-      </div>
-      {open && <div className="faq-a">{a}</div>}
+        {open ? <FiChevronUp size={20} strokeWidth={2.5} /> : <FiChevronDown size={20} strokeWidth={2.5} />}
+      </button>
+      {open && <div className="ap-faq-a">{a}</div>}
     </div>
   );
 };
 
-/* ─────────────────────────────────────────
-   MAIN COMPONENT
-───────────────────────────────────────── */
 const ApplyNow = () => {
-  const navigate   = useNavigate();
-  const handleBack = useCallback(() => navigate(-1), [navigate]);
+  const [name,     setName]     = useState('');
+  const [phone,    setPhone]    = useState('');
+  const [consent,  setConsent]  = useState(true);
+  const [loading,  setLoading]  = useState(false);
+  const [error,    setError]    = useState('');
+  const [gclid,    setGclid]    = useState('');
+  const [photoOk,  setPhotoOk]  = useState(false);
+  const [aboutSrc, setAboutSrc] = useState(ABOUT_PHOTO);
 
-  const [name,    setName]    = useState('');
-  const [phone,   setPhone]   = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error,   setError]   = useState('');
-  const [gclid,   setGclid]   = useState('');
+  const startedRef   = useRef(false);
+  const submittedRef = useRef(false);
 
-  /* gclid capture */
+  const push = (payload) => {
+    try {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push(payload);
+    } catch { /* never block the flow */ }
+  };
+
+  useEffect(() => { push({ event: 'apply_page_view' }); }, []);
+
+  /* ── SEO: title, meta description, keywords, canonical, OG ── */
+  useEffect(() => {
+    const prevTitle = document.title;
+    document.title = SEO.title;
+
+    const created = [];
+    const setMeta = (attr, key, content) => {
+      let el = document.querySelector(`meta[${attr}="${key}"]`);
+      if (!el) {
+        el = document.createElement('meta');
+        el.setAttribute(attr, key);
+        document.head.appendChild(el);
+        created.push(el);
+      }
+      el.setAttribute('content', content);
+      return el;
+    };
+
+    setMeta('name', 'description', SEO.description);
+    setMeta('name', 'keywords', SEO.keywords);
+    setMeta('name', 'robots', 'index,follow');
+    setMeta('property', 'og:title', SEO.title);
+    setMeta('property', 'og:description', SEO.description);
+    setMeta('property', 'og:url', SEO.canonical);
+    setMeta('property', 'og:type', 'website');
+    setMeta('property', 'og:locale', 'en_IN');
+    setMeta('name', 'twitter:card', 'summary_large_image');
+
+    let link = document.querySelector('link[rel="canonical"]');
+    if (!link) {
+      link = document.createElement('link');
+      link.setAttribute('rel', 'canonical');
+      document.head.appendChild(link);
+      created.push(link);
+    }
+    link.setAttribute('href', SEO.canonical);
+
+    return () => {
+      document.title = prevTitle;
+      created.forEach(el => el.parentNode && el.parentNode.removeChild(el));
+    };
+  }, []);
+
+  /* Preload the hero photo so text never lands on a half-painted image */
+  useEffect(() => {
+    const img = new Image();
+    img.onload  = () => setPhotoOk(true);
+    img.onerror = () => setPhotoOk(false);
+    img.src = CAMPUS_PHOTO;
+  }, []);
+
+  useEffect(() => {
+    const onLeave = () => {
+      if (startedRef.current && !submittedRef.current) push({ event: 'form_abandon' });
+    };
+    window.addEventListener('pagehide', onLeave);
+    return () => window.removeEventListener('pagehide', onLeave);
+  }, []);
+
+  const markStart = () => {
+    if (!startedRef.current) { startedRef.current = true; push({ event: 'form_start' }); }
+  };
+  const trackCall     = (loc) => push({ event: 'call_click', cta_location: loc });
+  const trackWhatsApp = (loc) => push({ event: 'whatsapp_click', cta_location: loc });
+
+  /* Brochure download — same pattern as the site's existing
+     handleExploreClick: build a real <a download>, click it, remove it.
+     GTM event fires first so the download itself can never block it. */
+  const handleDownloadBrochure = useCallback((loc) => {
+    push({ event: 'brochure_download', cta_location: loc });
+    const link = document.createElement('a');
+    link.href = BROCHURE_FILE;
+    link.download = BROCHURE_DOWNLOAD;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }, []);
+
   useEffect(() => {
     const p  = new URLSearchParams(window.location.search);
     const id = p.get('gclid') || '';
@@ -95,49 +230,123 @@ const ApplyNow = () => {
     else    { const s = localStorage.getItem('gclid'); if (s) setGclid(s); }
   }, []);
 
-  /* Schema markup */
+  /* Reset html/body while this page is mounted — a standalone route like
+     this one has no shared layout to reset margins/background for it,
+     so the browser's default 8px body margin can expose the app
+     shell's background colour as a sliver above our sticky header.
+     Force it to 0/white here, restore whatever it was on unmount. */
+  useEffect(() => {
+    const prev = {
+      htmlMargin: document.documentElement.style.margin,
+      bodyMargin: document.body.style.margin,
+      bodyPad:    document.body.style.padding,
+      bodyBg:     document.body.style.background,
+    };
+    document.documentElement.style.margin = '0';
+    document.body.style.margin     = '0';
+    document.body.style.padding    = '0';
+    document.body.style.background = '#FFFFFF';
+    return () => {
+      document.documentElement.style.margin = prev.htmlMargin;
+      document.body.style.margin     = prev.bodyMargin;
+      document.body.style.padding    = prev.bodyPad;
+      document.body.style.background = prev.bodyBg;
+    };
+  }, []);
+
+  /* Hide anything the site's global chrome renders outside our route:
+     the floating social-icon rail, a route-transition loading bar, or
+     any other fixed-position overlay that isn't part of this page.
+     Scans EVERY element in <body>, not just direct children, so depth
+     doesn't matter. Restores everything the instant this page unmounts. */
+  useEffect(() => {
+    const root = document.querySelector('.ap');
+    const restore = [];
+    document.querySelectorAll('body *').forEach((el) => {
+      if (root && root.contains(el)) return;
+      const cs = getComputedStyle(el);
+      const isFixed = cs.position === 'fixed';
+      const isTopStrip = (cs.position === 'fixed' || cs.position === 'absolute' || cs.position === 'sticky')
+        && (cs.top === '0px' || cs.top === '0%')
+        && el.offsetHeight > 0 && el.offsetHeight <= 8
+        && el.offsetWidth > window.innerWidth * 0.5;
+      const looksLikeLoader = /progress|loading|loader|topbar|nprogress/i.test(el.className || '')
+        || /progress|loading|loader|topbar|nprogress/i.test(el.id || '');
+      if (isFixed || isTopStrip || looksLikeLoader) {
+        restore.push([el, el.style.display]);
+        el.style.display = 'none';
+      }
+    });
+    return () => restore.forEach(([el, prev]) => { el.style.display = prev; });
+  }, []);
+
+  /* ── Structured data: Organization + Course + FAQ + Breadcrumb ── */
   useEffect(() => {
     const org = {
-      '@context': 'https://schema.org', '@type': 'EducationalOrganization',
+      '@context': 'https://schema.org', '@type': 'CollegeOrUniversity',
       name: 'Ganesan School of Business Management', alternateName: 'GSBM Chennai',
-      url: 'https://www.gsbm.co.in',
-      description: 'Top MBA College in Chennai Tamil Nadu. AICTE Approved MBA. Vinayaka Mission University. MBA Without Entrance Exam. Admissions 2026 Open.',
+      url: 'https://www.gsbm.co.in', telephone: COUNSELLOR_PHONE,
+      email: 'admissions@gsbm.co.in',
+      description: 'AICTE approved MBA college in Chennai, Tamil Nadu. UGC recognised and NAAC accredited framework. MBA admissions 2026–28 open.',
       address: { '@type': 'PostalAddress', addressLocality: 'Chennai', addressRegion: 'Tamil Nadu', addressCountry: 'IN' },
-      telephone: COUNSELLOR_PHONE,
+      aggregateRating: { '@type': 'AggregateRating', ratingValue: '4.8', reviewCount: String(TESTIMONIALS.length), bestRating: '5' },
+    };
+    const course = {
+      '@context': 'https://schema.org', '@type': 'Course',
+      name: 'Master of Business Administration (MBA) 2026–2028',
+      description: 'Two year full time MBA in Chennai with an industry integrated curriculum, experienced faculty and 100% placement support.',
+      provider: { '@type': 'CollegeOrUniversity', name: 'Ganesan School of Business Management', sameAs: 'https://www.gsbm.co.in' },
+      hasCourseInstance: {
+        '@type': 'CourseInstance', courseMode: 'full-time', courseWorkload: 'P2Y',
+        location: { '@type': 'Place', address: { '@type': 'PostalAddress', addressLocality: 'Chennai', addressRegion: 'Tamil Nadu', addressCountry: 'IN' } },
+      },
     };
     const faqSchema = {
       '@context': 'https://schema.org', '@type': 'FAQPage',
       mainEntity: FAQS.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
     };
-    const s1 = document.createElement('script'); s1.type = 'application/ld+json'; s1.text = JSON.stringify(org);
-    const s2 = document.createElement('script'); s2.type = 'application/ld+json'; s2.text = JSON.stringify(faqSchema);
-    document.head.appendChild(s1);
-    document.head.appendChild(s2);
-    return () => { document.head.removeChild(s1); document.head.removeChild(s2); };
+    const crumbs = {
+      '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.gsbm.co.in' },
+        { '@type': 'ListItem', position: 2, name: 'MBA Admission 2026–28', item: SEO.canonical },
+      ],
+    };
+    const nodes = [org, course, faqSchema, crumbs].map(obj => {
+      const s = document.createElement('script');
+      s.type = 'application/ld+json';
+      s.text = JSON.stringify(obj);
+      document.head.appendChild(s);
+      return s;
+    });
+    return () => nodes.forEach(n => n.parentNode && n.parentNode.removeChild(n));
+  }, []);
+
+  /* Mark <body> while this page is mounted so the global Footer (which
+     always renders on every route, /apply included) can be given extra
+     bottom padding on mobile — otherwise the fixed Call Us/WhatsApp bar
+     at the bottom of THIS page sits on top of Footer's last line
+     (copyright/credit) and covers it. See the body.ap-active rule near
+     the top of Applynow.css. */
+  useEffect(() => {
+    document.body.classList.add('ap-active');
+    return () => document.body.classList.remove('ap-active');
   }, []);
 
   const scrollToForm = () => {
-    document.getElementById('apply-form')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    document.getElementById('name-input')?.focus({ preventScroll: true });
+    document.getElementById('apply-form')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(() => document.getElementById('name-input')?.focus({ preventScroll: true }), 400);
   };
 
-  /**
-   * Fire-and-forget lead save. Never blocks or gates the redirect.
-   * who/qualification are kept in the payload as null so the existing
-   * /api/save-lead schema doesn't break — the quiz that collected them
-   * has been removed.
-   */
   const saveLeadNonBlocking = (payload) => {
     try {
       fetch('/api/save-lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...payload, source: 'apply-now-form', ts: new Date().toISOString() }),
+        body: JSON.stringify({ ...payload, source: 'apply-now-landing', ts: new Date().toISOString() }),
         keepalive: true,
-      }).catch(() => { /* best-effort only */ });
-    } catch {
-      /* never block the flow */
-    }
+      }).catch(() => {});
+    } catch { /* never block the flow */ }
   };
 
   const handleSubmit = () => {
@@ -145,14 +354,15 @@ const ApplyNow = () => {
     const cleanedPhone = phone.replace(/\D/g, '');
     if (!name.trim())               { setError('Enter your name to continue.'); return; }
     if (cleanedPhone.length !== 10) { setError('Enter a valid 10-digit mobile number.'); return; }
+    if (!consent)                   { setError('Please accept the terms to continue.'); return; }
 
     setLoading(true);
+    submittedRef.current = true;
+    push({ event: 'generate_lead', value: 1, currency: 'INR' });
+
     saveLeadNonBlocking({
-      name: name.trim(),
-      phone: cleanedPhone,
-      who: null,
-      qualification: null,
-      gclid: gclid || null,
+      name: name.trim(), phone: cleanedPhone,
+      who: null, qualification: null, gclid: gclid || null,
     });
 
     const params = new URLSearchParams({ PhoneNumber: cleanedPhone, Name: name.trim() });
@@ -160,484 +370,256 @@ const ApplyNow = () => {
     window.location.href = `${ZOHO_FORM_URL}?${params.toString()}`;
   };
 
-  /* ─────────────────────────────────────
-     RENDER
-  ───────────────────────────────────── */
   return (
-    <>
-      <style>{`
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    <div className="ap">
 
-        :root {
-          --navy:   #1a2340;
-          --gold:   #c9a84c;
-          --red:    #8b1a1a;
-          --bg:     #f6f5f2;
-          --border: #e4e1d9;
-          --white:  #ffffff;
-          --muted:  #777777;
-          --ftr-bg: #eceae4;
-          --ftr-bd: #ddd8cf;
-        }
-
-        .ap {
-          min-height: 100vh;
-          background: var(--bg);
-          font-family: 'Outfit', system-ui, sans-serif;
-          color: var(--navy);
-          display: flex;
-          flex-direction: column;
-        }
-
-        /* NAV */
-        .ap-nav {
-          background: var(--navy);
-          height: 54px;
-          display: flex; align-items: center;
-          padding: 0 24px; justify-content: space-between;
-          position: sticky; top: 0; z-index: 200;
-          box-shadow: 0 2px 16px rgba(0,0,0,.3);
-        }
-        .ap-nav-back {
-          display: flex; align-items: center; gap: 6px;
-          background: rgba(255,255,255,.08);
-          border: 1px solid rgba(255,255,255,.14);
-          color: rgba(255,255,255,.85);
-          font-size: 13px; font-weight: 500;
-          padding: 6px 14px; border-radius: 7px;
-          cursor: pointer; font-family: inherit;
-          transition: all .15s;
-          -webkit-tap-highlight-color: transparent;
-        }
-        .ap-nav-back:hover { background: rgba(255,255,255,.16); color: #fff; }
-        .ap-nav-brand { display: flex; align-items: center; gap: 10px; }
-        .ap-nav-logo  { font-size: 15px; font-weight: 800; color: #fff; letter-spacing: .08em; }
-        .ap-nav-tag   { font-size: 10px; color: rgba(255,255,255,.38); border-left: 1px solid rgba(255,255,255,.14); padding-left: 10px; }
-        .ap-nav-sec   { display: flex; align-items: center; gap: 4px; font-size: 11px; color: rgba(255,255,255,.32); }
-
-        /* HEADER */
-        .ap-urgency {
-          background: var(--red);
-          padding: 14px 24px;
-          display: flex; align-items: center; justify-content: center;
-          gap: 20px; flex-wrap: wrap;
-        }
-        .ap-urgency-text { font-size: 14px; color: #fff; font-weight: 700; letter-spacing: .01em; }
-        .ap-urgency-btn {
-          background: var(--gold); color: var(--navy);
-          border: none; border-radius: 8px;
-          padding: 11px 28px;
-          font-size: 14px; font-weight: 800; font-family: inherit;
-          letter-spacing: .02em;
-          cursor: pointer; transition: all .15s;
-          -webkit-tap-highlight-color: transparent;
-        }
-        .ap-urgency-btn:hover  { background: #dcb95c; transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,.2); }
-        .ap-urgency-btn:active { transform: scale(.98); }
-
-        /* HERO */
-        .ap-hero { background: linear-gradient(150deg, #1a2340 60%, #253060); flex: 1; }
-        .ap-hero-inner {
-          max-width: 1160px; margin: 0 auto;
-          display: grid; grid-template-columns: 1fr 420px;
-          min-height: calc(100vh - 96px);
-          align-items: stretch;
-        }
-
-        .ap-left { padding: 52px 48px 52px 32px; display: flex; flex-direction: column; justify-content: center; }
-        .ap-badge {
-          display: inline-flex; align-items: center; gap: 7px;
-          font-size: 10px; font-weight: 700; letter-spacing: .12em;
-          text-transform: uppercase; color: var(--gold);
-          border: 1px solid rgba(201,168,76,.4);
-          padding: 5px 14px; border-radius: 30px;
-          margin-bottom: 18px; width: fit-content;
-        }
-        .ap-badge-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); }
-        .ap-h1 { font-size: clamp(1.6rem, 2.8vw, 2.4rem); font-weight: 800; color: #fff; line-height: 1.22; margin-bottom: 12px; }
-        .ap-h1 em { color: var(--gold); font-style: normal; }
-        .ap-points { display: flex; flex-direction: column; gap: 11px; margin-bottom: 32px; }
-        .ap-point  { display: flex; align-items: flex-start; gap: 10px; font-size: 13.5px; color: rgba(255,255,255,.82); line-height: 1.5; }
-        .ap-check  {
-          width: 20px; height: 20px; border-radius: 6px;
-          background: rgba(201,168,76,.18);
-          border: 1px solid rgba(201,168,76,.38);
-          display: flex; align-items: center; justify-content: center;
-          flex-shrink: 0; margin-top: 1px; color: var(--gold);
-        }
-        .ap-stats    { display: flex; gap: 28px; flex-wrap: wrap; }
-        .ap-stat-val { font-size: 1.5rem; font-weight: 800; color: var(--gold); line-height: 1; }
-        .ap-stat-lbl { font-size: 10px; color: rgba(255,255,255,.4); margin-top: 3px; }
-
-        /* FORM PANEL */
-        .ap-right {
-          background: var(--white);
-          border-left: 1px solid rgba(255,255,255,.07);
-          display: flex; flex-direction: column; justify-content: center;
-          padding: 36px 32px;
-        }
-
-        .f-badge {
-          display: inline-flex; align-items: center; gap: 6px;
-          font-size: 10px; font-weight: 700; color: var(--red);
-          background: rgba(139,26,26,.07);
-          border: 1px solid rgba(139,26,26,.18);
-          padding: 3px 10px; border-radius: 20px;
-          letter-spacing: .06em; text-transform: uppercase;
-          margin-bottom: 10px; width: fit-content;
-        }
-        .f-title { font-size: 17px; font-weight: 800; color: var(--navy); margin-bottom: 4px; line-height: 1.3; }
-        .f-sub   { font-size: 12.5px; color: var(--muted); margin-bottom: 20px; line-height: 1.5; }
-
-        /* inputs */
-        .f-lbl   { font-size: 11px; font-weight: 700; color: var(--navy); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 7px; display: block; }
-        .f-field { margin-bottom: 16px; }
-        .f-phone-row { display: flex; gap: 8px; }
-        .f-prefix {
-          display: flex; align-items: center; gap: 5px; flex-shrink: 0;
-          background: #f6f5f2; border: 1.5px solid var(--border);
-          border-radius: 10px; padding: 0 12px;
-          font-size: 13px; font-weight: 600; color: var(--navy); white-space: nowrap;
-        }
-        .f-input {
-          flex: 1; min-width: 0; width: 100%;
-          border: 1.5px solid var(--border); border-radius: 10px;
-          padding: 13px; font-size: 16px; font-family: inherit;
-          color: var(--navy); background: #fff; outline: none;
-          transition: border-color .15s, box-shadow .15s;
-        }
-        .f-input:focus { border-color: var(--navy); box-shadow: 0 0 0 3px rgba(26,35,64,.07); }
-        .f-input::placeholder { color: #ccc; font-size: 13px; }
-        .f-hint { font-size: 11px; color: #bbb; margin-top: 5px; }
-
-        .f-btn {
-          width: 100%; background: var(--navy); color: #fff;
-          border: none; border-radius: 10px; padding: 14px 20px;
-          font-size: 14px; font-weight: 700; font-family: inherit;
-          cursor: pointer; transition: all .15s;
-          display: flex; align-items: center; justify-content: center; gap: 8px;
-          -webkit-tap-highlight-color: transparent;
-        }
-        .f-btn:hover:not(:disabled)  { background: #253060; transform: translateY(-1px); box-shadow: 0 6px 18px rgba(26,35,64,.25); }
-        .f-btn:active:not(:disabled) { transform: scale(.99); }
-        .f-btn:disabled              { opacity: .45; cursor: not-allowed; }
-
-        .f-err {
-          font-size: 12px; color: #c0392b;
-          background: #fdf3f2; border: 1px solid #f5c6c2;
-          padding: 9px 13px; border-radius: 8px;
-          margin-bottom: 14px;
-          display: flex; align-items: center; gap: 6px;
-        }
-
-        .f-sec { display: flex; align-items: center; justify-content: center; gap: 5px; font-size: 10.5px; color: #ccc; margin-top: 14px; }
-
-        /* ── COUNSELLOR DIRECT HELP ─────────────────────────────────
-           Sits right under the submit button — the point where anyone
-           who can't complete the form is looking for a way out. */
-        .f-help {
-          margin-top: 18px;
-          background: linear-gradient(180deg, #fffaef 0%, #fdf5e3 100%);
-          border: 1.5px solid rgba(201,168,76,.55);
-          border-left: 4px solid var(--gold);
-          border-radius: 12px;
-          padding: 16px 16px 15px;
-        }
-        .f-help-head {
-          display: flex; align-items: center; gap: 8px;
-          margin-bottom: 4px;
-        }
-        .f-help-icon {
-          width: 26px; height: 26px; border-radius: 8px;
-          background: var(--gold); color: var(--navy);
-          display: flex; align-items: center; justify-content: center;
-          flex-shrink: 0;
-        }
-        .f-help-t   { font-size: 13px; font-weight: 800; color: var(--navy); line-height: 1.3; }
-        .f-help-d   { font-size: 12px; color: #6b6250; line-height: 1.55; margin-bottom: 12px; }
-        .f-help-org { font-size: 11px; font-weight: 700; color: var(--navy); text-transform: uppercase; letter-spacing: .04em; margin-bottom: 8px; line-height: 1.4; }
-        .f-help-num {
-          display: flex; align-items: center; justify-content: center; gap: 8px;
-          background: var(--navy); color: #fff; text-decoration: none;
-          border-radius: 9px; padding: 12px 16px;
-          font-size: 15px; font-weight: 800; letter-spacing: .02em;
-          transition: all .15s;
-          -webkit-tap-highlight-color: transparent;
-        }
-        .f-help-num:hover  { background: #253060; transform: translateY(-1px); box-shadow: 0 6px 16px rgba(26,35,64,.22); }
-        .f-help-num:active { transform: scale(.99); }
-        .f-help-hours { font-size: 10.5px; color: #9a927f; text-align: center; margin-top: 7px; }
-
-        .f-divider { height: 1px; background: var(--border); margin: 20px 0; }
-        .f-dates   { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
-        .f-date    { background: #fafafa; border: 1px solid var(--border); border-radius: 8px; padding: 8px 6px; text-align: center; }
-        .f-date-val{ display: block; font-size: 12px; font-weight: 700; color: var(--red); }
-        .f-date-lbl{ display: block; font-size: 9px; color: var(--muted); margin-top: 2px; }
-
-        /* SECTIONS */
-        .ap-section { padding: 56px 24px; }
-        .ap-section.alt { background: var(--white); }
-        .ap-section.def { background: var(--bg); }
-        .ap-section-tag   { text-align: center; font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
-        .ap-section-title { text-align: center; font-size: clamp(1.1rem, 2.5vw, 1.55rem); font-weight: 800; color: var(--navy); margin-bottom: 40px; }
-
-        .how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; max-width: 860px; margin: 0 auto; }
-        .how-card { text-align: center; padding: 30px 20px 24px; border: 1.5px solid var(--border); border-radius: 14px; background: var(--bg); position: relative; transition: all .2s; }
-        .how-card:hover { border-color: var(--gold); box-shadow: 0 6px 24px rgba(0,0,0,.07); }
-        .how-num  { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--navy); color: #fff; font-size: 10px; font-weight: 700; padding: 3px 12px; border-radius: 20px; letter-spacing: .06em; white-space: nowrap; }
-        .how-icon { width: 54px; height: 54px; border-radius: 15px; background: #f0f4ff; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; color: var(--navy); }
-        .how-t    { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
-        .how-d    { font-size: 12.5px; color: var(--muted); line-height: 1.65; }
-
-        .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; max-width: 980px; margin: 0 auto; }
-        .testi-card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 22px; }
-        .testi-stars{ color: var(--gold); font-size: 12px; letter-spacing: 2px; margin-bottom: 10px; }
-        .testi-text { font-size: 13px; color: #444; line-height: 1.7; margin-bottom: 14px; font-style: italic; }
-        .testi-name { font-size: 13px; font-weight: 700; color: var(--navy); }
-        .testi-loc  { font-size: 11px; color: var(--muted); }
-
-        .faq-list  { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
-        .faq-item  { border: 1px solid var(--border); border-radius: 10px; cursor: pointer; transition: border-color .2s; }
-        .faq-item.open { border-color: var(--navy); }
-        .faq-q     { display: flex; justify-content: space-between; align-items: center; gap: 14px; padding: 16px 18px; font-size: 13.5px; font-weight: 600; color: var(--navy); line-height: 1.45; }
-        .faq-q svg { flex-shrink: 0; color: var(--muted); }
-        .faq-a     { padding: 0 18px 15px; font-size: 13px; color: #555; line-height: 1.72; border-top: 1px solid var(--border); }
-
-        .ap-footer {
-          background: var(--ftr-bg); border-top: 1px solid var(--ftr-bd);
-          padding: 16px 24px; text-align: center; font-size: 11px; color: #aaa;
-          display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap;
-        }
-        .ap-footer-dot { opacity: .4; }
-
-        /* RESPONSIVE */
-        @media (max-width: 920px) {
-          .ap-hero-inner { grid-template-columns: 1fr; min-height: auto; }
-          .ap-right { order: 1; border-left: none; border-bottom: 1px solid rgba(255,255,255,.08); padding: 28px 20px; }
-          .ap-left  { order: 2; padding: 32px 20px 40px; }
-          .ap-stats { justify-content: center; gap: 20px; }
-          .ap-h1    { font-size: clamp(1.45rem, 5vw, 2rem); }
-          .how-grid   { grid-template-columns: 1fr; gap: 14px; max-width: 440px; }
-          .testi-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
-          .f-dates    { grid-template-columns: repeat(2, 1fr); }
-        }
-        @media (max-width: 600px) {
-          .ap-nav     { padding: 0 14px; }
-          .ap-nav-tag { display: none; }
-          .ap-urgency { padding: 12px 14px; gap: 12px; }
-          .ap-urgency-text { font-size: 12.5px; }
-          .ap-urgency-btn  { padding: 9px 20px; font-size: 13px; }
-          .ap-right   { padding: 22px 16px; }
-          .ap-left    { padding: 24px 16px 36px; }
-          .f-title    { font-size: 15px; }
-          .f-help-num { font-size: 16px; padding: 13px 16px; }
-          .ap-section { padding: 40px 16px; }
-          .faq-q      { font-size: 13px; padding: 14px 14px; }
-          .faq-a      { padding: 0 14px 14px; }
-          .ap-footer  { flex-direction: column; gap: 3px; font-size: 10px; }
-          .ap-footer-dot { display: none; }
-          .how-grid   { max-width: 100%; }
-        }
-        @media (max-width: 380px) {
-          .ap-h1   { font-size: 1.35rem; }
-          .ap-nav-back span { display: none; }
-          .f-dates { grid-template-columns: repeat(2, 1fr); gap: 5px; }
-          .f-date-val { font-size: 11px; }
-          .f-help-num { font-size: 15px; }
-        }
-        @media (min-width: 1400px) {
-          .ap-hero-inner { max-width: 1280px; grid-template-columns: 1fr 460px; }
-          .ap-left  { padding: 60px 56px 60px 40px; }
-          .ap-right { padding: 44px 40px; }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          * { transition: none !important; animation: none !important; }
-          .f-btn:hover:not(:disabled), .f-help-num:hover, .ap-urgency-btn:hover { transform: none; }
-        }
-      `}</style>
-
-      <div className="ap">
-
-        <nav className="ap-nav">
-          <button className="ap-nav-back" onClick={handleBack}>
-            <FiArrowLeft size={13} strokeWidth={2} /><span>Back</span>
+      {/* ══ HEADER ══ */}
+      <header className="ap-hd">
+        <Link className="ap-hd-logo" to="/" aria-label="GSBM – Go to homepage">
+          <img src={gsbmLogo} alt="GSBM – Ganesan School of Business Management, Chennai" fetchPriority="high" />
+        </Link>
+        <div className="ap-hd-right">
+          <a className="ap-hd-call" href={`tel:${COUNSELLOR_PHONE}`} onClick={() => trackCall('header')}>
+            <FiPhone size={18} strokeWidth={2.4} />{COUNSELLOR_PHONE_DISPLAY}
+          </a>
+          <button className="ap-hd-btn" onClick={() => handleDownloadBrochure('header')}>
+            <FiDownload size={16} strokeWidth={2.4} />
+            <span className="ap-hd-btn-txt"><span className="ap-hd-btn-full">Download </span>Brochure</span>
+            <FiArrowRight size={16} strokeWidth={2.6} className="ap-hd-btn-arrow" />
           </button>
-          <div className="ap-nav-brand">
-            <span className="ap-nav-logo">GSBM</span>
-            <span className="ap-nav-tag">MBA College · Chennai</span>
-          </div>
-          <div className="ap-nav-sec"><FiLock size={11} strokeWidth={2} />Secure</div>
-        </nav>
-
-        <div className="ap-urgency">
-          <span className="ap-urgency-text">Applications Open — MBA Batch 2026–28</span>
-          <button className="ap-urgency-btn" onClick={scrollToForm}>Apply Now</button>
         </div>
+      </header>
 
-        <div className="ap-hero">
-          <div className="ap-hero-inner">
+      {/* ══ HERO ══ */}
+      <section
+        className={`ap-hero${photoOk ? ' has-photo' : ''}`}
+        style={{ '--hero-img': `url(${CAMPUS_PHOTO})` }}
+      >
+        <div className="ap-hero-in">
+          {/* Top chunk — always first: branding + headline. Stays visible
+              above the form on every breakpoint. */}
+          <div className="ap-hero-top">
+            <div className="ap-banner"><h1>MBA 2026–28</h1></div>
+            <p className="ap-hero-by">Master of Business Administration at</p>
+            <p className="ap-hero-name">Ganesan School of Business Management, Chennai</p>
+          </div>
 
-            <div className="ap-left">
-              <div className="ap-badge">
-                <div className="ap-badge-dot" />
-                MBA Admissions 2026–2028 · Open Now
-              </div>
-              <h1 className="ap-h1">
-                Top MBA College in Chennai —<br />
-                <em>GSBM, Tamil Nadu</em>
-              </h1>
-              <div className="ap-points">
-                {WHY_GSBM.map((point, i) => (
-                  <div key={i} className="ap-point">
-                    <div className="ap-check"><FiCheck size={11} strokeWidth={3} /></div>
-                    {point}
-                  </div>
-                ))}
-              </div>
-              <div className="ap-stats">
-                {STATS.map(s => (
-                  <div key={s.label}>
-                    <div className="ap-stat-val">{s.value}</div>
-                    <div className="ap-stat-lbl">{s.label}</div>
-                  </div>
-                ))}
-              </div>
+          {/* Bottom chunk — points + accreditation logos. Pushed BELOW the
+              form on mobile (see .ap-hero-bottom order in the mobile media
+              query) so the form is the first interactive thing visible. */}
+          <div className="ap-hero-bottom">
+            <div className="ap-pts">
+              {HERO_POINTS.map((p, i) => (
+                <div key={i} className="ap-pt">
+                  <span className="ap-pt-ck"><FiCheck size={16} strokeWidth={3.5} /></span>{p}
+                </div>
+              ))}
             </div>
 
-            {/* RIGHT — SINGLE DIRECT FORM (no steps, no quiz, no OTP) */}
-            <div className="ap-right" id="apply-form">
+            <div className="ap-badges" role="list" aria-label="Accreditations and affiliations">
+              {HERO_BADGES.map(b => (
+                <div key={b.alt} className="ap-badge-card" role="listitem">
+                  <img className="ap-badge-img" src={b.src} alt={b.alt}
+                       width={200} height={80} loading="eager" decoding="async" />
+                </div>
+              ))}
+            </div>
+            <p className="ap-badges-cap">AICTE Approved &nbsp;·&nbsp; NAAC Accredited &nbsp;·&nbsp; 25+ Years</p>
+          </div>
 
-              <div className="f-badge">Admissions Closing 30 August 2026</div>
-              <h2 className="f-title">Apply for MBA 2026–28</h2>
-              <p className="f-sub">
-                Enter your name and mobile number to go straight to the application form.
-                Our admissions counsellor will call you within 24 hours.
-              </p>
-
-              <div className="f-field">
-                <label className="f-lbl" htmlFor="name-input">Your Name</label>
-                <input
-                  id="name-input"
-                  className="f-input"
-                  type="text"
-                  autoComplete="name"
-                  placeholder="Enter your full name"
-                  value={name}
+          {/* FORM */}
+          <div className="ap-card" id="apply-form">
+            <div className="ap-card-hd">
+              <h2>Apply Now</h2>
+              {/* <p>Enter your name and mobile number to begin your application</p> */}
+              {/* <p>Our admissions counsellor will connect with you within 24 hours to guide you through the next steps.</p> */}
+            </div>
+            <div className="ap-card-in">
+              <div className="ap-field">
+                <label className="ap-lbl" htmlFor="name-input">Your Name</label>
+                <input id="name-input" className="ap-input" type="text" autoComplete="name"
+                  placeholder="Enter your full name" value={name} onFocus={markStart}
                   onChange={e => { setName(e.target.value); setError(''); }}
-                  onKeyDown={e => { if (e.key === 'Enter') handleSubmit(); }}
-                />
+                  onKeyDown={e => { if (e.key === 'Enter') handleSubmit(); }} />
               </div>
-
-              <div className="f-field">
-                <label className="f-lbl" htmlFor="ph-input">Your Mobile Number</label>
-                <div className="f-phone-row">
-                  <div className="f-prefix">🇮🇳 +91</div>
-                  <input
-                    id="ph-input"
-                    className="f-input"
-                    type="tel" inputMode="numeric" maxLength={10}
-                    autoComplete="tel-national"
-                    placeholder="Enter 10-digit number"
-                    value={phone}
+              <div className="ap-field">
+                <label className="ap-lbl" htmlFor="ph-input">Mobile Number</label>
+                <div className="ap-phone-row">
+                  <div className="ap-prefix">🇮🇳 +91</div>
+                  <input id="ph-input" className="ap-input" type="tel" inputMode="numeric" maxLength={10}
+                    autoComplete="tel-national" placeholder="Mobile Number" value={phone} onFocus={markStart}
                     onChange={e => { setPhone(e.target.value.replace(/\D/g, '').slice(0, 10)); setError(''); }}
-                    onKeyDown={e => { if (e.key === 'Enter') handleSubmit(); }}
-                  />
+                    onKeyDown={e => { if (e.key === 'Enter') handleSubmit(); }} />
                 </div>
-                <p className="f-hint">Used only to schedule your counselling call. No spam, ever.</p>
+                
               </div>
-
-              {error && <div className="f-err">⚠ {error}</div>}
-
-              <button className="f-btn" onClick={handleSubmit} disabled={loading}>
-                {loading ? <>↻ Opening application…</> : <><FiCheckCircle size={14} />Continue to Application Form</>}
+              <div className="ap-consent">
+                <input id="consent" type="checkbox" checked={consent}
+                  onChange={e => { setConsent(e.target.checked); setError(''); }} />
+                <label htmlFor="consent">
+                  I agree to the <a href="/privacy-policy" target="_blank" rel="noreferrer">Terms &amp; Privacy Policy</a>
+                </label>
+              </div>
+              {error && <div className="ap-err">⚠ {error}</div>}
+              <button className="ap-btn" onClick={handleSubmit} disabled={loading}>
+                {loading ? <>↻ Opening application…</> : <><FiCheckCircle size={19} strokeWidth={2.4} />Submit &amp; Continue</>}
               </button>
-
-              <div className="f-sec"><FiLock size={10} />100% secure · Used only for MBA admissions</div>
-
-              {/* ── ADMISSIONS COUNSELLOR — DIRECT HELP ── */}
-              <div className="f-help">
-                <div className="f-help-head">
-                  <div className="f-help-icon"><FiPhone size={14} strokeWidth={2.2} /></div>
-                  <p className="f-help-t">Can't fill the form? Call us directly</p>
-                </div>
-                <p className="f-help-d">
-                  Speak to an admissions counsellor — we'll take your details over the phone and complete the application for you.
-                </p>
-                <p className="f-help-org">Ganesan School of Business Management</p>
-                <a
-                  className="f-help-num"
-                  href={`tel:${COUNSELLOR_PHONE}`}
-                  aria-label={`Call GSBM admissions counsellor at ${COUNSELLOR_PHONE_DISPLAY}`}
-                >
-                  <FiPhone size={16} strokeWidth={2.2} />
-                  {COUNSELLOR_PHONE_DISPLAY}
+              <div className="ap-secure"><FiLock size={12} strokeWidth={2.4} />100% secure - This application is completely free</div>
+              {/* <div className="ap-free"><FiCheck size={13} strokeWidth={3} />This application is completely free — no payment required to fill this form</div> */}
+              <div className="ap-callbox">
+                <p className="ap-callbox-t">Need help with your application? Speak to our admissions team.</p>
+                <a className="ap-callbox-n" href={`tel:${COUNSELLOR_PHONE}`} onClick={() => trackCall('form')}>
+                  <FiPhone size={20} strokeWidth={2.4} />{COUNSELLOR_PHONE_DISPLAY}
                 </a>
-                <p className="f-help-hours">Admissions helpline · Mon–Sat, 9 AM – 6 PM</p>
-              </div>
-
-              <div className="f-divider" />
-              <p style={{ fontSize: '10px', color: '#bbb', textAlign: 'center', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '.06em', fontWeight: 700 }}>
-                Key Admission Dates
-              </p>
-              <div className="f-dates">
-                {KEY_DATES.map(({ label, date }) => (
-                  <div key={label} className="f-date">
-                    <span className="f-date-val">{date}</span>
-                    <span className="f-date-lbl">{label}</span>
-                  </div>
-                ))}
+                <p className="ap-callbox-h">Mon–Sat, 9 AM – 6 PM</p>
               </div>
             </div>
           </div>
         </div>
+      </section>
 
-        <section className="ap-section alt" aria-label="How to apply MBA Chennai GSBM">
-          <p className="ap-section-tag">Simple Process</p>
-          <h2 className="ap-section-title">How to Apply for MBA at GSBM Chennai — 3 Easy Steps</h2>
-          <div className="how-grid">
-            {HOW_IT_WORKS.map((item, i) => (
-              <div key={i} className="how-card">
-                <div className="how-num">Step {item.step}</div>
-                <div className="how-icon">{item.icon}</div>
-                <h3 className="how-t">{item.title}</h3>
-                <p className="how-d">{item.desc}</p>
+      <main>
+        {/* ══ ABOUT GSBM ══ */}
+        <section className="ap-sec" aria-labelledby="about-h">
+          <div className="ap-about">
+            <div>
+              <h2 id="about-h">About GSBM — A Leading MBA College in Chennai</h2>
+              <div className="ap-about-rule" />
+<p>
+                Established to bridge the gap between academic knowledge and real-world business
+                challenges, <strong>Ganesan School of Business Management (GSBM)</strong> develops
+                professionals with the analytical ability, ethical grounding and leadership confidence
+                to deliver results. Our founding philosophy is simple: management education must go
+                beyond the classroom to develop individuals who can lead organisations, solve real
+                problems and operate with integrity.
+              </p>
+              <p>
+                Located in Chennai, GSBM combines academic rigour with an intensely industry connected
+                curriculum and a strong focus on employability, leadership and career outcomes.
+              </p>
+              
+              <Link className="ap-about-link" to="/">
+                Read More About GSBM <FiArrowRight size={18} strokeWidth={2.6} />
+              </Link>
+            </div>
+            <div className="ap-about-img">
+              <img
+                src={aboutSrc}
+                alt="GSBM campus in Chennai — Ganesan School of Business Management"
+                loading="lazy"
+                onError={() => setAboutSrc(CAMPUS_PHOTO)}
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* ══ STEPS ══ */}
+        <section className="ap-sec tinted" aria-labelledby="steps-h">
+          <p className="ap-tag">Simple Process</p>
+          <h2 className="ap-h2" id="steps-h">How to Apply to GSBM Chennai in 3 Easy Steps</h2>
+          <p className="ap-lede"></p>
+          <div className="ap-steps">
+            <div className="ap-steps-row">
+              {HOW_IT_WORKS.map((item) => (
+                <div key={item.step} className="ap-ribbon">
+                  <div className="ap-ribbon-n">Step {item.step}</div>
+                  <div className="ap-ribbon-ic">{item.icon}</div>
+                  <h3 className="ap-ribbon-t">{item.title}</h3>
+                  <p className="ap-ribbon-d">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ══ WHY GSBM ══ */}
+        <section className="ap-sec" aria-labelledby="why-h">
+          <p className="ap-tag">Why GSBM</p>
+          <h2 className="ap-h2" id="why-h">Why Students Choose GSBM Chennai</h2>
+          <div className="ap-rule" />
+          <div className="ap-why">
+            {WHY_GSBM.map((point, i) => (
+              <div key={i} className="ap-why-i">
+                <span className="ap-why-ck"><FiCheck size={15} strokeWidth={3.5} /></span>
+                <span>{point}</span>
               </div>
             ))}
           </div>
         </section>
 
-        <section className="ap-section def" aria-label="Student reviews GSBM MBA College Chennai">
-          <p className="ap-section-tag">Student Reviews</p>
-          <h2 className="ap-section-title">What MBA Students Say About GSBM Chennai</h2>
-          <div className="testi-grid">
+        {/* ══ REVIEWS ══ */}
+        <section className="ap-sec tinted" aria-labelledby="reviews-h">
+          <p className="ap-tag">Student Reviews</p>
+          <h2 className="ap-h2" id="reviews-h">What MBA Students Say About GSBM Chennai</h2>
+          <div className="ap-rule" />
+          <div className="ap-testi">
             {TESTIMONIALS.map((t, i) => (
-              <div key={i} className="testi-card">
-                <div className="testi-stars">{'★'.repeat(t.rating)}</div>
-                <p className="testi-text">"{t.text}"</p>
-                <div className="testi-name">{t.name}</div>
-                <div className="testi-loc">{t.loc}</div>
-              </div>
+              <article key={i} className="ap-testi-c">
+                <div className="ap-testi-s" aria-label={`${t.rating} out of 5 stars`}>
+                  {Array.from({ length: t.rating }).map((_, k) => (
+                    <FiStar key={k} size={17} fill="currentColor" strokeWidth={0} />
+                  ))}
+                </div>
+                <p className="ap-testi-q">"{t.text}"</p>
+                <div className="ap-testi-r">
+                  <div className="ap-testi-av">{t.name.charAt(0)}</div>
+                  <div>
+                    <div className="ap-testi-n">{t.name}</div>
+                    <div className="ap-testi-l">MBA · {t.loc}</div>
+                  </div>
+                </div>
+              </article>
             ))}
           </div>
         </section>
 
-        <section className="ap-section alt" aria-label="MBA admission FAQ GSBM Chennai 2026">
-          <p className="ap-section-tag">Common Questions</p>
-          <h2 className="ap-section-title">Frequently Asked Questions — MBA Admissions Chennai 2026</h2>
-          <div className="faq-list">
+        {/* ══ FAQ ══ */}
+        <section className="ap-sec" aria-labelledby="faq-h">
+          <p className="ap-tag">Common Questions</p>
+          <h2 className="ap-h2" id="faq-h">MBA Admission Chennai 2026 — FAQs</h2>
+          <div className="ap-rule" />
+          <div className="ap-faq">
             {FAQS.map((f, i) => <FAQItem key={i} q={f.q} a={f.a} />)}
           </div>
         </section>
+      </main>
 
-        <footer className="ap-footer">
-          <FiLock size={11} strokeWidth={2} />
-          <span>Your information is encrypted and used solely for MBA admissions purposes.</span>
-          <span className="ap-footer-dot">·</span>
-          <span>© 2026 Ganesan School of Business Management — Top MBA College in Chennai, Tamil Nadu</span>
-        </footer>
+      {/* ══ CLOSING ══ */}
+      <section className="ap-close">
+        <h2>Ready to Apply for MBA 2026–28?</h2>
+        <p>Limited seats available. Last date for MBA admission 2026 is August 30, 2026.</p>
+        <div className="ap-close-row">
+          <button className="ap-close-btn" onClick={scrollToForm}>
+            <FiCheckCircle size={19} strokeWidth={2.4} />Apply Now
+          </button>
+          <a className="ap-close-call" href={`tel:${COUNSELLOR_PHONE}`} onClick={() => trackCall('footer')}>
+            <FiPhone size={19} strokeWidth={2.4} />{COUNSELLOR_PHONE_DISPLAY}
+          </a>
+        </div>
+      </section>
 
+      {/* <footer className="ap-ft">
+        <p><FiLock size={12} strokeWidth={2.4} style={{ verticalAlign: '-2px', marginRight: 6 }} />
+          Your information is encrypted and used solely for MBA admissions purposes.</p>
+        <p>
+          <Link to="/">Visit Website</Link>·
+          <button className="ap-ft-linkbtn" onClick={() => handleDownloadBrochure('footer')}>Download Brochure</button>·
+          <a href="/privacy-policy">Privacy Policy</a>·
+          <a href="mailto:admissions@gsbm.co.in">admissions@gsbm.co.in</a>
+        </p>
+        <p>© 2026 Ganesan School of Business Management — Top MBA College in Chennai, Tamil Nadu</p>
+      </footer> */}
+
+      <div className="ap-mobile-bar">
+        <a className="ap-mobile-call" href={`tel:${COUNSELLOR_PHONE}`} onClick={() => trackCall('mobile_bar')}>
+          <FiPhone size={17} strokeWidth={2.5} />Call Us
+        </a>
+        <a className="ap-mobile-wa" href={WHATSAPP_URL} target="_blank" rel="noreferrer"
+           onClick={() => trackWhatsApp('mobile_bar')}>
+          <WhatsAppIcon size={18} />WhatsApp
+        </a>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -3,12 +3,7 @@ import './LogoStrip.css';
 
 // ─── Static data outside component — not recreated on every render ────────────
 const LOGOS = [
-  {
-    src: 'https://res.cloudinary.com/damisreoh/image/upload/v1778318906/Screenshot_2026-05-09_at_2.57.53_PM_y1bdcd.png',
-    alt: 'VMRF – Vinayaka Mission Research Foundation logo',
-    width: 200,
-    height: 80,
-  },
+  
   {
     src: 'https://res.cloudinary.com/damisreoh/image/upload/v1782051287/AVIT-Logo-PNG_jw4ov5.png',
     alt: 'Aarupadai Veedu Institute of Technology (AVIT) logo',

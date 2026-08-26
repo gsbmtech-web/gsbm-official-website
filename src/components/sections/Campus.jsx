@@ -289,11 +289,7 @@ function Campus() {
         />
 
         <p className="campus-intro">
-          A modern, vibrant campus designed for learning, collaboration, and growth.
-          GSBM operates within a sprawling campus in Chennai — a green oasis on the
-          Old Mahabalipuram Road IT corridor. State-of-the-art infrastructure, smart
-          classrooms, and recreational facilities create the perfect environment for
-          holistic development.
+          A modern, vibrant campus designed for learning, collaboration and growth. Located along Chennai’s Old Mahabalipuram Road corridor, GSBM offers smart classrooms, collaborative learning spaces and recreational facilities that create an engaging environment for academic and personal development.
         </p>
 
         {/* ── Campus tour video ── */}

@@ -1,5 +1,5 @@
 .ctab {
-  background: #000000; /* pure black background */
+  background: var(--burgundy); /* was #000000 — restored to the site's previous footer color */
   padding: 70px 0;
   text-align: center;
   position: relative;

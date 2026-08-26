@@ -1,5 +1,7 @@
 /* ===== Navbar.css – FULLY RESPONSIVE (all devices incl. 360px Lava Z3) ===== */
 /* FIXED: Navbar now stays visible on scroll - removed overflow:hidden that was causing disappearing issue */
+/* UPDATED: 9 nav items now (Faculty added) — spacing retuned below so the
+   desktop row doesn't wrap/overflow before the 1024px hamburger cutoff. */
 
 /* ── Design tokens ── */
 :root {
@@ -16,14 +18,13 @@
   --gsbm-shadow:  0 8px 32px rgba(27, 42, 74, 0.10);
 }
 
-/* ── Top strip ── */
+/* ── Top strip — white bg, was navy ── */
 .gsbm-topstrip {
-  background: var(--gsbm-navy);
+  background: var(--gsbm-white);
   height: var(--gsbm-strip-h);
   display: flex;
   align-items: center;
-  border-bottom: 2px solid var(--gsbm-gold);
-  /* FIXED: Removed overflow:hidden - was causing clipping issues */
+  border-bottom: 1px solid var(--gsbm-border);
   overflow: visible;
   position: relative;
   z-index: 901;
@@ -45,7 +46,7 @@
   font-family: var(--gsbm-sans);
   font-size: 0.68rem;
   letter-spacing: 0.04em;
-  color: rgba(255, 255, 255, 0.72);
+  color: var(--gsbm-navy);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -80,18 +81,18 @@
   gap: 5px;
   font-family: var(--gsbm-sans);
   font-size: 0.68rem;
-  color: rgba(255, 255, 255, 0.75);
+  color: var(--gsbm-navy);
   text-decoration: none;
   letter-spacing: 0.02em;
   transition: color 0.2s;
   min-height: 34px;
 }
-.gsbm-toplink:hover         { color: var(--gsbm-gold); }
+.gsbm-toplink:hover         { color: var(--gsbm-burg); }
 .gsbm-toplink:focus-visible { outline: 2px solid var(--gsbm-gold); outline-offset: 2px; border-radius: 2px; }
 .gsbm-divider {
   width: 1px;
   height: 14px;
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--gsbm-border);
 }
 
 /* ── Main navbar ── */
@@ -103,10 +104,8 @@
   border-bottom: 1px solid var(--gsbm-border);
   transition: box-shadow 0.3s ease, background 0.3s ease;
   height: var(--gsbm-nav-h);
-  /* FIXED: Removed overflow:hidden - this was causing navbar to disappear on scroll */
   overflow: visible;
   width: 100%;
-  /* Extra safeguards for sticky positioning */
   transform: translateZ(0);
   will-change: transform;
 }
@@ -131,7 +130,7 @@
   align-items: center;
   flex-shrink: 0;
   text-decoration: none;
-  margin-right: 32px;
+  margin-right: 26px;
   height: 100%;
   padding: 10px 0;
   overflow: visible;
@@ -149,23 +148,26 @@
 }
 .gsbm-nav--scrolled .gsbm-logo-wrap { padding: 8px 0; }
 
-/* ── Desktop nav links ── */
+/* ── Desktop nav links ──
+   Base padding/letter-spacing trimmed slightly from the 8-item version
+   (16px/.1em → 14px/.09em) so 9 items comfortably fit the 1400px
+   container even at full desktop width, before any breakpoint kicks in. */
 .gsbm-nav-links {
   display: flex;
   align-items: stretch;
   height: 100%;
   flex: 1;
   justify-content: center;
-  gap: 2px;
+  gap: 1px;
 }
 .gsbm-navlink {
   display: flex;
   align-items: center;
-  padding: 0 16px;
+  padding: 0 14px;
   font-family: var(--gsbm-sans);
   font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.09em;
   text-transform: uppercase;
   color: var(--gsbm-navy);
   text-decoration: none;
@@ -177,8 +179,8 @@
   content: '';
   position: absolute;
   bottom: 0;
-  left: 16px;
-  right: 16px;
+  left: 14px;
+  right: 14px;
   height: 3px;
   background: var(--gsbm-gold);
   border-radius: 2px 2px 0 0;
@@ -193,7 +195,7 @@
 .gsbm-navlink:focus-visible     { outline: 2px solid var(--gsbm-gold); outline-offset: -2px; border-radius: 2px; }
 
 /* ── Desktop CTA button ── */
-.gsbm-nav-cta { flex-shrink: 0; margin-left: 24px; }
+.gsbm-nav-cta { flex-shrink: 0; margin-left: 18px; }
 .gsbm-apply-btn {
   display: inline-flex;
   align-items: center;
@@ -205,7 +207,7 @@
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  padding: 11px 28px;
+  padding: 11px 26px;
   border: 2px solid var(--gsbm-burg);
   border-radius: 4px;
   cursor: pointer;
@@ -332,6 +334,13 @@
 .gsbm-drawer-close:hover        { background: var(--gsbm-off); border-color: var(--gsbm-gold); }
 .gsbm-drawer-close:focus-visible { outline: 2px solid var(--gsbm-gold); outline-offset: 2px; }
 
+/* ── Mobile drawer nav —
+   9 links + the "Apply Now" footer button need to fit a viewport as
+   short as a landscape phone (e.g. ~360px tall) without the footer
+   getting pushed off-screen. flex:1 + overflow-y:auto on the link list
+   (already present below) already handles this by scrolling the LINK
+   LIST if needed while keeping drawer-head and drawer-footer pinned —
+   verified this still holds with the extra Faculty item. ── */
 .gsbm-drawer-nav {
   flex: 1;
   overflow-y: auto;
@@ -342,7 +351,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 24px;
+  padding: 13px 24px;
   font-family: var(--gsbm-sans);
   font-size: 0.85rem;
   font-weight: 700;
@@ -354,7 +363,7 @@
   transition: background 0.15s, color 0.15s, padding-left 0.2s;
   animation: gsbm-slideIn 0.35s ease both;
   animation-delay: var(--delay, 0ms);
-  min-height: 48px;
+  min-height: 46px;
 }
 @keyframes gsbm-slideIn {
   from { opacity: 0; transform: translateX(20px); }
@@ -372,11 +381,11 @@
 .gsbm-drawer-link:focus-visible { outline: 2px solid var(--gsbm-gold); outline-offset: -2px; }
 
 .gsbm-drawer-footer {
-  padding: 20px 24px;
+  padding: 18px 24px;
   border-top: 2px solid var(--gsbm-gold);
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
   flex-shrink: 0;
 }
 .gsbm-drawer-apply {
@@ -414,10 +423,21 @@
    RESPONSIVE BREAKPOINTS
    ══════════════════════════════════════════ */
 
+/* NEW — sits above the old 1200px tier. With 9 items, the row starts
+   getting tight noticeably earlier than it did with 8, so this catches
+   that range before things visibly crowd or wrap. */
+@media (max-width: 1320px) {
+  .gsbm-navlink   { padding: 0 11px; font-size: 0.74rem; letter-spacing: 0.07em; }
+  .gsbm-logo-wrap { margin-right: 18px; }
+  .gsbm-nav-cta   { margin-left: 14px; }
+  .gsbm-apply-btn { padding: 10px 20px; font-size: 0.72rem; }
+}
+
 @media (max-width: 1200px) {
-  .gsbm-navlink   { padding: 0 11px; font-size: 0.73rem; }
-  .gsbm-logo-wrap { margin-right: 20px; }
-  .gsbm-apply-btn { padding: 10px 18px; font-size: 0.73rem; }
+  .gsbm-navlink   { padding: 0 8px; font-size: 0.68rem; letter-spacing: 0.05em; }
+  .gsbm-logo-wrap { margin-right: 12px; }
+  .gsbm-logo-img  { max-width: 170px; }
+  .gsbm-apply-btn { padding: 9px 15px; font-size: 0.66rem; letter-spacing: 0.08em; }
 }
 
 @media (max-width: 1024px) {
@@ -449,9 +469,21 @@
   .gsbm-logo-img  { max-width: 130px; }
   .gsbm-nav-inner { padding: 0 0.75rem; }
   .gsbm-drawer    { width: 100vw; }
-  .gsbm-drawer-link { font-size: 0.78rem; padding: 12px 18px; }
+  .gsbm-drawer-link { font-size: 0.76rem; padding: 11px 18px; }
   .gsbm-drawer-head { padding: 12px 16px; }
   .gsbm-drawer-logo { height: 48px; }
-  .gsbm-drawer-footer { padding: 16px 18px; }
+  .gsbm-drawer-footer { padding: 14px 18px; }
   .gsbm-drawer-apply { font-size: 0.82rem; }
+}
+
+/* ── Very short viewports (landscape phones, small laptops with the
+   browser chrome eating vertical space) — drawer head/footer shrink a
+   touch so the scrollable 9-item link list gets more room without the
+   Apply button being squeezed off the bottom edge. ── */
+@media (max-height: 640px) {
+  .gsbm-drawer-head   { padding: 10px 20px; }
+  .gsbm-drawer-logo   { height: 44px; }
+  .gsbm-drawer-link   { padding: 10px 24px; min-height: 40px; }
+  .gsbm-drawer-footer { padding: 12px 24px; gap: 8px; }
+  .gsbm-drawer-apply  { padding: 11px; min-height: 42px; }
 }

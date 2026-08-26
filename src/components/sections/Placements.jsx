@@ -48,21 +48,19 @@ const Placements = () => (
   <section className="sec-navy" id="placements">
     <div className="W">
       <SectionHeader
-        kicker="Placement Record"
+        kicker="CAREER DEVELOPMENT"
         title="Careers That Begin Before Graduation"
-        subtitle="Our placement cell works year-round. From aptitude training to mock interviews to on-campus drives — we prepare every student, end to end."
+        subtitle="Career preparation at GSBM is continuous. From aptitude and communication training to internships, mock interviews and professional positioning, students are prepared systematically for the transition from campus to career."
         kickerClass="klt"
       />
 
       <Ac1 title="Our Recruiters">
-        <Ac2 title="Companies That Hire From GSBM Are Currently Expanding" defaultOpen>
+        <Ac2 title="INDUSTRY ENGAGEMENT & CAREER PARTNERSHIPS." defaultOpen>
           <p className="body-text placements-mb14">
-            GSBM is expanding — our recruiter base is growing steadily.
+           GSBM is building relationships with organisations across sectors to create meaningful opportunities for internships, industry engagement and future career pathways.
           </p>
           {/* ✦ decorative markers moved to CSS ::before/::after on this class */}
-          <p className="placements-gold-italic">
-            Placement record improving year on year
-          </p>
+          
         </Ac2>
       </Ac1>
 

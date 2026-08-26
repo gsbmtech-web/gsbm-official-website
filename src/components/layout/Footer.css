@@ -1,12 +1,15 @@
-/* Footer.css – premium styling with gold accents */
+/* Footer.css – white background, gold + burgundy accents
+   Full rewrite from the burgundy version: that build used white text at
+   various opacities everywhere, which is invisible on white — every
+   color below is new, not patched, so nothing is left half-dark. */
 
 .footer {
-  background: var(--burgundy);
-  border-top: 1px solid rgba(184, 146, 42, 0.2);
+  background: var(--white);
+  border-top: 1px solid var(--border);
   font-family: var(--sans);
 }
 
-/* Top gold stripe */
+/* Top gold stripe — unchanged, reads fine on white */
 .footer-top-stripe {
   height: 3px;
   background: linear-gradient(
@@ -34,7 +37,7 @@
   flex-direction: column;
 }
 
-/* Logo */
+/* Logo — no longer sits in a mismatched box, background now matches it */
 .footer-logo {
   height: 110px;
   width: auto;
@@ -47,25 +50,25 @@
 /* Tagline */
 .footer-tagline {
   font-size: 0.86rem;
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--text2);
   line-height: 1.9;
   margin-bottom: 24px;
   max-width: 340px;
   font-weight: 400;
 }
 
-/* Apply button */
+/* Apply button — outlined burgundy, fills gold on hover */
 .footer-cta {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   padding: 10px 22px;
-  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  border: 1.5px solid var(--burgundy);
   border-radius: 4px;
   background: transparent;
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--burgundy);
   font-size: 0.8rem;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.04em;
   cursor: pointer;
   transition: all 0.2s;
@@ -83,13 +86,13 @@
   transform: translateX(4px);
 }
 
-/* Headings – gold text */
+/* Headings – gold text, still reads clearly on white */
 .footer-heading {
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--gold2, var(--gold));
   margin-bottom: 18px;
 }
 
@@ -102,13 +105,13 @@
 .footer-link {
   display: block;
   font-size: 0.88rem;
-  color: rgba(255, 255, 255, 0.65);
+  color: var(--text2);
   text-decoration: none;
   padding: 4px 0;
   transition: color 0.2s, transform 0.2s;
 }
 .footer-link:hover {
-  color: var(--gold);
+  color: var(--burgundy);
   transform: translateX(4px);
 }
 
@@ -119,23 +122,23 @@
   align-items: flex-start;
   margin-bottom: 14px;
   font-size: 0.86rem;
-  color: rgba(255, 255, 255, 0.65);
+  color: var(--text2);
   line-height: 1.6;
 }
 .footer-contact-icon {
   flex-shrink: 0;
   font-size: 1rem;
   margin-top: 2px;
-  color: var(--gold);
+  color: var(--gold2, var(--gold));
 }
 .footer-contact-item a {
-  color: rgba(255, 255, 255, 0.65);
+  color: var(--text2);
   text-decoration: none;
   word-break: break-all;
   transition: color 0.2s;
 }
 .footer-contact-item a:hover {
-  color: var(--gold);
+  color: var(--burgundy);
 }
 
 /* ── Social icons ──────────────────────────────────────────── */
@@ -157,16 +160,16 @@
   justify-content: center;
   width: 34px;
   height: 34px;
-  border: 1.5px solid rgba(212, 175, 90, 0.35);
+  border: 1.5px solid var(--border2);
   border-radius: 4px;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--burgundy);
   text-decoration: none;
   transition: background 0.18s, border-color 0.18s, color 0.18s, transform 0.18s;
 }
 .footer-social-btn:hover {
   background: var(--gold);
   border-color: var(--gold);
-  color: var(--burgundy);
+  color: var(--navy);
   transform: translateY(-2px);
 }
 
@@ -175,59 +178,104 @@
   margin-top: 8px;
 }
 
-/* Divider */
+/* ══════════════════════════════════════════════════════════════
+   BOTTOM UTILITY BAR — same white as the rest now, so it needs its
+   own divider line to stay visually separate from the grid above.
+   ══════════════════════════════════════════════════════════════ */
 .footer-divider {
-  max-width: 1200px;
-  margin: 0 auto;
-  height: 1px;
-  background: rgba(184, 146, 42, 0.25);
-  margin-left: 2rem;
-  margin-right: 2rem;
+  display: none; /* footer-bottom's own border-top does this job */
 }
 
-/* Bottom bar */
 .footer-bottom {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px 2rem;
+  background: var(--white);
+  border-top: 1px solid var(--border);
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Row 1 — copyright + separator + Privacy Policy, centred */
+.footer-bottom-left {
+  padding: 20px 2rem 18px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 10px;
 }
 .footer-copy {
-  font-size: 0.7rem;
-  color: rgba(255, 255, 255, 0.45);
-  letter-spacing: 0.02em;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text3);
+  letter-spacing: 0.01em;
 }
+.footer-legal-sep {
+  color: var(--border2);
+  font-size: 0.78rem;
+}
+.footer-legal-link {
+  color: var(--burgundy);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.footer-legal-link:hover {
+  color: var(--gold2, var(--gold));
+  border-bottom-color: currentColor;
+}
+.footer-legal-link:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Row 2 — its own signature strip for the credit, not squeezed into a
+   corner. Subtle tinted background + top border gives it a deliberate,
+   "crafted by" moment instead of competing with the copyright line for
+   space on a single row. */
 .footer-credit {
+  background: var(--off);
+  border-top: 1px solid var(--border);
+  padding: 13px 2rem;
   display: flex;
-  align-items: baseline;
-  gap: 6px;
-  flex-wrap: wrap;
+  align-items: center;
   justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 .footer-credit-label {
-  font-size: 0.7rem;
-  letter-spacing: 0.05em;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.45);
+  color: var(--text3);
+  white-space: nowrap;
 }
 .footer-credit-link {
-  background: linear-gradient(135deg, #e8d5a8 0%, #f5e6b8 40%, #c9a84c 100%);
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
+  color: var(--burgundy);
+  background: none;
   font-weight: 800;
   font-size: 0.9rem;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.02em;
   text-decoration: none;
-  transition: opacity 0.2s;
+  border-bottom: 1.5px solid transparent;
+  transition: color 0.18s, border-color 0.18s, transform 0.18s;
+  display: inline-block;
 }
 .footer-credit-link:hover {
-  opacity: 0.8;
-  text-decoration: underline;
+  color: var(--gold2, var(--gold));
+  border-bottom-color: currentColor;
+  transform: translateY(-1px);
+}
+.footer-credit-link:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
 /* Responsive */
@@ -252,7 +300,7 @@
   .footer-col-brand {
     margin-bottom: 32px;
     padding-bottom: 32px;
-    border-bottom: 1px solid rgba(184, 146, 42, 0.2);
+    border-bottom: 1px solid var(--border);
   }
   .footer-logo {
     height: 70px;
@@ -262,69 +310,29 @@
     max-width: 100%;
     font-size: 0.82rem;
   }
-  .footer-bottom {
-    flex-direction: column;
-    text-align: center;
-    padding: 18px 1.25rem;
+  .footer-bottom-left {
+    padding: 18px 1.25rem 16px;
   }
-  .footer-divider {
-    margin-left: 1.25rem;
-    margin-right: 1.25rem;
+  .footer-credit {
+    padding: 12px 1.25rem;
   }
 }
-@media (max-width: 480px) {
-  .footer-logo { height: 55px; }
-  .footer-grid { padding: 32px 1rem 28px; }
-  .footer-divider { margin-left: 1rem; margin-right: 1rem; }
-  .footer-bottom { padding: 16px 1rem; }
-}
-/* ═══════════════════════════════════════════════════
-   APPEND to the end of src/components/layout/Footer.css
-   Styles for the Privacy Policy link in the bottom bar.
-   Nothing here overrides your existing rules.
-   ═══════════════════════════════════════════════════ */
-
-.footer-bottom-left {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.footer-legal-sep {
-  opacity: 0.35;
-}
-
-.footer-legal-link {
-  color: inherit;
-  text-decoration: none;
-  opacity: 0.85;
-  border-bottom: 1px solid transparent;
-  transition: opacity 0.15s, border-color 0.15s;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.footer-legal-link:hover {
-  opacity: 1;
-  border-bottom-color: currentColor;
-}
-
-.footer-legal-link:focus-visible {
-  outline: 2px solid var(--gsbm-gold, #c9a84c);
-  outline-offset: 2px;
-  border-radius: 2px;
-}
-
-/* On mobile the two items stack, so a dangling separator would read as a
-   rendering bug rather than a divider. */
 @media (max-width: 600px) {
   .footer-bottom-left {
     justify-content: center;
     text-align: center;
     gap: 6px;
   }
-
   .footer-legal-sep {
     display: none;
   }
+}
+@media (max-width: 480px) {
+  .footer-logo { height: 55px; }
+  .footer-grid { padding: 32px 1rem 28px; }
+  .footer-bottom-left { padding: 16px 1rem 14px; }
+  .footer-credit { padding: 11px 1rem; }
+  .footer-copy { font-size: 0.72rem; }
+  .footer-credit-label { font-size: 0.62rem; }
+  .footer-credit-link { font-size: 0.84rem; }
 }

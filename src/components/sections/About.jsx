@@ -8,12 +8,11 @@ import './About.css';
 
 /* ─── Static data outside component ─────────────────────────────────────────── */
 const QUICK_FACTS = [
-  { label: 'Program',    value: 'MBA – 2 Years Full-Time' },
-  { label: 'University', value: 'VMRF - DU' },
-  { label: 'Campus',     value: 'Chennai, India' },
-  { label: 'Intake',     value: '120 seats / year' },
-  { label: 'Approval',   value: 'AICTE Approved' },
-  { label: 'Entrance',   value: 'TANCET / CAT / MAT / GSBM Test' },
+  { label: 'Program', value: 'MBA – 2 Years Full-Time' },
+  { label: 'Campus', value: 'Chennai, India' },
+  { label: 'Intake', value: '120 seats / year' },
+  { label: 'Approval', value: 'AICTE Approved' },
+  { label: 'Entrance', value: 'TANCET / CAT / MAT / GSBM Test' },
 ];
 
 const CORE_VALUES = [
@@ -137,18 +136,11 @@ const About = memo(function About() {
                 .about-text { margin-bottom: 12px; }
             */}
             <p className="about-text about-text--mb">
-              Established to bridge the gap between academic knowledge and real-world business
-              challenges, Ganesan School of Business Management (GSBM) produces 'professionals
-              for results' with the right mix of analytical skill, ethical grounding, and
-              leadership confidence. Built on a clear founding philosophy: that management
-              education must go beyond classrooms to produce individuals who can lead
-              organisations, solve real problems, and operate with integrity.
+              Established to bridge the gap between academic knowledge and real world business challenges, Ganesan School of Business Management (GSBM) develops professionals with the analytical ability, ethical grounding and leadership confidence to deliver results. Our founding philosophy is simple: management education must go beyond the classroom to develop individuals who can lead organisations, solve real problems and operate with integrity.
             </p>
 
             <p className="about-text about-text--mb">
-              Operating under Vinayaka Mission's Research Foundation (Deemed to be University)
-              in Chennai, GSBM combines academic rigour with an intensely industry-connected
-              curriculum and a relentless focus on employability and placement outcomes.
+              Located in Chennai, GSBM combines academic rigour with an intensely industry connected curriculum and a strong focus on employability, leadership and career outcomes.
             </p>
 
             <Ac1 title="Vision & Mission" defaultOpen>
@@ -163,9 +155,7 @@ const About = memo(function About() {
                 <div className="vmcard vmcard--red">
                   <p className="vmcard-lbl">Our Mission</p>
                   <p className="vmcard-txt">
-                    To deliver accessible and practice-oriented management education that
-                    develops ethical, skilled, and innovative professionals who contribute
-                    to sustainable growth and societal progress.
+                   To deliver accessible and practice oriented management education that develops ethical, skilled and innovative professionals who contribute to sustainable growth and societal progress.
                   </p>
                 </div>
               </div>
@@ -184,15 +174,15 @@ const About = memo(function About() {
               <div className="ac-pad">
                 <InfoCard
                   label="AICTE Approved"
-                  value="Approved by the All India Council for Technical Education — the primary regulatory body for management education in India."
+                  value="Approved by the All India Council for Technical Education, the primary regulatory body for management education in India."
                 />
                 <InfoCard
                   label="VMRF Deemed to be University"
-                  value="MBA degree awarded by Vinayaka Mission's Research Foundation, a UGC-recognised Deemed to be University with a track record spanning decades."
+                  value="The GSBM MBA is offered within a UGC recognised higher education framework, providing students with a recognised university qualification alongside GSBM’s industry focused management education."
                 />
                 <InfoCard
                   label="NAAC Accredited"
-                  value="The parent university holds NAAC accreditation, ensuring academic quality standards are upheld across all programs."
+                  value="GSBM operates within a NAAC accredited institutional framework, bringing established academic quality standards together with GSBM’s contemporary approach to management education."
                 />
               </div>
             </Ac1>
@@ -200,9 +190,7 @@ const About = memo(function About() {
             <Ac1 title="Collaborations">
               <div className="ac-pad">
                 <p className="about-text">
-                  GSBM maintains active collaborations with industry bodies, corporations, and
-                  professional associations to keep the curriculum live and ensure students
-                  gain real exposure through internships, live projects, and expert sessions.
+                  GSBM maintains active collaborations with industry bodies, corporations and professional associations to keep the curriculum current and ensure students gain real exposure through internships, live projects and expert sessions.
                 </p>
               </div>
             </Ac1>

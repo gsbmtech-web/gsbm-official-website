@@ -172,20 +172,35 @@ h1, h2, h3, h4, h5, h6 {
   100% { transform: translateX(100%); }
 }
 
-/* ── Skip Link (accessibility) ── */
+/* ── Skip Link (accessibility) ──
+   FIXED: was `position: absolute; top: -40px; left: 0;` — that only
+   offsets relative to the nearest positioned ancestor, and once focused
+   it popped in as a small box overlapping the top strip at an odd spot
+   instead of a clean full-width bar. Switched to `position: fixed` so
+   it's always relative to the viewport regardless of any ancestor's
+   positioning, made it full width so it doesn't collide with the logo/
+   nav beside it, and raised z-index above the navbar (900) and top
+   strip (901) so it sits cleanly on top of everything when focused. */
 .skip-link {
-  position: absolute;
-  top: -40px;
+  position: fixed;
+  top: -60px;
   left: 0;
+  width: 100%;
   background: var(--navy);
   color: white;
-  padding: 8px 16px;
-  z-index: 1000;
+  padding: 14px 20px;
+  z-index: 2000;
   text-decoration: none;
   font-weight: bold;
   font-family: var(--sans);
+  text-align: center;
+  transition: top 0.2s ease;
 }
-.skip-link:focus { top: 0; outline: 2px solid var(--gold); }
+.skip-link:focus {
+  top: 0;
+  outline: 3px solid var(--gold);
+  outline-offset: -3px;
+}
 
 /* ── Focus Visible ── */
 :focus-visible {

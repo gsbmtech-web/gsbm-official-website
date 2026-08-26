@@ -42,7 +42,7 @@ const Programs = () => {
         <SectionHeader
           kicker="Programs Offered"
           title="MBA with Specialisations Designed by Students, Industry & Faculty"
-          subtitle="Every program at GSBM is designed to produce industry-ready professionals with the knowledge, exposure, and confidence to lead from day one. Coached, mentored, and groomed by the best."
+          subtitle="Every program at GSBM is designed to develop industry ready professionals with the knowledge, exposure and confidence to contribute from day one. Students are coached, mentored and prepared through a combination of academic learning, industry exposure and personalised development."
           kickerClass="kred"
           ruleClass="sh-rule-blue"
         />
@@ -50,13 +50,10 @@ const Programs = () => {
         <Ac1 title="MBA Degree Program — 2 Years Full-Time" defaultOpen>
           <Ac2 title="Program Overview" defaultOpen>
             <p className="body-text program-mb">
-              A full-time MBA degree awarded by Vinayaka Mission's Research Foundation (Deemed University).
-              The program balances rigorous academic theory with hands-on exposure through case studies,
-              industry simulations, live projects, and expert guest sessions.
+              A full time MBA program that combines rigorous management education with hands on exposure through case studies, industry simulations, live projects and expert sessions.
             </p>
             <p className="body-text">
-              Designed to produce decision-makers with strong analytical ability, ethical values, and a global
-              business perspective — Graduates who are both Leadership-ready and Placement-ready.
+              Designed to develop decision makers with strong analytical ability, ethical values and a global business perspective, preparing graduates to be both leadership ready and career ready.
             </p>
           </Ac2>
           <Ac2 title="Specialisations Available">
@@ -69,8 +66,7 @@ const Programs = () => {
         <Ac1 title="Industry-Integrated Certification Programs">
           <Ac2 title="Overview" defaultOpen>
             <p className="body-text">
-              Short-term certification programs running alongside the MBA curriculum. Designed to make students
-              immediately job-ready with in-demand technical and functional skills that complement their core MBA degree.
+              Short term certification programs offered alongside the MBA curriculum, designed to strengthen job readiness through relevant technical and functional skills that complement the core MBA program
             </p>
           </Ac2>
           <Ac2 title="Available Certifications">
@@ -83,8 +79,7 @@ const Programs = () => {
         <Ac1 title="Placement Training & Career Development">
           <Ac2 title="Overview" defaultOpen>
             <p className="body-text">
-              Year-round training embedded into the MBA program. Every student goes through structured preparation —
-              not just Academics, but full Corporate readiness across Aptitude, Communication, Interviews, and Personal branding.
+              Career development is embedded throughout the MBA program. Every student undergoes structured preparation across aptitude, communication, interviews, personal branding and workplace readiness.
             </p>
           </Ac2>
           <Ac2 title="Training Modules">
@@ -98,8 +93,7 @@ const Programs = () => {
         <Ac1 title="Workshops, Seminars & Guest Lectures">
           <Ac2 title="Overview" defaultOpen>
             <p className="body-text">
-              Regular sessions by CEOs, Senior Leaders, and Domain Experts from India's top organisations.
-              These sessions give students direct exposure to how business actually operates — far beyond what any textbook can offer.
+              Regular sessions with CEOs, senior leaders and domain experts give students direct exposure to how businesses operate and how experienced professionals approach real world challenges.
             </p>
           </Ac2>
           <Ac2 title="Topics Covered">

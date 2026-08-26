@@ -5,8 +5,8 @@
 .faculty-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  padding: 10px 8px;
+  gap: 28px;
+  padding: 14px 10px;
 }
 
 .faculty-research-grid {
@@ -18,12 +18,13 @@
 
 .fcard {
   border: 1px solid var(--border);
-  border-radius: 2px;
+  border-radius: 4px;
   overflow: hidden;
   background: var(--white);
   text-align: center;
   transition: all 0.22s ease;
   will-change: transform;
+  box-shadow: var(--shadow-sm);
 }
 
 .fcard:hover {
@@ -32,44 +33,112 @@
   border-color: var(--gold);
 }
 
+/* ── Photo / fallback avatar ──────────────────────────────────────
+   Now uses object-fit: contain so the full image is visible
+   without cropping. The hover scale has been removed to keep
+   the entire image in view at all times. ── */
+.fcard-photo {
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  background: var(--white);
+}
+.fcard-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  background: var(--white);
+}
+
 .fcard-av {
   width: 100%;
-  height: 150px;
+  height: 220px;
   background: var(--parchment);
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: var(--serif);
-  font-size: 2.4rem;
+  font-size: 2.8rem;
   font-weight: 600;
   color: var(--burgundy);
 }
 
 .fcard-body {
-  padding: 16px 14px 20px;
+  padding: 22px 18px 24px;
 }
 
 .fcard-name {
   font-family: var(--serif);
-  font-size: 1.15rem;
+  font-size: 1.32rem;
   color: var(--navy);
-  margin-bottom: 4px;
+  margin-bottom: 5px;
 }
 
 .fcard-title {
   font-family: var(--sans);
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   color: var(--burgundy);
   font-weight: 600;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
 .fcard-area {
   font-family: var(--sans);
-  font-size: 0.82rem;
+  font-size: 0.86rem;
   color: var(--text2);
+}
+
+/* ── Social links row ──────────────────────────────────────────────
+   Only rendered when at least one link exists (see Faculty.jsx) —
+   this CSS just needs to look right when it does appear. Same visual
+   language as Footer's social icons: small bordered squares, fill
+   gold on hover. ── */
+/* With up to 6 icons possible per person, a single tight row reads as
+   clutter — this wraps into a properly-spaced, centred set of rows
+   instead, with enough gap that a 6-icon person and a 2-icon person
+   both look intentional, not cramped or sparse. */
+.fcard-social {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px 10px;
+  flex-wrap: wrap;
+  max-width: 220px;
+  margin: 14px auto 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+/* Each icon carries its own platform brand color via the --brand custom
+   property set inline in Faculty.jsx (LinkedIn blue, YouTube red, etc).
+   Website has no brand color, so --brand is simply unset there and both
+   rules fall back to the site's own burgundy/gold — no special-casing
+   needed. Resting state: icon in its brand color, neutral border, white
+   background. Hover: fills solid with that same brand color. */
+.fcard-social-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 1.5px solid var(--border2);
+  border-radius: 6px;
+  background: var(--white);
+  color: var(--brand, var(--burgundy));
+  text-decoration: none;
+  transition: background 0.18s, border-color 0.18s, color 0.18s, transform 0.18s;
+}
+.fcard-social-btn:hover {
+  background: var(--brand, var(--gold));
+  border-color: var(--brand, var(--gold));
+  color: var(--white);
+  transform: translateY(-2px);
+}
+.fcard-social-btn:focus-visible {
+  outline: 2px solid var(--brand, var(--gold));
+  outline-offset: 2px;
 }
 
 @media (max-width: 1024px) {

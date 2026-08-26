@@ -7,13 +7,13 @@ const WHY_CARDS = [
     id: 'curriculum',
     Icon: FiZap,
     title: 'Futuristic, Industry-Integrated Curriculum',
-    desc: 'Co-designed with Industry partners and updated annually to match real Employer expectations — not Textbook theory alone.',
+    desc: "An industry integrated curriculum shaped with inputs from industry partners and regularly updated to reflect evolving employer expectations, going well beyond textbook learning."
   },
   {
     id: 'placement',
     Icon: FiTarget,
     title: 'Dedicated Placement Cell',
-    desc: 'Strong Company relationships, On-campus Recruitment drives, Internship pipelines, and Year-round Placement preparation for every student.',
+    desc: "A dedicated career development team focused on building industry relationships, internship opportunities and structured career preparation for every student."
   },
   {
     id: 'faculty',
@@ -31,13 +31,13 @@ const WHY_CARDS = [
     id: 'research',
     Icon: FiAward,
     title: 'Research & Innovation Culture',
-    desc: 'Active research environment, Live projects, Publications, and Collaboration with the wider VMRF (Deemed to be university) ecosystem.',
+    desc: "An active research and innovation environment supported by live projects, applied research, publications and collaboration with industry and academic partners.",
   },
   {
     id: 'alumni',
     Icon: FiUsers,
-    title: 'Alumni Network & Mentorship',
-    desc: 'A growing community of placed Alumni offering Mentorship, Referrals, and Guidance across Industries and Geographies.',
+    title: 'Industry Mentorship',
+    desc: "Students gain access to experienced industry professionals who provide mentoring, career perspectives and practical insights across functions and sectors."
   },
 ];
 
@@ -57,7 +57,7 @@ const Gsbmwhy = () => (
       <SectionHeader
         kicker="Why Choose GSBM"
         title="Your Competitive Edge Starts Here"
-        subtitle="Ganesan School of Business Management (GSBM) is not just another MBA degree offering institute. It is a launchpad — built around the belief that Education must translate directly into Personal and Professional Career outcomes."
+        subtitle="Ganesan School of Business Management (GSBM) is not just another MBA institution. It is a launchpad built around a simple belief management education must translate into meaningful personal and professional outcomes."
         center
       />
       <div className="why-grid">

@@ -150,7 +150,7 @@ const Contact = () => (
       <SectionHeader
         kicker="Contact Us"
         title="We're Here to Help"
-        subtitle="Reach our admissions team for any query about the MBA program, eligibility, fees, campus visits, or anything else."
+        subtitle="Reach our admissions team for information about the MBA program, eligibility, fees, scholarships, campus visits or the application process."
         kickerClass="kred"
       />
 
@@ -164,9 +164,7 @@ const Contact = () => (
       <Ac1 title="Campus Location & Map">
         <div className="contact-map-container">
           <p className="body-text contact-map-text">
-            GSBM is located at the VMRF campus, Vinayaka Nagar, Old Mahabalipuram Road (OMR),
-            Paiyanoor, Chennai – 603 104. Easily accessible by road with regular bus and cab
-            connectivity along the OMR IT corridor.
+            GSBM is located at Vinayaka Nagar, Old Mahabalipuram Road (OMR), Paiyanoor, Chennai 603 104, with convenient road, bus and cab connectivity along the OMR corridor.
           </p>
           <iframe
             title="GSBM Campus Map"
