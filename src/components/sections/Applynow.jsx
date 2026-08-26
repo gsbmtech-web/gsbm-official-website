@@ -27,26 +27,18 @@ const BROCHURE_DOWNLOAD  = 'GSBM_Brochure.pdf';    // the name the user sees whe
 
 /* ── SEO ───────────────────────────────────────────────────────────────── */
 const SEO = {
-  title: 'MBA Admission in Chennai 2026 | AICTE Approved MBA College | GSBM',
+  title: 'MBA Admissions 2026–2028 in Chennai | Apply Now | GSBM',
   description:
-    'Apply for MBA admission 2026–28 at GSBM Chennai. AICTE approved MBA college in Chennai, UGC recognised and NAAC accredited framework. Any graduate eligible. 100% placement support. Scholarships available. Apply in 20 seconds.',
+    'Apply for GSBM MBA Admissions 2026–2028 in Chennai. Check eligibility, entrance exams, specialisations and admission details. Apply online today.',
   canonical: 'https://www.gsbm.co.in/apply',
   keywords:
-    'MBA admission Chennai, MBA college in Chennai, AICTE approved MBA Chennai, best MBA college Tamil Nadu, MBA without entrance exam Chennai, MBA admission 2026, top MBA colleges Chennai, MBA fees Chennai, management college Chennai',
+    'MBA Admissions 2026, MBA Admissions 2026–2028, MBA Admission 2026 Chennai, MBA College in Chennai, MBA Application Form, MBA Apply Online',
+  // OG title/description are deliberately separate from the SEO title/
+  // description above — the doc specifies different copy for each.
+  ogTitle: 'MBA Admissions 2026–2028 in Chennai | GSBM',
+  ogDescription:
+    'Apply for GSBM MBA Admissions 2026–2028 in Chennai. Explore eligibility, entrance exams, specialisations and admission details.',
 };
-
-const WHY_GSBM = [
-  "AICTE Approved",
-  "UGC Recognised Degree Framework",
-  "NAAC Accredited Institutional Framework",
-  'Graduates from Any Discipline Can Apply',
-  'Structured Career Development and Placement Support',
-  'Merit Scholarships Available',
-  "25+ Years of Educational Experience",
-  "100% Career Development Support",
-  
-
-];
 
 const HERO_POINTS = [
   "UGC Recognised Degree Framework",
@@ -59,17 +51,6 @@ const HERO_POINTS = [
   "100% Career Development Support"
   
 ];
-
-/* Accreditation logos — same sources as the site's LogoStrip component.
-   VMRF dropped here on request — AICTE / NAAC / 25-years only. */
-const HERO_BADGES = [
-  { src: 'https://res.cloudinary.com/damisreoh/image/upload/q_auto,f_auto,w_200/v1777091751/AICTE_umarzo.webp',
-    alt: 'AICTE – All India Council for Technical Education' },
-  { src: 'https://res.cloudinary.com/damisreoh/image/upload/v1779259623/NAAC_LOGO_1_wvpqpj.jpg',
-    alt: 'NAAC – National Assessment and Accreditation Council' },
-  { src: 'https://res.cloudinary.com/damisreoh/image/upload/q_auto,f_auto,w_200/v1777091881/25-_NEW_final_tfkexe.png',
-    alt: 'GSBM – 25 years of excellence' },
-]
 
 const HOW_IT_WORKS = [
   { icon: <FiUser size={26} strokeWidth={2} />,          step: '1', title: 'Fill the Form',        desc: 'Fill the Form Enter your name and mobile number to get started. It takes less than a minute' },
@@ -165,9 +146,9 @@ const ApplyNow = () => {
 
     setMeta('name', 'description', SEO.description);
     setMeta('name', 'keywords', SEO.keywords);
-    setMeta('name', 'robots', 'index,follow');
-    setMeta('property', 'og:title', SEO.title);
-    setMeta('property', 'og:description', SEO.description);
+    setMeta('name', 'robots', 'index, follow, max-image-preview:large');
+    setMeta('property', 'og:title', SEO.ogTitle);
+    setMeta('property', 'og:description', SEO.ogDescription);
     setMeta('property', 'og:url', SEO.canonical);
     setMeta('property', 'og:type', 'website');
     setMeta('property', 'og:locale', 'en_IN');
@@ -399,7 +380,7 @@ const ApplyNow = () => {
           {/* Top chunk — always first: branding + headline. Stays visible
               above the form on every breakpoint. */}
           <div className="ap-hero-top">
-            <div className="ap-banner"><h1>MBA 2026–28</h1></div>
+            <div className="ap-banner"><h1>MBA Admissions 2026–2028</h1></div>
             <p className="ap-hero-by">Master of Business Administration at</p>
             <p className="ap-hero-name">Ganesan School of Business Management, Chennai</p>
           </div>
@@ -416,15 +397,6 @@ const ApplyNow = () => {
               ))}
             </div>
 
-            <div className="ap-badges" role="list" aria-label="Accreditations and affiliations">
-              {HERO_BADGES.map(b => (
-                <div key={b.alt} className="ap-badge-card" role="listitem">
-                  <img className="ap-badge-img" src={b.src} alt={b.alt}
-                       width={200} height={80} loading="eager" decoding="async" />
-                </div>
-              ))}
-            </div>
-            <p className="ap-badges-cap">AICTE Approved &nbsp;·&nbsp; NAAC Accredited &nbsp;·&nbsp; 25+ Years</p>
           </div>
 
           {/* FORM */}
@@ -457,15 +429,16 @@ const ApplyNow = () => {
                 <input id="consent" type="checkbox" checked={consent}
                   onChange={e => { setConsent(e.target.checked); setError(''); }} />
                 <label htmlFor="consent">
-                  I agree to the <a href="/privacy-policy" target="_blank" rel="noreferrer">Terms &amp; Privacy Policy</a>
+                  I agree to the <a href="/privacy-policy" target="_blank" rel="noreferrer">Terms &amp; Privacy Policy</a> and
+                  consent to be contacted by GSBM regarding admissions.
                 </label>
               </div>
               {error && <div className="ap-err">⚠ {error}</div>}
               <button className="ap-btn" onClick={handleSubmit} disabled={loading}>
                 {loading ? <>↻ Opening application…</> : <><FiCheckCircle size={19} strokeWidth={2.4} />Submit &amp; Continue</>}
               </button>
-              <div className="ap-secure"><FiLock size={12} strokeWidth={2.4} />100% secure - This application is completely free</div>
-              {/* <div className="ap-free"><FiCheck size={13} strokeWidth={3} />This application is completely free — no payment required to fill this form</div> */}
+              <div className="ap-secure"><FiLock size={12} strokeWidth={2.4} />100% secure</div>
+              <div className="ap-free"><FiCheck size={13} strokeWidth={3} />This application is completely free — no payment required to fill this form</div>
               <div className="ap-callbox">
                 <p className="ap-callbox-t">Need help with your application? Speak to our admissions team.</p>
                 <a className="ap-callbox-n" href={`tel:${COUNSELLOR_PHONE}`} onClick={() => trackCall('form')}>
@@ -529,21 +502,6 @@ const ApplyNow = () => {
                 </div>
               ))}
             </div>
-          </div>
-        </section>
-
-        {/* ══ WHY GSBM ══ */}
-        <section className="ap-sec" aria-labelledby="why-h">
-          <p className="ap-tag">Why GSBM</p>
-          <h2 className="ap-h2" id="why-h">Why Students Choose GSBM Chennai</h2>
-          <div className="ap-rule" />
-          <div className="ap-why">
-            {WHY_GSBM.map((point, i) => (
-              <div key={i} className="ap-why-i">
-                <span className="ap-why-ck"><FiCheck size={15} strokeWidth={3.5} /></span>
-                <span>{point}</span>
-              </div>
-            ))}
           </div>
         </section>
 

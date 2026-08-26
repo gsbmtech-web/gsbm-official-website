@@ -72,15 +72,23 @@ const Footer = () => {
 
         {/* Column 1 – Brand */}
         <div className="footer-col footer-col-brand">
-          <img
-            src={LogoImg}
-            alt="GSBM Logo"
-            className="footer-logo"
-            loading="lazy"
-            decoding="async"
-            width={180}
-            height={60}
-          />
+          {/* Deliberately a PLAIN <a href="/"> with no onClick handler —
+              every other internal link in this file goes through
+              handleNav (e.preventDefault + SPA navigate), but the logo
+              is meant to force a genuine full page reload on click, not
+              a client-side route change. Leaving the browser's default
+              anchor behaviour untouched is what achieves that. */}
+          <a href="/" className="footer-logo-link" aria-label="GSBM – Go to homepage" title="GSBM – Go to homepage">
+            <img
+              src={LogoImg}
+              alt="GSBM Logo"
+              className="footer-logo"
+              loading="lazy"
+              decoding="async"
+              width={180}
+              height={60}
+            />
+          </a>
           <p className="footer-tagline">
            Ganesan School of Business Management, Chennai. Building employable, ethical and industry ready leaders.
           </p>

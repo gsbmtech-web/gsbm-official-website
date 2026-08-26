@@ -323,25 +323,34 @@
   .ap-hd-btn-full { display: none; }
   .ap-hd-btn-arrow { display: none; }
 
-  /* ── Compact heading block ── */
-  .ap-hero-top { margin-bottom: 8px; }
+  /* ── Compact heading block — mobile shows ONLY the plain "MBA
+     Admissions 2026–2028" line above the form. The subtitle lines
+     ("Master of Business Administration at" / "Ganesan School of
+     Business Management, Chennai") are removed here on request, and
+     the banner drops its box/border/shadow entirely — no decorative
+     styling, just centred plain text. Desktop is untouched: it still
+     shows the full banner box + both subtitle lines. ── */
+  .ap-hero-top { margin-bottom: 14px; text-align: center; }
+  .ap-hero-by,
+  .ap-hero-name { display: none; }
   .ap-banner {
-    padding: 6px 14px 8px;
-    margin-bottom: 8px;
-    border-left-width: 3px;
+    display: inline-block;
+    width: auto;
+    background: rgba(122,48,12,.82);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-radius: 8px;
+    box-shadow: 0 8px 22px rgba(50,20,6,.34);
+    padding: 10px 20px;
+    margin: 0 auto;
+    text-align: center;
   }
   .ap-banner h1 {
-    font-size: 1.4rem;
-    line-height: 1.1;
-  }
-  .ap-hero-by {
-    font-size: 12px;
-    margin-bottom: 2px;
-  }
-  .ap-hero-name {
-    font-size: 0.9rem;
-    margin-bottom: 8px;
-    max-width: 100%;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 1.35rem;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
   }
 
   /* ── Compact form card ── */
@@ -363,10 +372,15 @@
   .ap-callbox-n { font-size: 16px; gap: 6px; }
   .ap-callbox-h { font-size: 10px; margin-top: 4px; }
 
-  /* ── ⭐ GAP between form and points ── */
+  /* ── GAP between form and points, PLUS clearance for the fixed
+     Call Us/WhatsApp bar below. Without this, most of the 8-item
+     checklist renders UNDER the sticky bar (position:fixed doesn't
+     push content — it just overlays whatever's already there), so
+     only the first item was ever actually visible. ── */
   .ap-hero-bottom {
     margin-top: 24px;
     margin-bottom: 0;
+    padding-bottom: 92px;
   }
 
   .ap-pts { gap: 8px; margin-bottom: 16px; }
