@@ -1,9 +1,9 @@
 import { useState, useCallback } from 'react';
 import giecLogo from '../../assets/clogos/Giec.jpeg';
-import iicLogo  from '../../assets/clogos/Iic.png';
+import iicLogo from '../../assets/clogos/Iic.png';
 import ediiLogo from '../../assets/clogos/Edii.png';
 import msmeLogo from '../../assets/clogos/Msme.png';
-import radioLogo from '../../assets/clogos/Ganesa88FM.png'; // ✅ add your logo here
+import radioLogo from '../../assets/clogos/Ganesa88FM.png';
 import './GIECSection.css';
 
 const PARTNERS = [
@@ -69,7 +69,7 @@ const GIECSection = () => (
             width={420}
             height={210}
           />
-          <span className="giec-partof">— Part of GSBM</span>
+          <span className="giec-partof">Part of GSBM</span>
         </div>
 
         {/* Two-col body */}
@@ -85,7 +85,7 @@ const GIECSection = () => (
             </h2>
 
             <p className="giec-tagline">
-              Empowering Entrepreneurs with End-to-End Startup Support
+              Empowering Entrepreneurs with End to End Startup Support
             </p>
 
             <p className="body-text giec-desc">
@@ -109,7 +109,7 @@ const GIECSection = () => (
       </div>
     </section>
 
-    {/* ✅ NEW: Ganesa 88.8 FM Section */}
+    {/* Ganesa 88.8 FM Section */}
     <section className="sec-sky radio-section" aria-labelledby="radio-heading">
       <div className="W radio-body">
         <img

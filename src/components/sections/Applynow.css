@@ -307,7 +307,7 @@
 
   /* ── Shrink hero padding drastically ── */
   .ap-hero {
-    padding: 6px 18px 18px;
+    padding: 20px 18px 18px;
     min-height: 0;
   }
 
@@ -330,7 +330,7 @@
      the banner drops its box/border/shadow entirely — no decorative
      styling, just centred plain text. Desktop is untouched: it still
      shows the full banner box + both subtitle lines. ── */
-  .ap-hero-top { margin-bottom: 14px; text-align: center; }
+  .ap-hero-top { margin-bottom: 24px; text-align: center; }
   .ap-hero-by,
   .ap-hero-name { display: none; }
   .ap-banner {
@@ -378,9 +378,9 @@
      push content — it just overlays whatever's already there), so
      only the first item was ever actually visible. ── */
   .ap-hero-bottom {
-    margin-top: 24px;
+    margin-top: 34px;
     margin-bottom: 0;
-    padding-bottom: 92px;
+    padding-bottom: 62px;
   }
 
   .ap-pts { gap: 8px; margin-bottom: 16px; }

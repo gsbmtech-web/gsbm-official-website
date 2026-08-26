@@ -6,7 +6,7 @@ const WHY_CARDS = [
   {
     id: 'curriculum',
     Icon: FiZap,
-    title: 'Futuristic, Industry-Integrated Curriculum',
+    title: 'Futuristic, Industry Integrated Curriculum',
     desc: "An industry integrated curriculum shaped with inputs from industry partners and regularly updated to reflect evolving employer expectations, going well beyond textbook learning."
   },
   {
@@ -19,13 +19,13 @@ const WHY_CARDS = [
     id: 'faculty',
     Icon: FiCpu,
     title: 'Experienced Faculty',
-    desc: 'Professors of Practice, Academics with Doctoral credentials, and Professionals who have led teams in Industry — bringing depth and real-world relevance together.',
+    desc: 'Professors of Practice, Academics with Doctoral credentials, and Professionals who have led teams in Industry, bringing depth and real world relevance together.',
   },
   {
     id: 'guest-lectures',
     Icon: FiMic,
     title: 'Guest Lectures & Industry Talks',
-    desc: "Regular sessions by CEOs, VPs, and Senior leaders from India's top organisations — giving students direct access to Corporate thinking.",
+    desc: "Regular sessions by CEOs, VPs, and Senior leaders from India's top organisations, giving students direct access to Corporate thinking.",
   },
   {
     id: 'research',

@@ -1,12 +1,15 @@
 /* ── Section shell ── */
 .giec-section {
   border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
+  padding: 56px 0;
 }
 
 /* ── GIEC Logo — LARGE & BOLD ── */
 .giec-brand {
-  margin-bottom: 48px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
 }
 .giec-logo {
   height: 210px;
@@ -15,12 +18,20 @@
   object-fit: contain;
   display: block;
 }
+.giec-partof {
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--text3);
+  white-space: nowrap;
+}
 
 /* ── Two-col grid (desktop) ── */
 .giec-body {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 64px;
+  gap: 48px;
   align-items: start;
 }
 
@@ -51,7 +62,7 @@
   margin-bottom: 16px;
 }
 .giec-desc {
-  margin-bottom: 28px;
+  margin-bottom: 0;
   max-width: 480px;
 }
 
@@ -72,12 +83,13 @@
   border-bottom: 1px solid var(--border);
 }
 
-/* ── Partner logos: NO box, NO bg, NO border — just big clean logos ── */
+/* ── Partner logos: uniform fixed-size boxes so mismatched source
+   images all read as the same visual size ── */
 .giec-partners-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 32px 24px;
-  align-items: center;
+  gap: 32px;
+  align-items: stretch;
 }
 .giec-partner-card {
   background: transparent;
@@ -86,6 +98,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 180px; /* bumped up from 140 */
   transition: transform 0.22s ease, filter 0.22s ease;
   will-change: transform;
 }
@@ -95,10 +108,15 @@
 }
 .giec-partner-logo {
   width: 100%;
-  max-width: 100%;
-  height: 100px;
+  max-width: 180px;
+  height: 100%;
+  max-height: 180px;
   object-fit: contain;
   display: block;
+  margin: 0 auto;
+  /* Safety net: blends any residual white background into the page bg.
+     Remove this once all source PNGs are confirmed fully transparent. */
+  mix-blend-mode: multiply;
 }
 .giec-partner-fallback {
   display: none;
@@ -119,80 +137,72 @@
    RESPONSIVE BREAKPOINTS
    ═══════════════════════════════════════ */
 
-/* ── Tablet landscape ≤ 1024px ── */
 @media (max-width: 1024px) {
   .giec-body {
     grid-template-columns: 1fr;
-    gap: 44px;
+    gap: 36px;
   }
   .giec-desc {
     max-width: 100%;
   }
+  .giec-partner-card {
+    height: 150px;
+  }
   .giec-partner-logo {
-    height: 90px;
+    max-width: 150px;
+    max-height: 150px;
   }
 }
 
-/* ── Tablet portrait ≤ 768px ── */
 @media (max-width: 768px) {
-  .giec-brand { margin-bottom: 36px; }
+  .giec-section { padding: 40px 0; }
+  .giec-brand { margin-bottom: 24px; }
   .giec-logo { height: 88px; max-width: 340px; }
-  .giec-body { gap: 36px; }
+  .giec-body { gap: 28px; }
   .giec-heading { font-size: clamp(1.45rem, 5vw, 2rem); }
-  .giec-partners-grid { gap: 24px 16px; }
-  .giec-partner-logo { height: 80px; }
+  .giec-partners-grid { gap: 18px; grid-template-columns: repeat(3, 1fr); }
+  .giec-partner-card { height: 120px; }
+  .giec-partner-logo { max-width: 120px; max-height: 120px; }
 }
 
-/* ── Mobile ≤ 600px ── */
 @media (max-width: 600px) {
   .giec-logo { height: 72px; max-width: 280px; }
-  .giec-partners-grid { gap: 20px 12px; }
-  .giec-partner-logo { height: 68px; }
+  .giec-partners-grid { gap: 16px; }
+  .giec-partner-card { height: 100px; }
+  .giec-partner-logo { max-width: 100px; max-height: 100px; }
 }
 
-/* ── Small mobile ≤ 400px ── */
 @media (max-width: 400px) {
-  .giec-brand { margin-bottom: 24px; }
+  .giec-brand { margin-bottom: 20px; }
   .giec-logo { height: 60px; max-width: 240px; }
   .giec-heading { font-size: 1.35rem; }
   .giec-tagline { font-size: 0.9rem; }
   .giec-partners-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
   }
-  .giec-partner-logo { height: 64px; width: auto; }
+  .giec-partner-card { height: 80px; }
+  .giec-partner-logo { max-width: 80px; max-height: 80px; }
 }
-.giec-brand {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 48px;
-}
-.giec-partof {
-  font-family: var(--sans);
-  font-size: 0.82rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  color: var(--text3);
-  white-space: nowrap;
-}
-/* Radio Section */
+
+/* ── Radio Section ── */
 .radio-section {
-  padding: 60px 0;
+  padding: 40px 0 56px;
   border-top: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .radio-body {
   display: flex;
   align-items: center;
-  gap: 40px;
+  gap: 32px;
 }
 
 .radio-logo {
-  width: 180px;
-  height: 180px;
+  width: 120px;
+  height: 120px;
   object-fit: contain;
   flex-shrink: 0;
+  mix-blend-mode: multiply;
 }
 
 .radio-text {
@@ -201,10 +211,10 @@
   gap: 8px;
 }
 
-/* Mobile */
 @media (max-width: 768px) {
   .radio-body {
     flex-direction: column;
     text-align: center;
+    gap: 20px;
   }
 }

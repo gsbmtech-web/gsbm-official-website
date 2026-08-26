@@ -12,7 +12,7 @@ const LEADERSHIP = [
     subtitle: "Hon'ble Chancellor, VMRF-DU.",
     photo: 'https://res.cloudinary.com/vewrsjxm/image/upload/v1787656411/wmremove-transformed-4.png',
     message:
-      'India does not have a shortage of graduates. It has a shortage of professionals who are genuinely ready — to think independently, to lead responsibly, and to perform under the pressures that real organisations place on them. GSBM was established to close that gap, not incrementally, but decisively. We are not building a school for rankings or recognition. We are building one for outcomes — for students who will go on to run enterprises, lead teams, and contribute to this country\'s growth in ways that matter. That is the only measure I am interested in.',
+      'India does not have a shortage of graduates. It has a shortage of professionals who are genuinely ready to think independently, to lead responsibly, and to perform under the pressures that real organisations place on them. GSBM was established to close that gap, not incrementally, but decisively. We are not building a school for rankings or recognition. We are building one for outcomes — for students who will go on to run enterprises, lead teams, and contribute to this country\'s growth in ways that matter. That is the only measure I am interested in.',
   },
   {
     id: 'anuradha',
@@ -40,7 +40,7 @@ const LEADERSHIP = [
     subtitle: null,
     photo: 'https://res.cloudinary.com/vewrsjxm/image/upload/v1787656419/wmremove-transformed.png',
     message:
-      'At GSBM, we believe education is not just about degrees — it is about shaping the character and capability of future leaders who will drive India\'s business growth. Every student who joins us carries the potential to change industries. We strive to provide a relaxed but disciplined ecosystem for students\' all-round development. The central focus is to transform students into confident, knowledgeable, and skilled individuals who are not only ready for various jobs but also conditioned to think and create jobs. Employability is the key idea.',
+      'At GSBM, we believe education is not just about degrees, it is about shaping the character and capability of future leaders who will drive India\'s business growth. Every student who joins us carries the potential to change industries. We strive to provide a relaxed but disciplined ecosystem for students\' all-round development. The central focus is to transform students into confident, knowledgeable, and skilled individuals who are not only ready for various jobs but also conditioned to think and create jobs. Employability is the key idea.',
   },
 ];
 
