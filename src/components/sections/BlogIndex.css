@@ -4,10 +4,18 @@
    CSS variable names if your project defines --gsbm-navy etc. globally. */
 
 .blogx {
-  --bx-navy: var(--gsbm-navy, #0d1f3c);
-  --bx-navy-light: #16294a;
-  --bx-gold: var(--gsbm-gold, #c8963e);
-  --bx-accent: var(--gsbm-accent, #8a1c24);
+  /* FIXED: these fallback values were an invented navy-blue palette
+     (a dark navy that has nothing to do with the actual site — --gsbm-
+     navy isn't defined anywhere in the real project, so this always
+     fell back to that made-up navy instead of matching the rest of the
+     site. Fallbacks now match the exact rust gradient used on the
+     ApplyNow page's step cards (--rust/--rust-d/--rust-dd:
+     #C2703F / #AA4E1A / #8A3E13), so the blog reads as the same brand
+     as the rest of the site, not a different color scheme. */
+  --bx-navy: var(--gsbm-navy, #8A3E13);
+  --bx-navy-light: #AA4E1A;
+  --bx-gold: var(--gsbm-gold, #C9A84C);
+  --bx-accent: var(--gsbm-accent, #8A3E13);
   --bx-text: #2b2f36;
   --bx-text-muted: #6b7280;
   --bx-border: #e6e2d8;
@@ -15,10 +23,12 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-/* ── Hero band ── */
+/* ── Hero band ──
+   Same 3-stop rust gradient as the ApplyNow step cards, not a flat
+   fallback color — matches your screenshot exactly. */
 .blogx-hero {
   position: relative;
-  background: var(--bx-navy);
+  background: linear-gradient(180deg, #C2703F 0%, #AA4E1A 55%, #8A3E13 100%);
   overflow: hidden;
   padding: 64px 24px;
 }
