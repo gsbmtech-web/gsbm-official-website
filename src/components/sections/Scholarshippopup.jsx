@@ -13,7 +13,7 @@ const scholarshipCreative = '/images/scholarship-popup/scholarship-popup.jpg';
    page and doesn't affect ad approval. This value only affects
    organic ranking on the homepage — lower is safer there.
 ───────────────────────────────────────────────────────────── */
-const CLOSE_DELAY_SECONDS = 10;
+const CLOSE_DELAY_SECONDS = 5;
 
 /* Set to false if you want the popup on EVERY homepage visit
    in the same browser session (more aggressive, more annoying). */
