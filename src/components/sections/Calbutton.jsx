@@ -35,7 +35,7 @@ const Calbutton = () => {
             href="tel:+918667690672"
             className="btn ctab-btn-secondary"
           >
-            Talk to an Advisor
+           Talk to a Counsellor
           </a>
         </div>
       </div>

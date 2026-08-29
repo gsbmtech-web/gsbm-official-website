@@ -42,14 +42,18 @@
   font-family: serif;
 }
 
+/* FIXED: was font-style:italic — that's what made the text read as
+   "leaning left"/crooked. Upright now, matching the ApplyNow reviews
+   (.ap-testi-q), and bumped to weight 600 to match that same section's
+   text weight so the two review blocks feel like one consistent style
+   across the site rather than two different treatments. */
 .tcard-text {
   font-family: var(--sans, system-ui, -apple-system, sans-serif);
   font-size: 1rem;
-  font-style: italic;
   line-height: 1.65;
   color: #1a1a1a;                /* Solid black/dark gray for readability */
   margin-bottom: 24px;
-  font-weight: 400;
+  font-weight: 600;
 }
 
 .tcard-author {

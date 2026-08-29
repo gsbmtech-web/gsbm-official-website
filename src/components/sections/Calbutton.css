@@ -25,13 +25,16 @@
   bottom: 0;
 }
 
+/* Kicker + heading now white — reads as the primary, punchy layer on
+   the burgundy background. Was gold before, which competed visually
+   with the gold buttons/lines below it. */
 .ctab-kicker {
   font-family: var(--sans);
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--gold); /* gold text */
+  color: #FFFFFF;
   display: block;
   margin-bottom: 12px;
 }
@@ -39,14 +42,18 @@
 .ctab h2 {
   font-family: var(--serif);
   font-size: clamp(1.8rem, 3.8vw, 3rem);
-  color: var(--gold); /* gold text */
+  color: #FFFFFF;
   margin-bottom: 16px;
 }
 
+/* Description gets its own distinct tone — a soft warm gold/cream
+   rather than plain white or grey, so it reads as a secondary layer
+   under the white headline while still pairing naturally with the
+   gold buttons and decorative lines already on this section. */
 .ctab p {
   font-family: var(--sans);
   font-size: 1.08rem;
-  color: rgba(255, 255, 255, 0.85); /* light grey for contrast */
+  color: #E8D19C;
   max-width: 520px;
   margin: 0 auto 32px;
   line-height: 1.85;
@@ -74,17 +81,24 @@
   background: #e6c85c;
 }
 
-/* Secondary button – transparent with gold border */
+/* Secondary button — brightened. Was gold text + gold border on fully
+   transparent background, which read faint next to the solid-gold
+   Apply Now button beside it. Switched to a brighter gold (matching
+   the primary button's own hover shade, so it's a proven legible tone
+   from this same palette) and added a soft background tint so it has
+   real presence at rest, not just on hover. */
 .ctab-btn-secondary {
-  background: transparent;
-  color: var(--gold);
-  border: 2px solid var(--gold);
+  background: rgba(230, 200, 92, 0.1);
+  color: #E6C85C;
+  border: 2px solid #E6C85C;
   padding: 12px 28px;
   transition: all 0.2s;
 }
 
 .ctab-btn-secondary:hover {
-  background: rgba(184, 146, 42, 0.1);
+  background: rgba(230, 200, 92, 0.22);
+  border-color: #F0D876;
+  color: #F0D876;
   transform: translateY(-2px);
 }
 

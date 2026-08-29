@@ -107,7 +107,7 @@ const Admissions = () => (
               </p>
               <p className="body-text">
                 The process is designed to be transparent, student-friendly, and focused on identifying
-                candidates with genuine drive and a clear sense of purpose — not just exam scores.
+                candidates with genuine drive and a clear sense of purpose, not just exam scores.
               </p>
             </Ac2>
           </Ac1>

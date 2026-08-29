@@ -59,9 +59,9 @@ const HOW_IT_WORKS = [
 ];
 
 const TESTIMONIALS = [
-  { name: 'Priya R.',  loc: 'Chennai',    rating: 5, text: 'GSBM gave me the career boost I needed. Best MBA college in Chennai with excellent faculty and outstanding placement support!' },
-  { name: 'Arjun K.',  loc: 'Tamil Nadu', rating: 5, text: 'I was looking for an MBA college in Chennai without entrance exam. GSBM was the perfect choice. Highly recommend to all freshers!' },
-  { name: 'Divya S.',  loc: 'Coimbatore', rating: 5, text: 'AICTE approved, great campus, affordable fees. The admissions team was very helpful throughout my MBA application process.' },
+  { name: 'Priya R.',  loc: 'Chennai', rating: 5, text: 'GSBM gave me the career boost I needed. Best MBA college in Chennai with excellent faculty and outstanding placement support!' },
+  { name: 'Arjun K.',  loc: 'Chennai', rating: 5, text: 'I was looking for an MBA college in Chennai without entrance exam. GSBM was the perfect choice. Highly recommend to all freshers!' },
+  { name: 'Divya S.',  loc: 'Chennai', rating: 5, text: 'AICTE approved, great campus, affordable fees. The admissions team was very helpful throughout my MBA application process.' },
 ];
 
 const FAQS = [
@@ -438,7 +438,7 @@ const ApplyNow = () => {
                 {loading ? <>↻ Opening application…</> : <><FiCheckCircle size={19} strokeWidth={2.4} />Submit &amp; Continue</>}
               </button>
               <div className="ap-secure"><FiLock size={12} strokeWidth={2.4} />100% secure</div>
-              <div className="ap-free"><FiCheck size={13} strokeWidth={3} />This application is completely free — no payment required to fill this form</div>
+              <div className="ap-free"><FiCheck size={13} strokeWidth={3} />This application is completely free. No payment required to fill this form</div>
               <div className="ap-callbox">
                 <p className="ap-callbox-t">Need help with your application? Speak to our admissions team.</p>
                 <a className="ap-callbox-n" href={`tel:${COUNSELLOR_PHONE}`} onClick={() => trackCall('form')}>
