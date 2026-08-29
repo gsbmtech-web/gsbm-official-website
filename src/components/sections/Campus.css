@@ -6,10 +6,14 @@
    Moving here = parsed once by the browser, cached, zero runtime cost.
 ──────────────────────────────────────────────────────────────────────────── */
 
+/* Widened further — was 68ch, capping the line length shorter than the
+   video/gallery box below it. Removed so this paragraph spans the same
+   full container width as that box, matching the "match the box below"
+   treatment already applied to Programs/Faculty/Placements/Contact. */
 .campus-intro {
-  text-align: center;
-  max-width: 800px;
-  margin: 0 auto 40px;
+  text-align: left;
+  max-width: 100%;
+  margin: 0 0 40px;
   font-family: var(--sans);
   font-size: 1.05rem;
   line-height: 1.85;

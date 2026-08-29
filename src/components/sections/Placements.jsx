@@ -52,6 +52,7 @@ const Placements = () => (
         title="Careers That Begin Before Graduation"
         subtitle="Career preparation at GSBM is continuous. From aptitude and communication training to internships, mock interviews and professional positioning, students are prepared systematically for the transition from campus to career."
         kickerClass="klt"
+        subtitleWide
       />
 
       <Ac1 title="Our Recruiters">
@@ -60,7 +61,6 @@ const Placements = () => (
            GSBM is building relationships with organisations across sectors to create meaningful opportunities for internships, industry engagement and future career pathways.
           </p>
           {/* ✦ decorative markers moved to CSS ::before/::after on this class */}
-          
         </Ac2>
       </Ac1>
 

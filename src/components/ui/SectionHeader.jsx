@@ -6,14 +6,19 @@ export default function SectionHeader({
   kickerClass = 'kblue',
   ruleClass = '',
   center = false,
-  oneLine = false,   // opt-in: keep this subtitle on a single line on wide screens
+  oneLine = false,      // opt-in: keep this subtitle on a single line on wide screens
+  subtitleWide = false, // opt-in: subtitle paragraph spans full width instead of the 68ch reading cap
 }) {
   return (
     <div className={`sh${center ? ' sh-center' : ''}`}>
       <span className={`sh-kicker ${kickerClass}`}>{kicker}</span>
       <h2>{title}</h2>
       <div className={`sh-rule ${ruleClass}`} />
-      {subtitle && <p className={oneLine ? 'sh-oneline' : ''}>{subtitle}</p>}
+      {subtitle && (
+        <p className={`${oneLine ? 'sh-oneline' : ''}${subtitleWide ? ' sh-p-wide' : ''}`.trim()}>
+          {subtitle}
+        </p>
+      )}
       <style jsx="true">{`
         .sh { margin-bottom: 52px; }
         .sh-center { text-align: center; }
@@ -44,6 +49,27 @@ export default function SectionHeader({
         }
         .sh-rule-blue { background: var(--blue3); }
         .sh-center .sh-rule { margin-left: auto; margin-right: auto; }
+
+        /* OPT-IN wide rule — stretches to the full width of whatever
+           contains this header (the same .W wrapper the box/video/
+           accordion below it also sits in), instead of the default
+           48px accent. Requested specifically for sections where a
+           full-width element (accordion bar, video, info-card row)
+           sits immediately below the header and the short rule looked
+           visually disconnected from it — NOT applied globally, since
+           About/Leadership/Why-Choose-GSBM don't have that pattern and
+           were already confirmed correct as-is. Scoped with a class,
+           not a default, so nothing changes unless a section opts in. */
+        /* OPT-IN wide subtitle — independent of the rule, on its own
+           switch. Removes the 68ch reading-width cap for this element
+           only, so lines wrap using the full container width and run
+           further right, closer to the box's right edge below it,
+           instead of wrapping early into a narrower column. The rule
+           line itself is NOT affected by this and always stays the
+           default 48px accent — that's a separate, unrelated thing. */
+        .sh p.sh-p-wide {
+          max-width: 100%;
+        }
 
         /* DEFAULT subtitle — wraps normally, always. Every section gets
            this unless it explicitly opts out via the oneLine prop.

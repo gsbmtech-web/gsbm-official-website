@@ -223,6 +223,7 @@ const Faculty = () => (
         kicker="Faculty & Research"
         title="Academic Excellence Meets Industry Experience"
         subtitle="Our faculty bring doctoral credentials, academic depth and real corporate experience into the classroom, ensuring students receive an education that is both rigorous and relevant."
+        subtitleWide
       />
 
       <Ac1 title="Faculty Overview & Teaching Philosophy" defaultOpen>

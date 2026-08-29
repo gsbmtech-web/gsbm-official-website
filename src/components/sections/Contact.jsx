@@ -152,6 +152,7 @@ const Contact = () => (
         title="We're Here to Help"
         subtitle="Reach our admissions team for information about the MBA program, eligibility, fees, scholarships, campus visits or the application process."
         kickerClass="kred"
+        subtitleWide
       />
 
       <div className="contact-cards-grid">

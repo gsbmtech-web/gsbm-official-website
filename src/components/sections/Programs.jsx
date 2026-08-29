@@ -45,6 +45,7 @@ const Programs = () => {
           subtitle="Every program at GSBM is designed to develop industry ready professionals with the knowledge, exposure and confidence to contribute from day one. Students are coached, mentored and prepared through a combination of academic learning, industry exposure and personalised development."
           kickerClass="kred"
           ruleClass="sh-rule-blue"
+          subtitleWide
         />
 
         <Ac1 title="MBA Degree Program — 2 Years Full-Time" defaultOpen>
