@@ -5,7 +5,40 @@ import './Scholarshippopup.css';
 /* Files in public/ are served from the site root — reference them by URL,
    never import them. A relative import reaching into public/ breaks the
    Vite build. Path is case-sensitive on Vercel. */
-const scholarshipCreative = '/images/scholarship-popup/scholarship-popup.jpg';
+const CREATIVE_DIR = '/images/scholarship-popup';
+
+/* ─────────────────────────────────────────────────────────────
+   Explicit calendar → creative map. Not a formula — a lookup table,
+   because the requested sequence isn't a straight countdown: it
+   holds at "8" for the opening days, decrements daily from there,
+   then holds at "1" for the closing days instead of continuing down.
+
+   Dates are IST (Asia/Kolkata), matched against the visitor's current
+   IST calendar date. Any date not listed here — before 4 Sept, or
+   any date after 14 Sept — means the popup simply doesn't show, so
+   this table is also what auto-pauses the campaign after the 14th.
+
+   To run this for a future cohort, replace the table (and the image
+   files it points at).
+───────────────────────────────────────────────────────────── */
+const DAY_COUNT_BY_DATE = {
+  '2026-09-04': 8,
+  '2026-09-05': 7,
+  '2026-09-06': 6,
+  '2026-09-07': 5,
+  '2026-09-08': 4,
+  '2026-09-09': 3,
+  '2026-09-10': 2,
+  '2026-09-11': 1,
+  '2026-09-12': 1,
+  '2026-09-13': 1,
+  '2026-09-14': 1,
+};
+
+// en-CA locale formats as YYYY-MM-DD, which is exactly what the table above
+// is keyed by — avoids any manual UTC-offset math.
+const getTodayIST = () =>
+  new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata' }).format(new Date());
 
 /* ─────────────────────────────────────────────────────────────
    Seconds before the close button becomes active.
@@ -19,7 +52,12 @@ const CLOSE_DELAY_SECONDS = 5;
    in the same browser session (more aggressive, more annoying). */
 const SHOW_ONCE_PER_SESSION = true;
 
-const SESSION_KEY = 'gsbm_scholarship_popup_seen';
+/* Keyed per calendar date (not just "seen ever this session") so a
+   visitor who leaves a tab open overnight still sees tomorrow's
+   updated "X days left" creative once, instead of being stuck with
+   whatever day-count they first saw. Uses the same IST date as the
+   lookup table above so the two stay in sync. */
+const sessionKeyForToday = (todayIST) => `gsbm_scholarship_popup_seen_${todayIST}`;
 
 /* GA4 event helper — silently no-ops if gtag isn't loaded yet,
    so this never breaks the popup. */
@@ -40,12 +78,27 @@ const ScholarshipPopup = () => {
 
   const canClose = remaining <= 0;
 
-  /* ── Open immediately on mount ────────────────────────────── */
+  // Computed once per mount — stable for the lifetime of this popup instance.
+  const todayIST      = getTodayIST();
+  const clampedDays   = DAY_COUNT_BY_DATE[todayIST];
+  // Not in the table → before the campaign starts, or after 14 Sept. Either
+  // way, the popup simply doesn't run — this is what auto-pauses it.
+  const isCampaignLive = clampedDays !== undefined;
+  const scholarshipCreative = isCampaignLive
+    ? `${CREATIVE_DIR}/scholarship-popup-${clampedDays}.jpg`
+    : null;
+  const daysLeftLabel = isCampaignLive
+    ? `${clampedDays} day${clampedDays === 1 ? '' : 's'} left`
+    : '';
+
+  /* ── Open immediately on mount — but never outside the dates in the table ── */
   useEffect(() => {
-    if (SHOW_ONCE_PER_SESSION && sessionStorage.getItem(SESSION_KEY)) return;
+    if (!isCampaignLive) return;
+    if (SHOW_ONCE_PER_SESSION && sessionStorage.getItem(sessionKeyForToday(todayIST))) return;
     setOpen(true);
-    track('popup_shown');
-    if (SHOW_ONCE_PER_SESSION) sessionStorage.setItem(SESSION_KEY, '1');
+    track('popup_shown', { days_left: clampedDays });
+    if (SHOW_ONCE_PER_SESSION) sessionStorage.setItem(sessionKeyForToday(todayIST), '1');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /* ── Countdown ────────────────────────────────────────────── */
@@ -69,9 +122,9 @@ const ScholarshipPopup = () => {
 
   const handleClose = useCallback(() => {
     if (!canClose) return;
-    track('popup_dismissed');
+    track('popup_dismissed', { days_left: clampedDays });
     setOpen(false);
-  }, [canClose]);
+  }, [canClose, clampedDays]);
 
   /* ── Escape closes, but only once the timer is done ───────── */
   useEffect(() => {
@@ -83,10 +136,10 @@ const ScholarshipPopup = () => {
 
   /* ── Click the creative → Apply Now page ──────────────────── */
   const handleApply = useCallback(() => {
-    track('popup_clicked', { destination: '/apply' });
+    track('popup_clicked', { destination: '/apply', days_left: clampedDays });
     setOpen(false);
     navigate('/apply');
-  }, [navigate]);
+  }, [navigate, clampedDays]);
 
   if (!open) return null;
 
@@ -121,7 +174,7 @@ const ScholarshipPopup = () => {
         <button type="button" className="gsp-creative-btn" onClick={handleApply}>
           <img
             src={scholarshipCreative}
-            alt="Exclusive scholarship opportunity — up to ₹1.5 lakhs scholarship for the first 20 students. GSBM MBA admissions 2026–28 batch. Apply online now."
+            alt={`Exclusive scholarship opportunity — up to ₹1.5 lakhs scholarship for the first 20 students. GSBM MBA admissions 2026–28 batch. ${daysLeftLabel}. Apply online now.`}
             className="gsp-creative"
             fetchPriority="high"
             decoding="async"
