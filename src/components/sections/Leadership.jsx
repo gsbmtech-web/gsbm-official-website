@@ -10,7 +10,7 @@ const LEADERSHIP = [
     name: 'Dr. A S Ganesan',
     title: 'Chief Patron, GSBM',
     subtitle: "Hon'ble Chancellor, VMRF-DU.",
-    photo: 'https://res.cloudinary.com/vewrsjxm/image/upload/v1787656411/wmremove-transformed-4.png',
+    photo: 'https://res.cloudinary.com/vewrsjxm/image/upload/q_auto,f_auto,w_400/v1787656411/wmremove-transformed-4.png',
     message:
       'India does not have a shortage of graduates. It has a shortage of professionals who are genuinely ready to think independently, to lead responsibly, and to perform under the pressures that real organisations place on them. GSBM was established to close that gap, not incrementally, but decisively. We are not building a school for rankings or recognition. We are building one for outcomes — for students who will go on to run enterprises, lead teams, and contribute to this country\'s growth in ways that matter. That is the only measure I am interested in.',
   },
@@ -19,7 +19,7 @@ const LEADERSHIP = [
     name: 'Dr. Anuradha Ganesan',
     title: 'Patron, GSBM',
     subtitle: 'Vice President, VMRF-DU',
-    photo: 'https://res.cloudinary.com/vewrsjxm/image/upload/v1787656416/wmremove-transformed-3.png',
+    photo: 'https://res.cloudinary.com/vewrsjxm/image/upload/q_auto,f_auto,w_400/v1787656416/wmremove-transformed-3.png',
     message:
       'Medicine taught me that the best outcomes come from combining rigorous systems with genuine human care. That philosophy shapes everything we are building at GSBM. We want our students to graduate not only with knowledge, but with the confidence, capability and values to make a meaningful difference.',
   },
@@ -29,7 +29,7 @@ const LEADERSHIP = [
     title: 'Co-Patron, GSBM',
     subtitle: 'Director – Institutional Development and Strategy',
     subtitlee: 'Office of the Chancellor',
-    photo: 'https://res.cloudinary.com/vewrsjxm/image/upload/v1787656411/wmremove-transformed-2.png',
+   photo: 'https://res.cloudinary.com/vewrsjxm/image/upload/q_auto,f_auto,w_400/v1787656411/wmremove-transformed-2.png',
     message:
       'As Co Patron of Ganesan School of Business Management, I am deeply committed to shaping a new generation of business leaders who lead with purpose and integrity. With my Economics graduation from the University of Chicago and an MBA from University College London, UK, and experience across healthcare and education, I strongly believe GSBM must blend cutting-edge knowledge with a strong human touch in this AI-driven era. Our focus remains on developing ethical decision-makers who prioritize sustainability, real-world impact, and genuine employability. Together, let us build business education that not only creates successful professionals but also responsible citizens committed to the greater social good.',
   },
@@ -38,7 +38,7 @@ const LEADERSHIP = [
     name: 'Prof. P.S. Balaganapathy',
     title: 'Director, GSBM',
     subtitle: null,
-    photo: 'https://res.cloudinary.com/vewrsjxm/image/upload/v1787656419/wmremove-transformed.png',
+    photo: 'https://res.cloudinary.com/vewrsjxm/image/upload/q_auto,f_auto,w_400/v1787656419/wmremove-transformed.png',
     message:
       'At GSBM, we believe education is not just about degrees, it is about shaping the character and capability of future leaders who will drive India\'s business growth. Every student who joins us carries the potential to change industries. We strive to provide a relaxed but disciplined ecosystem for students\' all-round development. The central focus is to transform students into confident, knowledgeable, and skilled individuals who are not only ready for various jobs but also conditioned to think and create jobs. Employability is the key idea.',
   },

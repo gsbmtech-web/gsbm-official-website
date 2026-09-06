@@ -5,7 +5,7 @@ import './LogoStrip.css';
 const LOGOS = [
   
   {
-    src: 'https://res.cloudinary.com/damisreoh/image/upload/v1782051287/AVIT-Logo-PNG_jw4ov5.png',
+    src: 'https://res.cloudinary.com/damisreoh/image/upload/q_auto,f_auto,w_200/v1782051287/AVIT-Logo-PNG_jw4ov5.png',
     alt: 'Aarupadai Veedu Institute of Technology (AVIT) logo',
     width: 200,
     height: 80,
@@ -17,7 +17,7 @@ const LOGOS = [
     height: 80,
   },
   {
-    src: 'https://res.cloudinary.com/damisreoh/image/upload/v1779259623/NAAC_LOGO_1_wvpqpj.jpg',
+   src: 'https://res.cloudinary.com/damisreoh/image/upload/q_auto,f_auto,w_200/v1779259623/NAAC_LOGO_1_wvpqpj.jpg',
     alt: 'NAAC – National Assessment and Accreditation Council logo',
     width: 200,
     height: 80,
