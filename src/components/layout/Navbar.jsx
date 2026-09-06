@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback, useRef, startTransition, memo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { getAllBlogSlugs } from '../../utils/BlogPosts';
-import vmrfLogoFull from '../../assets/mainlogo.png';
 import './Navbar.css';
 
 
@@ -363,7 +362,7 @@ function Navbar() {
             aria-label="GSBM – Go to homepage"
           >
             <img
-              src={vmrfLogoFull}
+              src="/images/mainlogo.webp"
               alt="GSBM – Ganesan School of Business Management"
               className="gsbm-logo-img"
               width={200}
@@ -437,14 +436,14 @@ function Navbar() {
         <div className="gsbm-drawer-head">
           <a href="/" onClick={handleLogoClick} aria-label="GSBM – Go to homepage">
             <img
-              src={vmrfLogoFull}
-              alt="GSBM"
-              className="gsbm-drawer-logo"
-              width={180}
-              height={64}
-              loading="lazy"
-              decoding="async"
-            />
+  src="/images/mainlogo.webp"
+  alt="GSBM"
+  className="gsbm-drawer-logo"
+  width={180}
+  height={64}
+  loading="lazy"
+  decoding="async"
+/>
           </a>
           <button
             type="button"
