@@ -68,7 +68,7 @@ const SidebarPromo = memo(function SidebarPromo() {
   return (
     <div className="about-sidebar-promo">
       <p className="about-promo-badge">Admissions Open</p>
-      <p className="about-promo-title">MBA 2026–2028</p>
+      <p className="about-promo-title">MBA 2027–2029</p>
       <p className="about-promo-desc">
         Limited seats available. Early applications get priority.
       </p>
@@ -89,9 +89,9 @@ const ContactInfo = memo(function ContactInfo() {
     <div className="about-contact-box">
       <p className="about-contact-head">Get in Touch</p>
 
-      <a href="tel:+918667690672" className="about-contact-row">
+      <a href="tel:+919791658444" className="about-contact-row">
         {PhoneIcon}
-        <span>+91 8667690672</span>
+        <span>+91 9791658444</span>
       </a>
 
       {/*

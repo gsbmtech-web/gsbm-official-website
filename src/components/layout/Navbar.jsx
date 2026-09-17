@@ -330,12 +330,12 @@ function Navbar() {
           </span>
           <div className="gsbm-topstrip-right">
             <a
-              href="tel:+918667690672"
+              href="tel:+919791658444"
               className="gsbm-toplink"
-              aria-label="Call admissions: +91 8667690672"
+              aria-label="Call admissions: +91 9791658444"
             >
               {PhoneIcon}
-              +91 8667690672
+              +91 9791658444
             </a>
             <span className="gsbm-divider" aria-hidden="true" />
             <a
@@ -391,7 +391,7 @@ function Navbar() {
               type="button"
               className="gsbm-apply-btn"
               onClick={goToApply}
-              aria-label="Apply now for MBA 2026–2028"
+              aria-label="Apply now for MBA 2027–2029"
             >
               <span>Apply Now</span>
               {ArrowIcon}
@@ -474,17 +474,17 @@ function Navbar() {
             className="gsbm-drawer-apply"
             onClick={goToApply}
             tabIndex={mobileOpen ? 0 : -1}
-            aria-label="Apply now for MBA 2026–2028"
+            aria-label="Apply now for MBA 2027–2029"
           >
             Apply Now
           </button>
           <div className="gsbm-drawer-contact">
             <a
-              href="tel:+918667690672"
+              href="tel:+919791658444"
               tabIndex={mobileOpen ? 0 : -1}
-              aria-label="Call admissions: +91 8667690672"
+              aria-label="Call admissions: +91 9791658444"
             >
-              +91 8667690672
+              +91 9791658444
             </a>
           </div>
         </div>

@@ -27,9 +27,9 @@ const FloatingActions = () => {
   return (
     <div className="fa-stack" role="complementary" aria-label="Quick actions">
       <a
-        href="tel:+918667690672"
+        href="tel:+919791658444"
         className="fa-btn fa-btn--call"
-        aria-label="Call admissions: +91 8667690672"
+        aria-label="Call admissions: +91 9791658444"
         title="Call us"
       >
         <FiPhone size={19} />

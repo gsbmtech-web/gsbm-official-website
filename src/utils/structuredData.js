@@ -29,7 +29,7 @@ export const generateOrganizationSchema = () => ({
   },
   "contactPoint": {
     "@type": "ContactPoint",
-    "telephone": "+918667690672",
+    "telephone": "+919791658444",
     "contactType": "admissions",
     "email": "admissions@gsbm.co.in",
     "availableLanguage": "English"

@@ -21,14 +21,14 @@ const faqs = [
   { id: 'no-exam', q: 'Can I apply without an entrance exam score?', a: 'Yes. Direct merit-based admission is available. The committee evaluates academic performance and personal interview scores.' },
   { id: 'scholarship', q: 'Are scholarships available?', a: 'Yes. Merit-based scholarships are available. Candidates with 85 and above percentile score in CAT are eligible for scholarships. Contact the admissions office for more details.' },
   { id: 'hostel', q: 'Is hostel accommodation available?', a: 'Yes. The campus has hostel facilities for outstation students. Contact campus administration for current availability and fees.' },
-  { id: 'start-date', q: 'When does the academic year begin?', a: 'The MBA program commences in July each year. The exact date for 2026–2028 will be stated in your offer letter.' },
+  { id: 'start-date', q: 'When does the academic year begin?', a: 'The MBA program commences in July each year. The exact date for 2027–2029 will be stated in your offer letter.' },
   { id: 'placement', q: 'How does GSBM prepare students for careers?', a: 'Career preparation at GSBM begins from the first semester, with structured development across aptitude, communication, business problem solving, internships, interviews, personal branding and workplace readiness.' },
 ];
 
 const quickFactsRows = [
-  { label: 'Applications', value: 'Applications open for Batch 2026' },
+  { label: 'Applications', value: 'Applications open for Batch 2027' },
   { label: 'Admission', value: 'Based on entrance exam and interview' },
-  { label: 'Commencement', value: 'Class commencement August 2026' },
+  
 ];
 
 // ─── Sub-components ──────────────────────────────────────────────────────────
@@ -60,7 +60,7 @@ const SidebarPromo = () => {
   return (
     <div className="admissions-sidebar-promo">
       <p className="admissions-promo-badge">Admissions Open</p>
-      <p className="admissions-promo-title">MBA 2026–2028</p>
+      <p className="admissions-promo-title">MBA 2027–2029</p>
       <p className="admissions-promo-desc">Limited seats available. Early applications get priority.</p>
       <a href="/apply" className="btn btn-red admissions-promo-btn" onClick={handleApply}>
         Apply Now
@@ -73,9 +73,9 @@ const SidebarPromo = () => {
 const ContactInfo = () => (
   <div className="admissions-contact-box">
     <p className="admissions-contact-head">Get in Touch</p>
-    <a href="tel:+918667690672" className="admissions-contact-row">
+    <a href="tel:+919791658444" className="admissions-contact-row">
       <FiPhone size={16} aria-hidden="true" focusable="false" />
-      <span>+91 8667690672</span>
+      <span>+91 9791658444</span>
     </a>
     <a href="mailto:admissions@gsbm.co.in." className="admissions-contact-row">
       <FiMail size={16} aria-hidden="true" focusable="false" />
@@ -95,7 +95,7 @@ const Admissions = () => (
         {/* Left column */}
         <div>
           <SectionHeader
-            kicker="Admissions 2026-2028"
+            kicker="Admissions 2027–2029"
             title="Your MBA Journey Starts Here"
             kickerClass="kred"
           />

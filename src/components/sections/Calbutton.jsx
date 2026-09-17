@@ -17,7 +17,7 @@ const Calbutton = () => {
   return (
     <section className="ctab">
       <div className="W">
-        <span className="ctab-kicker">MBA Admissions 2026–2028</span>
+        <span className="ctab-kicker">MBA Admissions 2027–2029</span>
         <h2>Ready to Transform Your Career?</h2>
         <p>
           Limited seats available. Apply to GSBM and begin your MBA journey with a program built around academic rigour, industry exposure and career readiness. This also avoids an unsupported superlative such as “Chennai’s most transformative”.
@@ -32,7 +32,7 @@ const Calbutton = () => {
             Apply Now →
           </a>
           <a
-            href="tel:+918667690672"
+            href="tel:+919791658444"
             className="btn ctab-btn-secondary"
           >
            Talk to a Counsellor

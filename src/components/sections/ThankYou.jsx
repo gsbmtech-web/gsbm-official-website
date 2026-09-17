@@ -203,7 +203,7 @@ const ThankYou = () => {
               <FiCheckCircle size={32} strokeWidth={1.5} />
             </div>
 
-            <div className="ty-badge">MBA 2026–2028 · Application Received</div>
+            <div className="ty-badge">MBA 2027–2029 · Application Received</div>
 
             <h1 className="ty-title">Application Submitted!</h1>
 
@@ -237,8 +237,8 @@ const ThankYou = () => {
               </div>
             </div>
 
-            <a href="tel:+918667690672" className="ty-cta">
-              <FiPhone size={15} /> Call Admissions: +91 8667690672
+            <a href="tel:+919791658444" className="ty-cta">
+              <FiPhone size={15} /> Call Admissions: +91 9791658444
             </a>
 
             <button className="ty-home-btn" onClick={() => navigate('/')}>

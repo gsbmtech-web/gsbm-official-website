@@ -27,17 +27,17 @@ const BROCHURE_DOWNLOAD  = 'GSBM_Brochure.pdf';    // the name the user sees whe
 
 /* ── SEO ───────────────────────────────────────────────────────────────── */
 const SEO = {
-  title: 'MBA Admissions 2026–2028 in Chennai | Apply Now | GSBM',
+  title: 'MBA Admissions 2027–2029 in Chennai | Apply Now | GSBM',
   description:
-    'Apply for GSBM MBA Admissions 2026–2028 in Chennai. Check eligibility, entrance exams, specialisations and admission details. Apply online today.',
+    'Apply for GSBM MBA Admissions 2027–2029 in Chennai. Check eligibility, entrance exams, specialisations and admission details. Apply online today.',
   canonical: 'https://www.gsbm.co.in/apply',
   keywords:
-    'MBA Admissions 2026, MBA Admissions 2026–2028, MBA Admission 2026 Chennai, MBA College in Chennai, MBA Application Form, MBA Apply Online',
+    'MBA Admissions 2027, MBA Admissions 2027–2029, MBA Admission 2027 Chennai, MBA College in Chennai, MBA Application Form, MBA Apply Online',
   // OG title/description are deliberately separate from the SEO title/
   // description above — the doc specifies different copy for each.
-  ogTitle: 'MBA Admissions 2026–2028 in Chennai | GSBM',
+  ogTitle: 'MBA Admissions 2027–2029 in Chennai | GSBM',
   ogDescription:
-    'Apply for GSBM MBA Admissions 2026–2028 in Chennai. Explore eligibility, entrance exams, specialisations and admission details.',
+    'Apply for GSBM MBA Admissions 2027–2029 in Chennai. Explore eligibility, entrance exams, specialisations and admission details.',
 };
 
 const HERO_POINTS = [
@@ -69,7 +69,6 @@ const FAQS = [
   { q: 'Can I get MBA admission in Chennai without entrance exam?', a: "Candidates may apply to GSBM through the applicable admission routes. Eligibility is based on academic qualifications and the prevailing admission requirements. Our admissions team can guide you on the appropriate route." },
   { q: 'What is the MBA admission process at GSBM Chennai?',        a: "The process is simple: submit your application, complete the required admission interaction and, if selected, receive your admission offer. Our admissions team will guide you throughout the process." },
   { q: 'Why should I consider GSBM for my MBA?',                    a: " GSBM offers an industry integrated MBA experience built around academic rigour, personalised learning, industry exposure, career development and a strong focus on employability." },
-   { q: 'What is the last date for MBA admission 2026?',             a: 'The last date for MBA admission 2026 at GSBM Chennai is August 30, 2026. Limited seats are available so we recommend applying as early as possible.' },
   { q: 'Can working professionals apply for the GSBM MBA??',         a: "Yes. Eligible working professionals may apply to the full time MBA program, subject to the applicable admission " },
   
 ];
@@ -77,9 +76,9 @@ const FAQS = [
 
 const ZOHO_FORM_URL = 'https://forms.zohopublic.in/gsbmtechgm1/form/GSBMChennaiMBAPROGRAM/formperma/TJrU6LXsWTqAWh5ZbxgeWMkmSW2-aK-lzoJ2xn3iEjQ';
 
-const COUNSELLOR_PHONE         = '+918667690672';
-const COUNSELLOR_PHONE_DISPLAY = '+91 8667690672';
-const WHATSAPP_NUMBER          = '918667690672'; // country code, no + and no spaces
+const COUNSELLOR_PHONE         = '+919791658444';
+const COUNSELLOR_PHONE_DISPLAY = '+91 9791658444';
+const WHATSAPP_NUMBER          = '919791658444'; // country code, no + and no spaces
 const WHATSAPP_MSG             = 'Hi, I would like to know more about MBA admissions at GSBM.';
 const WHATSAPP_URL             = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MSG)}`;
 
@@ -268,13 +267,13 @@ const ApplyNow = () => {
       name: 'Ganesan School of Business Management', alternateName: 'GSBM Chennai',
       url: 'https://www.gsbm.co.in', telephone: COUNSELLOR_PHONE,
       email: 'admissions@gsbm.co.in',
-      description: 'AICTE approved MBA college in Chennai, Tamil Nadu. UGC recognised and NAAC accredited framework. MBA admissions 2026–28 open.',
+      description: 'AICTE approved MBA college in Chennai, Tamil Nadu. UGC recognised and NAAC accredited framework. MBA admissions 2027-29 open.',
       address: { '@type': 'PostalAddress', addressLocality: 'Chennai', addressRegion: 'Tamil Nadu', addressCountry: 'IN' },
       aggregateRating: { '@type': 'AggregateRating', ratingValue: '4.8', reviewCount: String(TESTIMONIALS.length), bestRating: '5' },
     };
     const course = {
       '@context': 'https://schema.org', '@type': 'Course',
-      name: 'Master of Business Administration (MBA) 2026–2028',
+      name: 'Master of Business Administration (MBA) 2027–2029',
       description: 'Two year full time MBA in Chennai with an industry integrated curriculum, experienced faculty and 100% placement support.',
       provider: { '@type': 'CollegeOrUniversity', name: 'Ganesan School of Business Management', sameAs: 'https://www.gsbm.co.in' },
       hasCourseInstance: {
@@ -290,7 +289,7 @@ const ApplyNow = () => {
       '@context': 'https://schema.org', '@type': 'BreadcrumbList',
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.gsbm.co.in' },
-        { '@type': 'ListItem', position: 2, name: 'MBA Admission 2026–28', item: SEO.canonical },
+        { '@type': 'ListItem', position: 2, name: 'MBA Admission 2027-29', item: SEO.canonical },
       ],
     };
     const nodes = [org, course, faqSchema, crumbs].map(obj => {
@@ -380,7 +379,7 @@ const ApplyNow = () => {
           {/* Top chunk — always first: branding + headline. Stays visible
               above the form on every breakpoint. */}
           <div className="ap-hero-top">
-            <div className="ap-banner"><h1>MBA Admissions 2026–2028</h1></div>
+            <div className="ap-banner"><h1>MBA Admissions 2027–2029</h1></div>
             <p className="ap-hero-by">Master of Business Administration at</p>
             <p className="ap-hero-name">Ganesan School of Business Management, Chennai</p>
           </div>
@@ -534,7 +533,7 @@ const ApplyNow = () => {
         {/* ══ FAQ ══ */}
         <section className="ap-sec" aria-labelledby="faq-h">
           <p className="ap-tag">Common Questions</p>
-          <h2 className="ap-h2" id="faq-h">MBA Admission Chennai 2026 — FAQs</h2>
+          <h2 className="ap-h2" id="faq-h">MBA Admission Chennai 2027 — FAQs</h2>
           <div className="ap-rule" />
           <div className="ap-faq">
             {FAQS.map((f, i) => <FAQItem key={i} q={f.q} a={f.a} />)}
@@ -544,8 +543,8 @@ const ApplyNow = () => {
 
       {/* ══ CLOSING ══ */}
       <section className="ap-close">
-        <h2>Ready to Apply for MBA 2026–28?</h2>
-        <p>Limited seats available. Last date for MBA admission 2026 is August 30, 2026.</p>
+        <h2>Ready to Apply for MBA 2027-29?</h2>
+        <p>Limited seats available</p>
         <div className="ap-close-row">
           <button className="ap-close-btn" onClick={scrollToForm}>
             <FiCheckCircle size={19} strokeWidth={2.4} />Apply Now
@@ -565,7 +564,7 @@ const ApplyNow = () => {
           <a href="/privacy-policy">Privacy Policy</a>·
           <a href="mailto:admissions@gsbm.co.in">admissions@gsbm.co.in</a>
         </p>
-        <p>© 2026 Ganesan School of Business Management — Top MBA College in Chennai, Tamil Nadu</p>
+        <p>© 2027 Ganesan School of Business Management — Top MBA College in Chennai, Tamil Nadu</p>
       </footer> */}
 
       <div className="ap-mobile-bar">

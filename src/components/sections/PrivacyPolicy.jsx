@@ -14,7 +14,7 @@ const LAST_UPDATED = '2026';
 const CONTACT = {
   email: 'admissions@gsbm.co.in',
   phone: '+91 86676 90672',
-  phoneHref: '+918667690672',
+  phoneHref: '+919791658444',
   address:
     "Ganesan School of Business Management, VMRF Campus, Vinayaka Nagar, Rajiv Gandhi Salai (Old Mahabalipuram Road), Chennai, Tamil Nadu, India",
 };

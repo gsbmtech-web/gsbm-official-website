@@ -90,7 +90,7 @@ function Hero() {
           <div className="badge-block">
             <div className="badge">
               <span className="badge-dot" aria-hidden="true" />
-              <span className="badge-text">MBA Admissions Open &nbsp;·&nbsp; 2026 – 2028</span>
+              <span className="badge-text">MBA Admissions Open &nbsp;·&nbsp; 2027 – 2029</span>
             </div>
           </div>
 

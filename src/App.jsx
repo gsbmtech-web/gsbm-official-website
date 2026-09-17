@@ -62,8 +62,8 @@ ScrollToTop.displayName = 'ScrollToTop';
 const PAGE_META = {
     home: {
     title: 'GSBM – Top MBA College in Chennai | Ganesan School of Business Management',
-    description: 'Join GSBM Chennai — AICTE approved, NAAC accredited MBA college. Specialisations in Marketing, Finance, HR & Business Analytics. 100% placement support. Apply for 2026–2028 batch now.',
-    keywords: 'MBA Chennai, top MBA college Chennai, GSBM Chennai, MBA admissions 2026, AICTE approved MBA Chennai, MBA marketing Chennai, MBA finance Chennai, business school Chennai, MBA placements Chennai, Ganesan School of Business Management',
+    description: 'Join GSBM Chennai — AICTE approved, NAAC accredited MBA college. Specialisations in Marketing, Finance, HR & Business Analytics. 100% placement support. Apply for 2027–2029 batch now.',
+    keywords: 'MBA Chennai, top MBA college Chennai, GSBM Chennai, MBA admissions 2027, AICTE approved MBA Chennai, MBA marketing Chennai, MBA finance Chennai, business school Chennai, MBA placements Chennai, Ganesan School of Business Management',
     path: '/',
   },
   about: {
@@ -82,8 +82,8 @@ const PAGE_META = {
     path: '/programs',
   },
   admissions: {
-    title: 'MBA Admissions 2026 | GSBM Chennai',
-    description: 'GSBM MBA admissions 2026 — eligibility, entrance exams accepted, the step-by-step process, and key dates.',
+    title: 'MBA Admissions 2027 | GSBM Chennai',
+    description: 'GSBM MBA admissions 2027 — eligibility, entrance exams accepted, the step-by-step process, and key dates.',
     path: '/admissions',
   },
   faculty: {
@@ -107,8 +107,8 @@ const PAGE_META = {
     path: '/contact',
   },
     apply: {
-    title: 'Apply for MBA 2026–28 | GSBM Chennai Admissions',
-    description: 'Apply online for the GSBM MBA 2026–2028 batch in Chennai. AICTE approved, VMRF-DU awarded. Talk to an admissions counsellor for eligibility, fees and scholarships.',
+    title: 'Apply for MBA 2027–28 | GSBM Chennai Admissions',
+    description: 'Apply online for the GSBM MBA 2027–2029 batch in Chennai. AICTE approved, VMRF-DU awarded. Talk to an admissions counsellor for eligibility, fees and scholarships.',
     path: '/apply',
   },
 };
