@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 const SEO = ({ 
   title = 'GSBM – Ganesan School of Business Management',
   description = 'AICTE approved MBA in Chennai with specialisations in Marketing, Finance, HR, Business Analytics. Industry-integrated curriculum, placements, NAAC accredited.',
-  keywords = ['MBA Chennai', 'GSBM', 'business school', 'MBA admissions 2026', 'AICTE approved MBA', 'management college Chennai'],
+  keywords = ['MBA Chennai', 'GSBM', 'business school', 'MBA Admissions 2027', 'AICTE approved MBA', 'management college Chennai'],
   image = 'https://www.gsbm.co.in/og-default.jpg',
   url = 'https://www.gsbm.co.in',
   type = 'website',
