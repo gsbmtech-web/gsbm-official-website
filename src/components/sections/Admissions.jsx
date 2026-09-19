@@ -61,7 +61,6 @@ const SidebarPromo = () => {
     <div className="admissions-sidebar-promo">
       <p className="admissions-promo-badge">Admissions Open</p>
       <p className="admissions-promo-title">MBA 2027–2029</p>
-      <p className="admissions-promo-desc">Limited seats available. Early applications get priority.</p>
       <a href="/apply" className="btn btn-red admissions-promo-btn" onClick={handleApply}>
         Apply Now
       </a>

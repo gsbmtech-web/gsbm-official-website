@@ -20,7 +20,7 @@ const Calbutton = () => {
         <span className="ctab-kicker">MBA Admissions 2027–2029</span>
         <h2>Ready to Transform Your Career?</h2>
         <p>
-          Limited seats available. Apply to GSBM and begin your MBA journey with a program built around academic rigour, industry exposure and career readiness. This also avoids an unsupported superlative such as “Chennai’s most transformative”.
+         Apply to GSBM and begin your MBA journey with a program built around academic rigour, industry exposure and career readiness. This also avoids an unsupported superlative such as “Chennai’s most transformative”.
         </p>
         <div className="ctab-btns">
           <a

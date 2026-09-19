@@ -544,7 +544,7 @@ const ApplyNow = () => {
       {/* ══ CLOSING ══ */}
       <section className="ap-close">
         <h2>Ready to Apply for MBA 2027-29?</h2>
-        <p>Limited seats available</p>
+        <p></p>
         <div className="ap-close-row">
           <button className="ap-close-btn" onClick={scrollToForm}>
             <FiCheckCircle size={19} strokeWidth={2.4} />Apply Now

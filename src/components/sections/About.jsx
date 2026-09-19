@@ -69,9 +69,9 @@ const SidebarPromo = memo(function SidebarPromo() {
     <div className="about-sidebar-promo">
       <p className="about-promo-badge">Admissions Open</p>
       <p className="about-promo-title">MBA 2027–2029</p>
-      <p className="about-promo-desc">
+      {/* <p className="about-promo-desc">
         Limited seats available. Early applications get priority.
-      </p>
+      </p> */}
       {/* href="/apply" keeps right-click "Open in new tab" working */}
       <a
         href="/apply"
